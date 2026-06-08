@@ -341,42 +341,33 @@
 </script>
 
 <script>
-/* ===== タイトルのスロット風スクランブル ===== */
+/* ===== タイトルのワード切替（音声入力 → ミライデバイス → AIネックレス） ===== */
 (function () {
   var el = document.querySelector('.hero h1 .grad');
   if (!el) return;
-  var finalText = el.textContent;
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  var pool = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンッャュョーABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  var n = finalText.length;
-  var base = 450, per = 230;     // 確定までゆっくり
-  var rollEvery = 85;            // 文字の差し替え間隔(ms)
-  var lock = [];
-  for (var i = 0; i < n; i++) lock.push(base + (i + 1) * per);
-  var last = lock[n - 1];
-  var t0 = null, lastRoll = -1e9;
-  var cur = [];
-
-  function rnd() { return pool.charAt(Math.floor(Math.random() * pool.length)); }
-  for (var k = 0; k < n; k++) cur[k] = rnd();
-
-  function frame(ts) {
-    if (t0 === null) t0 = ts;
-    var e = ts - t0;
-    var roll = (ts - lastRoll) >= rollEvery;
-    if (roll) lastRoll = ts;
-    var out = '';
-    for (var i = 0; i < n; i++) {
-      if (finalText[i] === ' ') { out += ' '; }
-      else if (e >= lock[i]) { out += finalText[i]; }
-      else { if (roll) cur[i] = rnd(); out += cur[i]; }
-    }
-    el.textContent = out;
-    if (e < last) requestAnimationFrame(frame);
-    else el.textContent = finalText;
+  var words = ['音声入力', 'ミライデバイス', 'AIネックレス'];
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    el.textContent = words[words.length - 1];
+    return;
   }
-  requestAnimationFrame(frame);
+  var hold = 1300;  // 各ワードの表示時間(ms)
+  var fade = 520;   // フェード時間(ms)
+  el.style.transition = 'opacity ' + fade + 'ms ease';
+  el.style.opacity = '1';
+  el.textContent = words[0];
+  var idx = 0;
+
+  function step() {
+    if (idx >= words.length - 1) return;   // 最後(AIネックレス)で停止
+    el.style.opacity = '0';
+    setTimeout(function () {
+      idx++;
+      el.textContent = words[idx];
+      el.style.opacity = '1';
+      if (idx < words.length - 1) setTimeout(step, hold + fade);
+    }, fade);
+  }
+  setTimeout(step, hold);
 })();
 </script>
 
