@@ -191,13 +191,31 @@
     </div>
 
     <div class="flow">
-      <div class="node"><div class="t">ESP32-S3 ペンダント</div><div class="s">2×MEMS(I2S) 収音<br>VAD で発話時のみ送信<br>IMA-ADPCM 圧縮</div></div>
-      <div class="arrow">→</div>
-      <div class="node"><div class="t">BLE</div><div class="s">2ch ADPCM<br>≈ 128 kbps<br>（生音声は送らない）</div></div>
-      <div class="arrow">→</div>
-      <div class="node"><div class="t">スマホ / Flutter</div><div class="s">2ch差分で自分/相手を分離<br>16k→24k リサンプル<br>WebSocket 中継</div></div>
-      <div class="arrow">→</div>
-      <div class="node"><div class="t">OpenAI Realtime</div><div class="s">文字起こし / 会話 / 通訳<br>（サーバーレス）</div></div>
+      <div class="node hw">
+        <div class="badge">ハードウェア</div>
+        <div class="t">ESP32-S3 ペンダント</div>
+        <div class="s">2×MEMS(I2S) 収音<br>VAD で発話時のみ送信<br>IMA-ADPCM 圧縮</div>
+      </div>
+      <div class="link">
+        <div class="lbl">BLE</div>
+        <div class="ar">→</div>
+        <div class="sub">2ch ADPCM<br>≈128kbps</div>
+      </div>
+      <div class="node hw">
+        <div class="badge">ハードウェア</div>
+        <div class="t">スマホ / Flutter</div>
+        <div class="s">2ch差分で自分/相手を分離<br>16k→24k リサンプル</div>
+      </div>
+      <div class="link">
+        <div class="lbl">WebSocket</div>
+        <div class="ar">→</div>
+        <div class="sub">インターネット</div>
+      </div>
+      <div class="node cloud">
+        <div class="badge">クラウドAPI</div>
+        <div class="t">OpenAI Realtime</div>
+        <div class="s">文字起こし / 会話 / 通訳<br>（サーバーレス）</div>
+      </div>
     </div>
   </div>
 </section>

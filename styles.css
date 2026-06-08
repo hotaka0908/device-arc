@@ -146,6 +146,18 @@ tbody tr.row-self td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
 .flow .arrow { display: flex; align-items: center; justify-content: center; color: var(--accent); padding: 0 10px; font-size: 20px; }
 @media (max-width: 720px) { .flow { flex-direction: column; } .flow .arrow { transform: rotate(90deg); padding: 8px 0; } }
 
+/* HW を主役にしたフロー */
+.flow .node.hw { border: 2px solid var(--accent); box-shadow: 0 2px 12px rgba(5,150,105,.14); }
+.flow .node.cloud { border: 1px dashed #b9c7bf; background: var(--bg-soft); }
+.flow .node .badge { display: inline-block; font-size: 10px; letter-spacing: .06em; padding: 2px 9px; border-radius: 999px; margin-bottom: 7px; font-family: var(--display); }
+.flow .node.hw .badge { background: rgba(5,150,105,.12); color: var(--accent); }
+.flow .node.cloud .badge { background: #e6ece9; color: var(--muted); }
+.flow .link { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 10px; min-width: 96px; }
+.flow .link .lbl { font-family: var(--display); font-size: 12px; font-weight: 700; color: var(--accent); }
+.flow .link .ar { color: var(--accent); font-size: 22px; line-height: 1; margin: 2px 0; }
+.flow .link .sub { font-size: 10.5px; color: var(--muted); text-align: center; }
+@media (max-width: 720px) { .flow .link .ar { transform: rotate(90deg); } }
+
 /* ===== Badges ===== */
 .b { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 3px 10px; border-radius: 999px; font-weight: 600; }
 .b.ok { background: rgba(22,163,74,.14); color: var(--good); }
