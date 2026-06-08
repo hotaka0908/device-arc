@@ -399,7 +399,7 @@
     }
     setTimeout(go, rand(200, 1800));
   }
-  for (var i = 0; i < COUNT; i++) makeWalker(i === 0 ? 'bot2' : 'bot', i === 0);
+  for (var i = 0; i < COUNT; i++) makeWalker(i === 1 ? 'bot2' : 'bot', i === 0);
 
   function overWalker(x, y) {
     var hit = false;
