@@ -336,5 +336,38 @@
 })();
 </script>
 
+<script>
+/* ===== タイトルのスロット風スクランブル ===== */
+(function () {
+  var el = document.querySelector('.hero h1 .grad');
+  if (!el) return;
+  var finalText = el.textContent;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var pool = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンッャュョーABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  var n = finalText.length;
+  var base = 350, per = 130;
+  var lock = [];
+  for (var i = 0; i < n; i++) lock.push(base + (i + 1) * per);
+  var last = lock[n - 1];
+  var t0 = null;
+
+  function rnd() { return pool.charAt(Math.floor(Math.random() * pool.length)); }
+  function frame(ts) {
+    if (t0 === null) t0 = ts;
+    var e = ts - t0, out = '';
+    for (var i = 0; i < n; i++) {
+      if (finalText[i] === ' ') { out += ' '; }
+      else if (e >= lock[i]) { out += finalText[i]; }
+      else { out += rnd(); }
+    }
+    el.textContent = out;
+    if (e < last) requestAnimationFrame(frame);
+    else el.textContent = finalText;
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+
 </body>
 </html>
