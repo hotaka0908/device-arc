@@ -268,6 +268,8 @@
 
 <footer>
   <div class="wrap">
+    <div class="thanks">THANK YOU FOR READING</div>
+    <svg class="footer-bot" viewBox="0 0 16 18"><use href="#bot"/></svg>
     <div>Wiz Necklace — AIネックレス ハードウェア要件</div>
     <div>アプリ <span class="kbd">necklace2</span>（Flutter）／ファーム <span class="kbd">ai_voice_necklace</span>（ESP32-S3）</div>
   </div>
@@ -321,7 +323,7 @@
     a.addEventListener('mouseenter', hover);
     a.addEventListener('click', click);
   });
-  document.querySelectorAll('.mascot').forEach(function (m) {
+  document.querySelectorAll('.mascot, .footer-bot').forEach(function (m) {
     m.addEventListener('click', function () {
       mascot();
       m.classList.remove('boing'); void m.offsetWidth; m.classList.add('boing');
@@ -397,7 +399,7 @@
 
   function overWalker(x, y) {
     var hit = false;
-    document.querySelectorAll('.walker, .mascot').forEach(function (w) {
+    document.querySelectorAll('.walker, .mascot, .footer-bot').forEach(function (w) {
       var r = w.getBoundingClientRect();
       if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) hit = true;
     });
