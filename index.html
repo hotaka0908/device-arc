@@ -403,7 +403,7 @@
 
   function overWalker(x, y) {
     var hit = false;
-    document.querySelectorAll('.walker').forEach(function (w) {
+    document.querySelectorAll('.walker, .mascot').forEach(function (w) {
       var r = w.getBoundingClientRect();
       if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) hit = true;
     });

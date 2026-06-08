@@ -175,7 +175,7 @@ footer .wrap { display: flex; flex-direction: column; gap: 6px; align-items: cen
 
 /* ===== Pixel mascots（遊び心） ===== */
 .mascot {
-  position: absolute; pointer-events: auto; cursor: pointer; z-index: 3;
+  position: absolute; pointer-events: auto; cursor: inherit; z-index: 3;
   image-rendering: pixelated;
   filter: drop-shadow(0 3px 0 rgba(6,95,70,.08));
 }
