@@ -123,6 +123,10 @@ tbody tr:hover { background: rgba(16,185,129,.05); }
 td b { color: var(--text); }
 td .em { color: var(--accent); font-weight: 700; }
 
+/* ドレミファソラシド: 区分セル */
+.note-cell { cursor: pointer; transition: color .15s; }
+.note-cell:hover b { color: var(--accent); }
+
 /* highlighted "this device" row */
 tbody tr.row-self td { background: rgba(16,185,129,.10); }
 tbody tr.row-self:hover td { background: rgba(16,185,129,.16); }
