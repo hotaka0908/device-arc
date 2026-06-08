@@ -249,17 +249,17 @@
     <div class="sec-head">
       <div class="kicker">05 — OPEN ISSUES</div>
       <h2>検討事項（レビュー観点）</h2>
-      <p>確定前のオープンな技術判断。HW/SW それぞれの観点でレビュー・指摘を求めたい点。</p>
+      <p>まだ決めていない点。エンジニアに意見・指摘をもらいたい項目です。</p>
     </div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>論点</th><th>選択肢 / 内容</th><th>トレードオフ</th><th>暫定方針</th></tr></thead>
+        <thead><tr><th>検討すること</th><th>内容</th><th>迷いどころ</th><th>いまの考え</th></tr></thead>
         <tbody>
-          <tr><td><b>2chの行き先</b></td><td>A：自分→Realtime ／ 相手→transcription　｜　B：mixして1本</td><td>話者ラベル精度 ↔ 実装量</td><td>A</td></tr>
-          <tr><td><b>コーデック</b></td><td>IMA-ADPCM 2ch を継続</td><td>帯域◎ ↔ 位相劣化で分離精度に影響</td><td>継続（要検証）</td></tr>
-          <tr><td><b>稼働時間</b></td><td>640mAh で目標30h（VAD間引き前提）</td><td>容量・サイズ ↔ 稼働時間</td><td>目標30h（実測で確定）</td></tr>
-          <tr><td><b>カメラ仕様</b></td><td>静止画/動画・画角・解像度・撮影頻度</td><td>消費電力・厚み ↔ 用途</td><td>未定</td></tr>
-          <tr><td><b>マイク開口</b></td><td>上面/下面の開口・防風メッシュ・体からの離隔</td><td>収音品質 ↔ 防塵・意匠</td><td>試作で確認</td></tr>
+          <tr><td><b>音声の送り先</b></td><td>A：自分の声→会話AI／相手の声→文字起こし　｜　B：混ぜて1本にまとめる</td><td>誰の発言か分けやすい ↔ 作る手間が増える</td><td>A</td></tr>
+          <tr><td><b>音声の圧縮方式</b></td><td>今の圧縮（ADPCM）をそのまま使う</td><td>通信が軽い ↔ 音が少し劣化して分離に影響するかも</td><td>継続（要確認）</td></tr>
+          <tr><td><b>電池のもち</b></td><td>640mAh で目標30時間（話していない時は送らない前提）</td><td>電池を大きく ↔ 本体が大きく重くなる</td><td>目標30時間（実機で測って確定）</td></tr>
+          <tr><td><b>カメラの仕様</b></td><td>写真か動画か・画角・画質・撮る頻度</td><td>電池のもち・厚み ↔ やりたいこと</td><td>未定</td></tr>
+          <tr><td><b>マイクの穴</b></td><td>上下の穴の位置・風よけ・体から少し浮かせる</td><td>音をきれいに拾う ↔ ホコリ・見た目</td><td>試作で確認</td></tr>
         </tbody>
       </table>
     </div>
