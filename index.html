@@ -71,8 +71,9 @@
     <div class="links">
       <a href="#layout">配置</a>
       <a href="#spec">要件</a>
+      <a href="#arch">構成</a>
       <a href="#compare">比較</a>
-      <a href="#open">未決</a>
+      <a href="#open">検討</a>
     </div>
   </div>
 </nav>
@@ -82,6 +83,7 @@
   <div class="wrap">
     <span class="eyebrow" style="text-transform:none;">Hardware Spec</span>
     <h1><span class="grad">AIネックレス</span></h1>
+    <p class="lead">自分の声を明瞭に録り、相手の声を分離して文字起こしする胸装着デバイスの要件定義。</p>
   </div>
 </header>
 
@@ -188,12 +190,45 @@
   </div>
 </section>
 
+<!-- ARCH -->
+<section id="arch">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">03 — ARCHITECTURE</div>
+      <h2>システム構成</h2>
+      <p>デバイスは収音と送信に専念し、分離・文字起こしはスマホ／クラウドが担当。HW↔SW の境界とデータの流れ。</p>
+    </div>
+
+    <div class="flow">
+      <div class="node"><div class="t">ESP32-S3 ペンダント</div><div class="s">2× MEMS（I2S）→ VAD → ADPCM</div></div>
+      <div class="arrow">→</div>
+      <div class="node"><div class="t">BLE</div><div class="s">2ch ADPCM ≈ 128 kbps</div></div>
+      <div class="arrow">→</div>
+      <div class="node"><div class="t">スマホ / Flutter</div><div class="s">2ch分離 → リサンプル → 中継</div></div>
+      <div class="arrow">→</div>
+      <div class="node"><div class="t">OpenAI Realtime</div><div class="s">文字起こし / 会話 / 通訳</div></div>
+    </div>
+
+    <div class="table-wrap" style="margin-top:22px;">
+      <table>
+        <thead><tr><th>レイヤ</th><th>担当</th><th>処理</th></tr></thead>
+        <tbody>
+          <tr><td><b>デバイス</b></td><td>ESP32-S3</td><td>2ch I2S 収音／VADで発話時のみ送信／IMA-ADPCM 圧縮</td></tr>
+          <tr><td><b>伝送</b></td><td>BLE</td><td>2ch ADPCM ≈ 128 kbps（生音声は送らない）</td></tr>
+          <tr><td><b>スマホ</b></td><td>Flutter</td><td>2ch差分で自分/相手を分離／16k→24k リサンプル／WebSocket 中継</td></tr>
+          <tr><td><b>クラウド</b></td><td>OpenAI Realtime</td><td>文字起こし／会話／通訳（サーバーレス）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
 <!-- COMPARE -->
 <section id="compare">
   <svg class="mascot m-compare" viewBox="0 0 16 12"><use href="#peek"/></svg>
   <div class="wrap">
     <div class="sec-head">
-      <div class="kicker">03 — COMPARISON</div>
+      <div class="kicker">04 — COMPARISON</div>
       <h2>他社マイク構成（DJI / Anker / PLAUD）</h2>
     </div>
     <div class="table-wrap">
@@ -214,17 +249,27 @@
   </div>
 </section>
 
-<!-- OPEN -->
+<!-- OPEN / REVIEW -->
 <section id="open">
   <div class="wrap">
     <div class="sec-head">
-      <div class="kicker">04 — OPEN</div>
-      <h2>未決事項</h2>
+      <div class="kicker">05 — OPEN ISSUES</div>
+      <h2>検討事項（レビュー観点）</h2>
+      <p>確定前のオープンな技術判断。HW/SW それぞれの観点でレビュー・指摘を求めたい点。</p>
     </div>
-    <ul class="clean">
-      <li><b>2ストリームの行き先</b> — A: 自分→Realtime / 相手→transcription（話者ラベルが綺麗）　B: mixして1本（実装が軽い）</li>
-      <li><b>稼働時間目標</b> — 連続何時間か → 電池容量を確定</li>
-    </ul>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>論点</th><th>選択肢 / 内容</th><th>トレードオフ</th><th>暫定方針</th></tr></thead>
+        <tbody>
+          <tr><td><b>2chの行き先</b></td><td>A：自分→Realtime ／ 相手→transcription　｜　B：mixして1本</td><td>話者ラベル精度 ↔ 実装量</td><td>A</td></tr>
+          <tr><td><b>分離の実装場所</b></td><td>スマホ（2ch差分）　｜　ESP32（ESP-SR AFE）</td><td>柔軟性 ↔ 省電力・帯域</td><td>スマホ</td></tr>
+          <tr><td><b>コーデック</b></td><td>IMA-ADPCM 2ch を継続</td><td>帯域◎ ↔ 位相劣化で分離精度に影響</td><td>継続（要検証）</td></tr>
+          <tr><td><b>稼働時間</b></td><td>640mAh で連続何時間か（VAD間引き前提）</td><td>容量・サイズ ↔ 稼働時間</td><td>要実測</td></tr>
+          <tr><td><b>カメラ仕様</b></td><td>静止画/動画・画角・解像度・撮影頻度</td><td>消費電力・厚み ↔ 用途</td><td>未定</td></tr>
+          <tr><td><b>マイク開口</b></td><td>上面/下面の開口・防風メッシュ・体からの離隔</td><td>収音品質 ↔ 防塵・意匠</td><td>試作で確認</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
 
