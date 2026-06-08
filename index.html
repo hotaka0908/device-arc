@@ -7,7 +7,7 @@
 <meta name="description" content="首から下げるAIデバイスのハードウェア要件。マイク・カメラ・LEDの配置と仕様、他社比較。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -221,6 +221,60 @@
     <div>アプリ <span class="kbd">necklace2</span>（Flutter）／ファーム <span class="kbd">ai_voice_necklace</span>（ESP32-S3）</div>
   </div>
 </footer>
+
+<button id="sound-toggle" aria-label="サウンド切替" title="サウンド切替">🔊</button>
+
+<script>
+(function () {
+  var actx = null, soundOn = true;
+  var btn = document.getElementById('sound-toggle');
+
+  function ctx() {
+    if (!actx) { try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return null; } }
+    if (actx && actx.state === 'suspended') actx.resume();
+    return actx;
+  }
+  function tone(freq, dur, type, vol, delay) {
+    if (!soundOn) return;
+    var a = ctx(); if (!a) return;
+    var o = a.createOscillator(), g = a.createGain();
+    o.type = type || 'square'; o.frequency.value = freq;
+    o.connect(g); g.connect(a.destination);
+    var t = a.currentTime + (delay || 0);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol || 0.06, t + 0.006);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + (dur || 0.12));
+    o.start(t); o.stop(t + (dur || 0.12) + 0.03);
+  }
+  var hover  = function () { tone(880, 0.05, 'square', 0.025); };
+  var click  = function () { tone(660, 0.07, 'square', 0.05); tone(990, 0.09, 'square', 0.045, 0.06); };
+  var notes  = [523, 587, 659, 784, 880, 988];
+  var mascot = function () {
+    var f = notes[Math.floor(Math.random() * notes.length)];
+    tone(f, 0.10, 'triangle', 0.07);
+    tone(f * 1.5, 0.12, 'triangle', 0.05, 0.08);
+  };
+  var startup = function () { tone(523,0.09,'square',0.05); tone(659,0.09,'square',0.05,0.09); tone(784,0.12,'square',0.05,0.18); };
+
+  document.querySelectorAll('.nav .links a').forEach(function (a) {
+    a.addEventListener('mouseenter', hover);
+    a.addEventListener('click', click);
+  });
+  document.querySelectorAll('.mascot').forEach(function (m) {
+    m.addEventListener('click', function () {
+      mascot();
+      m.classList.remove('boing'); void m.offsetWidth; m.classList.add('boing');
+      setTimeout(function () { m.classList.remove('boing'); }, 460);
+    });
+  });
+  btn.addEventListener('click', function () {
+    soundOn = !soundOn;
+    btn.textContent = soundOn ? '🔊' : '🔇';
+    if (soundOn) { ctx(); startup(); }
+  });
+  window.addEventListener('pointerdown', function () { ctx(); }, { once: true });
+})();
+</script>
 
 </body>
 </html>
