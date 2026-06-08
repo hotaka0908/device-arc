@@ -344,20 +344,27 @@
 
   var pool = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンッャュョーABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   var n = finalText.length;
-  var base = 350, per = 130;
+  var base = 450, per = 230;     // 確定までゆっくり
+  var rollEvery = 85;            // 文字の差し替え間隔(ms)
   var lock = [];
   for (var i = 0; i < n; i++) lock.push(base + (i + 1) * per);
   var last = lock[n - 1];
-  var t0 = null;
+  var t0 = null, lastRoll = -1e9;
+  var cur = [];
 
   function rnd() { return pool.charAt(Math.floor(Math.random() * pool.length)); }
+  for (var k = 0; k < n; k++) cur[k] = rnd();
+
   function frame(ts) {
     if (t0 === null) t0 = ts;
-    var e = ts - t0, out = '';
+    var e = ts - t0;
+    var roll = (ts - lastRoll) >= rollEvery;
+    if (roll) lastRoll = ts;
+    var out = '';
     for (var i = 0; i < n; i++) {
       if (finalText[i] === ' ') { out += ' '; }
       else if (e >= lock[i]) { out += finalText[i]; }
-      else { out += rnd(); }
+      else { if (roll) cur[i] = rnd(); out += cur[i]; }
     }
     el.textContent = out;
     if (e < last) requestAnimationFrame(frame);
