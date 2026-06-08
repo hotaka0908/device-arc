@@ -20,6 +20,7 @@
       <a href="#overview">概要</a>
       <a href="#layout">配置</a>
       <a href="#why">配置の根拠</a>
+      <a href="#compare">他社比較</a>
       <a href="#arch">システム構成</a>
       <a href="#spec">要件一覧</a>
       <a href="#routing">未決事項</a>
@@ -245,11 +246,97 @@
   </div>
 </section>
 
+<!-- COMPARE -->
+<section id="compare">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">04 — COMPETITOR COMPARISON</div>
+      <h2>他社マイク構成との比較（DJI / Anker / PLAUD）</h2>
+      <p>大きく2系統ある。<b>クリップ式ワイヤレスマイク（DJI・Anker）</b>は口元に着ける近接型で単一マイク＋DSP。<b>ウェアラブルAIレコーダー（PLAUD）</b>は離れた話者も録るためマイクアレイ＋ビームフォーミング。本機は後者の系統。</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>製品</th><th>カテゴリ</th><th>マイク構成</th><th>ノイズ／集音方式</th><th>狙う音源</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>DJI Mic 2</b></td>
+            <td>クリップ式ワイヤレス</td>
+            <td>無指向性MEMS <b>×1</b>（送信機ごと）</td>
+            <td>インテリジェントNC（DSP・2段）</td>
+            <td>近接＝装着者本人の声</td>
+          </tr>
+          <tr>
+            <td><b>DJI Mic 3</b></td>
+            <td>クリップ式ワイヤレス</td>
+            <td>内蔵マイク <b>×1</b>＋適応ゲイン</td>
+            <td>アクティブNC 2段＋風防</td>
+            <td>近接＝装着者本人の声</td>
+          </tr>
+          <tr>
+            <td><b>AnkerWork M650</b></td>
+            <td>クリップ式ワイヤレス</td>
+            <td>内蔵マイク <b>×1</b>（＋外部ラベリア対応）</td>
+            <td>VoiceShield NC（3段）</td>
+            <td>近接＝装着者本人の声</td>
+          </tr>
+          <tr>
+            <td><b>PLAUD Note</b></td>
+            <td>AIボイスレコーダー</td>
+            <td>MEMS <b>×2</b></td>
+            <td>アレイ＋ビームフォーミング</td>
+            <td>〜3m・対面〜会議</td>
+          </tr>
+          <tr>
+            <td><b>PLAUD NotePin</b></td>
+            <td>ウェアラブルAI</td>
+            <td>デュアルMEMS <b>×2</b></td>
+            <td>ビームフォーミング（+3dB SNR）</td>
+            <td>〜3m・装着者＋周囲</td>
+          </tr>
+          <tr>
+            <td><b>PLAUD Note Pro</b></td>
+            <td>AIボイスレコーダー</td>
+            <td>MEMS <b>×4</b> ＋ <span class="em">VPU ×1</span>（接触）</td>
+            <td>Acoustic AI-Beamforming＋VPU</td>
+            <td>〜5m・話者ロック</td>
+          </tr>
+          <tr class="row-self">
+            <td><b><span class="star">★</span> 本機 Wiz</b></td>
+            <td>ウェアラブルAI</td>
+            <td>MEMS <b>×2</b>（上＋下・縦40mm）＋骨伝導（任意）</td>
+            <td>2ch差分で「自分↑／相手→」を分離</td>
+            <td>対面1対1の文字起こし</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="src">出典: DJI Mic 2 / Mic 3 公式・B&H・SoundGuys ／ AnkerWork M650（Amazon・TechRadar）／ PLAUD Note・NotePin・Note Pro 公式。各社の「2 TX」等は<b>送信機（人数）の数</b>で、1台あたりのマイク数とは別。</div>
+
+    <div class="grid cols-3" style="margin-top:26px;">
+      <div class="card">
+        <h3>📎 クリップ式は別カテゴリ</h3>
+        <p>DJI・Ankerは口元に着ける近接型。音源が近くSN比が高いので<b>単一マイク＋DSP</b>で足りる。「自分の声」専用。</p>
+      </div>
+      <div class="card">
+        <h3>🧠 PLAUDが本機の同類</h3>
+        <p>離れた話者も録るウェアラブルは<b>マイクアレイ＋ビームフォーミング</b>が必須。NotePinは2、Pro は4マイク。</p>
+      </div>
+      <div class="card">
+        <h3>🦴 VPU／骨伝導は実在の正解</h3>
+        <p>PLAUD Note Pro は4MEMS＋<b>VPU（接触センサー）</b>を採用。本機の背面骨伝導案は業界でも使われる手法。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ARCH -->
 <section id="arch">
   <div class="wrap">
     <div class="sec-head">
-      <div class="kicker">04 — SYSTEM ARCHITECTURE</div>
+      <div class="kicker">05 — SYSTEM ARCHITECTURE</div>
       <h2>システム構成</h2>
       <p>デバイスは収音と送信に専念。スマホが中継・分離し、AIはクラウド。既存の Wiz アプリ（Flutter）のパイプラインをそのまま拡張できる。</p>
     </div>
@@ -297,7 +384,7 @@
 <section id="spec">
   <div class="wrap">
     <div class="sec-head">
-      <div class="kicker">05 — REQUIREMENTS</div>
+      <div class="kicker">06 — REQUIREMENTS</div>
       <h2>要件一覧</h2>
     </div>
     <div class="table-wrap">
@@ -329,7 +416,7 @@
 <section id="routing">
   <div class="wrap">
     <div class="sec-head">
-      <div class="kicker">06 — OPEN DECISION</div>
+      <div class="kicker">07 — OPEN DECISION</div>
       <h2>残る論点：2ストリームの行き先</h2>
       <p>OpenAI Realtime の入力はモノラル1本。2マイクで分離した「自分」「相手」をどう振り分けるかだけ決めれば、要件は確定する。</p>
     </div>
