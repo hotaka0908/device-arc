@@ -413,13 +413,15 @@
     });
   });
 
-  // ロボットの上ではカーソルを指(pointer)に
+  // ロボットの上では巨大な指カーソルに
+  var handSVG = '<svg xmlns="http://www.w3.org/2000/svg" width="108" height="120" viewBox="0 0 18 20" shape-rendering="crispEdges"><polygon points="6,2 9,2 9,8 14,8 14,18 4,18 4,13 2,13 2,10 4,10 4,8 6,8" fill="#ffffff" stroke="#065f46" stroke-width="1"/></svg>';
+  var BIG_CURSOR = 'url("data:image/svg+xml,' + encodeURIComponent(handSVG) + '") 45 12, pointer';
   var cursorOn = false;
   document.addEventListener('mousemove', function (e) {
     var on = overWalker(e.clientX, e.clientY);
     if (on !== cursorOn) {
       cursorOn = on;
-      document.body.style.cursor = on ? 'pointer' : '';
+      document.body.style.cursor = on ? BIG_CURSOR : '';
     }
   });
 })();
