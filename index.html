@@ -171,7 +171,7 @@
           <tr><td><b>マイク</b></td><td>MEMS ×2（上面・下面）</td></tr>
           <tr><td><b>カメラ</b></td><td>中央前方／OV2640系・DVP接続・解像度/画角は要確定（静止画/動画）</td></tr>
           <tr><td><b>LED</b></td><td>録画インジケータ・前面上部</td></tr>
-          <tr><td><b>電源</b></td><td>LiPo 640mAh（30時間駆動）</td></tr>
+          <tr><td><b>電源</b></td><td>LiPo 640mAh（目標30時間）</td></tr>
           <tr><td><b>充電</b></td><td>USB-C／充電IC（TP4056系）</td></tr>
           <tr><td><b>接続</b></td><td>BLE</td></tr>
           <tr><td><b>入力</b></td><td>側面PTTボタン（押下中のみ録音）</td></tr>
@@ -258,7 +258,7 @@
           <tr><td><b>2chの行き先</b></td><td>A：自分→Realtime ／ 相手→transcription　｜　B：mixして1本</td><td>話者ラベル精度 ↔ 実装量</td><td>A</td></tr>
           <tr><td><b>分離の実装場所</b></td><td>スマホ（2ch差分）　｜　ESP32（ESP-SR AFE）</td><td>柔軟性 ↔ 省電力・帯域</td><td>スマホ</td></tr>
           <tr><td><b>コーデック</b></td><td>IMA-ADPCM 2ch を継続</td><td>帯域◎ ↔ 位相劣化で分離精度に影響</td><td>継続（要検証）</td></tr>
-          <tr><td><b>稼働時間</b></td><td>640mAh で連続何時間か（VAD間引き前提）</td><td>容量・サイズ ↔ 稼働時間</td><td>要実測</td></tr>
+          <tr><td><b>稼働時間</b></td><td>640mAh で目標30h（VAD間引き前提）</td><td>容量・サイズ ↔ 稼働時間</td><td>目標30h（実測で確定）</td></tr>
           <tr><td><b>カメラ仕様</b></td><td>静止画/動画・画角・解像度・撮影頻度</td><td>消費電力・厚み ↔ 用途</td><td>未定</td></tr>
           <tr><td><b>マイク開口</b></td><td>上面/下面の開口・防風メッシュ・体からの離隔</td><td>収音品質 ↔ 防塵・意匠</td><td>試作で確認</td></tr>
         </tbody>
