@@ -191,25 +191,13 @@
     </div>
 
     <div class="flow">
-      <div class="node"><div class="t">ESP32-S3 ペンダント</div><div class="s">2× MEMS（I2S）→ VAD → ADPCM</div></div>
+      <div class="node"><div class="t">ESP32-S3 ペンダント</div><div class="s">2×MEMS(I2S) 収音<br>VAD で発話時のみ送信<br>IMA-ADPCM 圧縮</div></div>
       <div class="arrow">→</div>
-      <div class="node"><div class="t">BLE</div><div class="s">2ch ADPCM ≈ 128 kbps</div></div>
+      <div class="node"><div class="t">BLE</div><div class="s">2ch ADPCM<br>≈ 128 kbps<br>（生音声は送らない）</div></div>
       <div class="arrow">→</div>
-      <div class="node"><div class="t">スマホ / Flutter</div><div class="s">2ch分離 → リサンプル → 中継</div></div>
+      <div class="node"><div class="t">スマホ / Flutter</div><div class="s">2ch差分で自分/相手を分離<br>16k→24k リサンプル<br>WebSocket 中継</div></div>
       <div class="arrow">→</div>
-      <div class="node"><div class="t">OpenAI Realtime</div><div class="s">文字起こし / 会話 / 通訳</div></div>
-    </div>
-
-    <div class="table-wrap" style="margin-top:22px;">
-      <table>
-        <thead><tr><th>レイヤ</th><th>担当</th><th>処理</th></tr></thead>
-        <tbody>
-          <tr><td><b>デバイス</b></td><td>ESP32-S3</td><td>2ch I2S 収音／VADで発話時のみ送信／IMA-ADPCM 圧縮</td></tr>
-          <tr><td><b>伝送</b></td><td>BLE</td><td>2ch ADPCM ≈ 128 kbps（生音声は送らない）</td></tr>
-          <tr><td><b>スマホ</b></td><td>Flutter</td><td>2ch差分で自分/相手を分離／16k→24k リサンプル／WebSocket 中継</td></tr>
-          <tr><td><b>クラウド</b></td><td>OpenAI Realtime</td><td>文字起こし／会話／通訳（サーバーレス）</td></tr>
-        </tbody>
-      </table>
+      <div class="node"><div class="t">OpenAI Realtime</div><div class="s">文字起こし / 会話 / 通訳<br>（サーバーレス）</div></div>
     </div>
   </div>
 </section>
