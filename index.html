@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AIネックレス 要件定義 — Wiz Device</title>
-<meta name="description" content="首から下げるAIデバイスのハードウェア要件。マイク・カメラ・LEDの配置とその根拠、ESP32-S3 + BLE + スマホのシステム構成をわかりやすく図解。">
+<meta name="description" content="首から下げるAIデバイスのハードウェア要件。マイク・カメラ・LEDの配置と仕様、他社比較。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -17,13 +17,10 @@
   <div class="wrap">
     <div class="brand"><span class="dot"></span> Wiz Necklace — 要件</div>
     <div class="links">
-      <a href="#overview">概要</a>
       <a href="#layout">配置</a>
-      <a href="#why">配置の根拠</a>
-      <a href="#compare">他社比較</a>
-      <a href="#arch">システム構成</a>
-      <a href="#spec">要件一覧</a>
-      <a href="#routing">未決事項</a>
+      <a href="#spec">要件</a>
+      <a href="#compare">比較</a>
+      <a href="#open">未決</a>
     </div>
   </div>
 </nav>
@@ -31,9 +28,9 @@
 <!-- HERO -->
 <header class="hero">
   <div class="wrap">
-    <span class="eyebrow">◎ AI Wearable Device — Hardware Spec</span>
-    <h1>首から下げる<span class="grad">AIネックレス</span>の<br>ハードウェア要件</h1>
-    <p class="lead">自分の声をはっきり拾い、相手の声を文字起こしする。<br>マイク・カメラ・LEDをどこに置くか、なぜそうするのかを図で示します。</p>
+    <span class="eyebrow">◎ AI Wearable — Hardware Spec</span>
+    <h1>首から下げる<span class="grad">AIネックレス</span></h1>
+    <p class="lead">自分の声をはっきり拾い、相手の声を分離して文字起こしする胸装着デバイス。</p>
     <div class="chips">
       <span class="chip">寸法 <b>40 × 30 × 10&nbsp;mm</b></span>
       <span class="chip">MCU <b>ESP32-S3</b></span>
@@ -45,92 +42,54 @@
   </div>
 </header>
 
-<!-- OVERVIEW -->
-<section id="overview">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="kicker">01 — OVERVIEW</div>
-      <h2>このデバイスは何か</h2>
-      <p>胸（鎖骨下）に下げる小型デバイス。装着者本人の声をクリアに録り、対面の相手の声を分離して文字起こしする。音声処理はスマホ側、AI連携はクラウド（OpenAI Realtime）で行う。</p>
-    </div>
-    <div class="grid cols-3">
-      <div class="card">
-        <span class="tag">GOAL</span>
-        <h3>🎤 2つの声を分けて録る</h3>
-        <p>上から来る「自分の声」と、前から来る「相手の声」を2マイクで分離。会話メモ・対面通訳に使う。</p>
-      </div>
-      <div class="card">
-        <span class="tag">FORM</span>
-        <h3>📐 40×30×10mm の縦長</h3>
-        <p>胸に縦向きで下げる。縦長を活かしてマイクを上下に最大間隔で配置できる。</p>
-      </div>
-      <div class="card">
-        <span class="tag">SYSTEM</span>
-        <h3>🔗 ESP32-S3 → BLE → スマホ</h3>
-        <p>デバイスは収音と送信に専念。重い処理はスマホとクラウドが担当。サーバーレス。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- LAYOUT -->
 <section id="layout">
   <div class="wrap">
     <div class="sec-head">
-      <div class="kicker">02 — COMPONENT LAYOUT</div>
-      <h2>部品の配置</h2>
-      <p>マイクは上端と下端（縦40mmの最長間隔）。カメラは中央、録画LEDは前面上部。スピーカーは載せず、音声出力はスマホにフォールバックする。</p>
+      <div class="kicker">01 — LAYOUT</div>
+      <h2>部品配置</h2>
     </div>
 
     <div class="grid cols-2">
       <!-- FRONT VIEW -->
       <div class="diagram">
         <svg viewBox="0 0 360 400" role="img" aria-label="正面図">
-          <!-- dimension width -->
           <line x1="105" y1="40" x2="255" y2="40" stroke="#5b8cff" stroke-width="1"/>
           <line x1="105" y1="35" x2="105" y2="45" stroke="#5b8cff" stroke-width="1"/>
           <line x1="255" y1="35" x2="255" y2="45" stroke="#5b8cff" stroke-width="1"/>
           <text x="180" y="30" fill="#9aa3b8" font-size="12" text-anchor="middle">30 mm</text>
-          <!-- dimension height -->
           <line x1="90" y1="55" x2="90" y2="255" stroke="#5b8cff" stroke-width="1"/>
           <line x1="85" y1="55" x2="95" y2="55" stroke="#5b8cff" stroke-width="1"/>
           <line x1="85" y1="255" x2="95" y2="255" stroke="#5b8cff" stroke-width="1"/>
           <text x="78" y="160" fill="#9aa3b8" font-size="12" text-anchor="middle" transform="rotate(-90 78 160)">40 mm</text>
 
-          <!-- device body -->
           <rect x="105" y="55" width="150" height="200" rx="26" fill="#1b2030" stroke="#3a4361" stroke-width="1.5"/>
 
-          <!-- top mic -->
           <circle cx="180" cy="88" r="9" fill="none" stroke="#38e0c4" stroke-width="2"/>
           <circle cx="180" cy="88" r="2.5" fill="#38e0c4"/>
           <text x="270" y="84" fill="#38e0c4" font-size="12">上マイク</text>
-          <text x="270" y="99" fill="#9aa3b8" font-size="11">上向き／自分の声</text>
+          <text x="270" y="99" fill="#9aa3b8" font-size="11">上向き／自分</text>
 
-          <!-- LED -->
           <circle cx="142" cy="88" r="3.5" fill="#ffb454"/>
           <text x="62" y="92" fill="#ffb454" font-size="11" text-anchor="end">LED</text>
 
-          <!-- camera -->
           <circle cx="180" cy="158" r="24" fill="#0e1422" stroke="#5b8cff" stroke-width="2"/>
           <circle cx="180" cy="158" r="12" fill="none" stroke="#5b8cff" stroke-width="1.5"/>
           <circle cx="180" cy="158" r="3" fill="#5b8cff"/>
           <text x="270" y="155" fill="#5b8cff" font-size="12">カメラ</text>
           <text x="270" y="170" fill="#9aa3b8" font-size="11">中央</text>
 
-          <!-- bottom mic -->
           <circle cx="180" cy="226" r="9" fill="none" stroke="#38e0c4" stroke-width="2"/>
           <circle cx="180" cy="226" r="2.5" fill="#38e0c4"/>
           <text x="270" y="222" fill="#38e0c4" font-size="12">下マイク</text>
           <text x="270" y="237" fill="#9aa3b8" font-size="11">前向き／相手</text>
 
-          <!-- baseline -->
           <line x1="148" y1="88" x2="148" y2="226" stroke="#38e0c4" stroke-width="1" stroke-dasharray="4 4" opacity=".7"/>
           <text x="120" y="160" fill="#38e0c4" font-size="11" text-anchor="middle" transform="rotate(-90 120 160)">間隔 ≈ 40mm</text>
 
-          <!-- strap -->
           <rect x="168" y="44" width="24" height="9" rx="4" fill="none" stroke="#3a4361" stroke-width="1.5"/>
         </svg>
-        <div class="caption">正面図（前面）— 縦40 × 横30mm</div>
+        <div class="caption">正面図 — 縦40 × 横30mm</div>
       </div>
 
       <!-- SIDE VIEW -->
@@ -138,33 +97,26 @@
         <svg viewBox="0 0 360 400" role="img" aria-label="側面図">
           <text x="60" y="50" fill="#9aa3b8" font-size="12" text-anchor="middle">前（相手側）</text>
           <text x="300" y="50" fill="#9aa3b8" font-size="12" text-anchor="middle">背（体側）</text>
-
-          <!-- thickness dim -->
           <line x1="158" y1="300" x2="202" y2="300" stroke="#5b8cff" stroke-width="1"/>
           <text x="180" y="318" fill="#9aa3b8" font-size="12" text-anchor="middle">10 mm</text>
 
-          <!-- device thin body -->
           <rect x="158" y="70" width="44" height="210" rx="16" fill="#1b2030" stroke="#3a4361" stroke-width="1.5"/>
 
-          <!-- top mic + up arrow -->
           <circle cx="180" cy="92" r="6" fill="none" stroke="#38e0c4" stroke-width="2"/>
           <line x1="180" y1="84" x2="180" y2="40" stroke="#38e0c4" stroke-width="2"/>
           <polygon points="180,32 175,44 185,44" fill="#38e0c4"/>
           <text x="180" y="26" fill="#38e0c4" font-size="11" text-anchor="middle">自分の声 ↑</text>
 
-          <!-- camera front-up arrow -->
           <circle cx="158" cy="170" r="6" fill="none" stroke="#5b8cff" stroke-width="2"/>
           <line x1="152" y1="168" x2="92" y2="138" stroke="#5b8cff" stroke-width="2"/>
           <polygon points="84,134 97,135 92,146" fill="#5b8cff"/>
           <text x="86" y="124" fill="#5b8cff" font-size="11" text-anchor="middle">カメラ +15〜30°</text>
 
-          <!-- bottom mic front-down arrow -->
           <circle cx="158" cy="252" r="6" fill="none" stroke="#38e0c4" stroke-width="2"/>
           <line x1="152" y1="256" x2="98" y2="286" stroke="#38e0c4" stroke-width="2"/>
           <polygon points="90,290 103,284 105,295" fill="#38e0c4"/>
           <text x="92" y="306" fill="#38e0c4" font-size="11" text-anchor="middle">相手 ↘ 前下</text>
 
-          <!-- bone sensor back -->
           <circle cx="202" cy="200" r="5" fill="#ffb454"/>
           <line x1="208" y1="200" x2="262" y2="200" stroke="#ffb454" stroke-width="1.5" stroke-dasharray="3 3"/>
           <text x="266" y="197" fill="#ffb454" font-size="11">骨伝導</text>
@@ -177,71 +129,38 @@
     <div class="legend">
       <div class="it"><span class="sw" style="background:#38e0c4"></span> MEMSマイク ×2</div>
       <div class="it"><span class="sw" style="background:#5b8cff"></span> カメラ</div>
-      <div class="it"><span class="sw" style="background:#ffb454"></span> LED / 骨伝導センサー</div>
-      <div class="it"><span class="sw" style="background:#3a4361"></span> 筐体 / ストラップ</div>
+      <div class="it"><span class="sw" style="background:#ffb454"></span> LED / 骨伝導</div>
     </div>
+
+    <p class="note">マイクを上下に置く理由：自分の声＝真上（エンドファイア）、相手＝前（ブロードサイド）。縦40mm（筐体最長）の間隔で2音源を分離する。左右定位は捨て、対面1対1に最適化。</p>
   </div>
 </section>
 
-<!-- WHY -->
-<section id="why">
+<!-- SPEC -->
+<section id="spec">
   <div class="wrap">
     <div class="sec-head">
-      <div class="kicker">03 — RATIONALE</div>
-      <h2>なぜマイクを「上＋下」に置くのか</h2>
-      <p>分けたいのは「上から来る自分の声」と「前から来る相手の声」。縦に並べると、この2方向がちょうど直交し、2マイクで最もきれいに分離できる。</p>
+      <div class="kicker">02 — REQUIREMENTS</div>
+      <h2>要件一覧</h2>
     </div>
-
-    <div class="diagram" style="max-width:none;">
-      <svg viewBox="0 0 520 300" role="img" aria-label="到来方向の幾何">
-        <!-- wearer head -->
-        <circle cx="100" cy="55" r="26" fill="#1b2030" stroke="#3a4361" stroke-width="1.5"/>
-        <circle cx="92" cy="50" r="2.5" fill="#9aa3b8"/>
-        <path d="M88 64 Q100 72 112 64" fill="none" stroke="#38e0c4" stroke-width="2.5"/>
-        <text x="150" y="50" fill="#9aa3b8" font-size="12">装着者の口</text>
-
-        <!-- device on chest -->
-        <rect x="80" y="150" width="40" height="90" rx="12" fill="#1b2030" stroke="#3a4361" stroke-width="1.5"/>
-        <circle cx="100" cy="168" r="6" fill="none" stroke="#38e0c4" stroke-width="2"/>
-        <circle cx="100" cy="222" r="6" fill="none" stroke="#38e0c4" stroke-width="2"/>
-        <text x="100" y="262" fill="#9aa3b8" font-size="11" text-anchor="middle">デバイス</text>
-
-        <!-- array axis -->
-        <line x1="100" y1="160" x2="100" y2="230" stroke="#38e0c4" stroke-width="1" stroke-dasharray="3 3" opacity=".6"/>
-
-        <!-- own voice endfire arrow (down along axis) -->
-        <line x1="100" y1="84" x2="100" y2="156" stroke="#38e0c4" stroke-width="2.5"/>
-        <polygon points="100,162 94,150 106,150" fill="#38e0c4"/>
-        <text x="118" y="120" fill="#38e0c4" font-size="12">自分の声＝真上から</text>
-        <text x="118" y="136" fill="#6b7488" font-size="11">エンドファイア（差が最大）</text>
-
-        <!-- partner -->
-        <circle cx="430" cy="120" r="22" fill="#1b2030" stroke="#3a4361" stroke-width="1.5"/>
-        <rect x="410" y="146" width="40" height="60" rx="14" fill="#1b2030" stroke="#3a4361" stroke-width="1.5"/>
-        <text x="430" y="226" fill="#9aa3b8" font-size="11" text-anchor="middle">相手</text>
-
-        <!-- partner broadside arrow (horizontal) -->
-        <line x1="400" y1="195" x2="128" y2="200" stroke="#5b8cff" stroke-width="2.5"/>
-        <polygon points="122,200 134,194 134,206" fill="#5b8cff"/>
-        <text x="250" y="186" fill="#5b8cff" font-size="12" text-anchor="middle">相手の声＝前（真横）から</text>
-        <text x="250" y="218" fill="#6b7488" font-size="11" text-anchor="middle">ブロードサイド（差ゼロ＝基準）</text>
-      </svg>
-      <div class="caption">自分＝エンドファイア／相手＝ブロードサイド。この直交関係が2マイク分離の理想形。</div>
-    </div>
-
-    <div class="grid cols-3" style="margin-top:22px;">
-      <div class="card">
-        <h3>↕ 最長ベースライン</h3>
-        <p>縦40mmは筐体の最長寸法。間隔が広いほど低い周波数（声の芯）まで方向が効き、分離が安定する。</p>
-      </div>
-      <div class="card">
-        <h3>🎯 軸が目的に一致</h3>
-        <p>「上 vs 前」という分けたい方向と、マイクの縦軸がぴったり重なる。斜めや左右配置より素直に効く。</p>
-      </div>
-      <div class="card">
-        <h3>↔ 左右定位は捨てる</h3>
-        <p>縦配置は「相手が左右どちらか」は分からない。1対1の文字起こしが主用途なので問題なし。</p>
-      </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>区分</th><th>項目</th><th>仕様</th></tr></thead>
+        <tbody>
+          <tr><td><b>MCU</b></td><td>チップ</td><td><span class="em">ESP32-S3</span>（BLE 5.0 / 2M PHY・デュアルI2S・PSRAM）</td></tr>
+          <tr><td><b>筐体</b></td><td>寸法 / 装着</td><td>40 × 30 × 10 mm・縦長／胸（鎖骨下）</td></tr>
+          <tr><td><b>マイク</b></td><td>構成</td><td>デジタルMEMS ×2、<span class="em">上端＋下端</span>（間隔 ≈ 40mm）</td></tr>
+          <tr><td></td><td>向き</td><td>上＝上向き（自分）／下＝前下向き（相手）</td></tr>
+          <tr><td></td><td>処理</td><td>2ch差分で自分／相手を分離 → 2ストリーム</td></tr>
+          <tr><td><b>カメラ</b></td><td>配置 / 光軸</td><td>中央／前方 +15〜30° 上向き</td></tr>
+          <tr><td><b>LED</b></td><td>表示</td><td>録画インジケータ・前面上部</td></tr>
+          <tr><td><b>スピーカー</b></td><td>—</td><td><span class="b no">なし</span>（音声はスマホ再生）</td></tr>
+          <tr><td><b>電源</b></td><td>電池</td><td>LiPo 300–500mAh</td></tr>
+          <tr><td><b>接続</b></td><td>無線</td><td>BLE（IMA-ADPCM）→ スマホ → OpenAI Realtime</td></tr>
+          <tr><td><b>入力</b></td><td>ボタン</td><td>PTT（Manual）／Auto（VAD）</td></tr>
+          <tr><td><b>任意</b></td><td>骨伝導</td><td>背面・推奨。自声検知で話者分離を強化</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
@@ -250,220 +169,46 @@
 <section id="compare">
   <div class="wrap">
     <div class="sec-head">
-      <div class="kicker">04 — COMPETITOR COMPARISON</div>
-      <h2>他社マイク構成との比較（DJI / Anker / PLAUD）</h2>
-      <p>大きく2系統ある。<b>クリップ式ワイヤレスマイク（DJI・Anker）</b>は口元に着ける近接型で単一マイク＋DSP。<b>ウェアラブルAIレコーダー（PLAUD）</b>は離れた話者も録るためマイクアレイ＋ビームフォーミング。本機は後者の系統。</p>
-    </div>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>製品</th><th>カテゴリ</th><th>マイク構成</th><th>ノイズ／集音方式</th><th>狙う音源</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><b>DJI Mic 2</b></td>
-            <td>クリップ式ワイヤレス</td>
-            <td>無指向性MEMS <b>×1</b>（送信機ごと）</td>
-            <td>インテリジェントNC（DSP・2段）</td>
-            <td>近接＝装着者本人の声</td>
-          </tr>
-          <tr>
-            <td><b>DJI Mic 3</b></td>
-            <td>クリップ式ワイヤレス</td>
-            <td>内蔵マイク <b>×1</b>＋適応ゲイン</td>
-            <td>アクティブNC 2段＋風防</td>
-            <td>近接＝装着者本人の声</td>
-          </tr>
-          <tr>
-            <td><b>AnkerWork M650</b></td>
-            <td>クリップ式ワイヤレス</td>
-            <td>内蔵マイク <b>×1</b>（＋外部ラベリア対応）</td>
-            <td>VoiceShield NC（3段）</td>
-            <td>近接＝装着者本人の声</td>
-          </tr>
-          <tr>
-            <td><b>PLAUD Note</b></td>
-            <td>AIボイスレコーダー</td>
-            <td>MEMS <b>×2</b></td>
-            <td>アレイ＋ビームフォーミング</td>
-            <td>〜3m・対面〜会議</td>
-          </tr>
-          <tr>
-            <td><b>PLAUD NotePin</b></td>
-            <td>ウェアラブルAI</td>
-            <td>デュアルMEMS <b>×2</b></td>
-            <td>ビームフォーミング（+3dB SNR）</td>
-            <td>〜3m・装着者＋周囲</td>
-          </tr>
-          <tr>
-            <td><b>PLAUD Note Pro</b></td>
-            <td>AIボイスレコーダー</td>
-            <td>MEMS <b>×4</b> ＋ <span class="em">VPU ×1</span>（接触）</td>
-            <td>Acoustic AI-Beamforming＋VPU</td>
-            <td>〜5m・話者ロック</td>
-          </tr>
-          <tr class="row-self">
-            <td><b><span class="star">★</span> 本機 Wiz</b></td>
-            <td>ウェアラブルAI</td>
-            <td>MEMS <b>×2</b>（上＋下・縦40mm）＋骨伝導（任意）</td>
-            <td>2ch差分で「自分↑／相手→」を分離</td>
-            <td>対面1対1の文字起こし</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="src">出典: DJI Mic 2 / Mic 3 公式・B&H・SoundGuys ／ AnkerWork M650（Amazon・TechRadar）／ PLAUD Note・NotePin・Note Pro 公式。各社の「2 TX」等は<b>送信機（人数）の数</b>で、1台あたりのマイク数とは別。</div>
-
-    <div class="grid cols-3" style="margin-top:26px;">
-      <div class="card">
-        <h3>📎 クリップ式は別カテゴリ</h3>
-        <p>DJI・Ankerは口元に着ける近接型。音源が近くSN比が高いので<b>単一マイク＋DSP</b>で足りる。「自分の声」専用。</p>
-      </div>
-      <div class="card">
-        <h3>🧠 PLAUDが本機の同類</h3>
-        <p>離れた話者も録るウェアラブルは<b>マイクアレイ＋ビームフォーミング</b>が必須。NotePinは2、Pro は4マイク。</p>
-      </div>
-      <div class="card">
-        <h3>🦴 VPU／骨伝導は実在の正解</h3>
-        <p>PLAUD Note Pro は4MEMS＋<b>VPU（接触センサー）</b>を採用。本機の背面骨伝導案は業界でも使われる手法。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ARCH -->
-<section id="arch">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="kicker">05 — SYSTEM ARCHITECTURE</div>
-      <h2>システム構成</h2>
-      <p>デバイスは収音と送信に専念。スマホが中継・分離し、AIはクラウド。既存の Wiz アプリ（Flutter）のパイプラインをそのまま拡張できる。</p>
-    </div>
-
-    <div class="flow">
-      <div class="node">
-        <div class="t">ESP32-S3 ペンダント</div>
-        <div class="s">2× MEMS（I2S）→ VAD → IMA-ADPCM</div>
-      </div>
-      <div class="arrow">→</div>
-      <div class="node">
-        <div class="t">BLE</div>
-        <div class="s">2ch ADPCM ≈ 128 kbps</div>
-      </div>
-      <div class="arrow">→</div>
-      <div class="node">
-        <div class="t">スマホ / Flutter</div>
-        <div class="s">2ch分離 → リサンプル → 中継</div>
-      </div>
-      <div class="arrow">→</div>
-      <div class="node">
-        <div class="t">OpenAI Realtime</div>
-        <div class="s">会話 / 通訳 / 文字起こし</div>
-      </div>
-    </div>
-
-    <div class="grid cols-3" style="margin-top:22px;">
-      <div class="card">
-        <h3><span class="b ok">解決</span> 帯域</h3>
-        <p>現状1ch ADPCMで ≈64kbps。2chでも ≈128kbps でBLEに余裕。生音声を送る必要はない。</p>
-      </div>
-      <div class="card">
-        <h3><span class="b ok">解決</span> スピーカー無し</h3>
-        <p>アプリは「再生特性が無い場合はスマホスピーカーへフォールバック」を実装済み。そのまま動く。</p>
-      </div>
-      <div class="card">
-        <h3><span class="b ok">既存</span> 省電力 VAD</h3>
-        <p>Autoモードの無音検知を流用し、発話時だけ送信。idle 1–2mA / 1時間で deep sleep。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SPEC -->
-<section id="spec">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="kicker">06 — REQUIREMENTS</div>
-      <h2>要件一覧</h2>
+      <div class="kicker">03 — COMPARISON</div>
+      <h2>他社マイク構成（DJI / Anker / PLAUD）</h2>
     </div>
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr><th>区分</th><th>項目</th><th>仕様</th></tr>
-        </thead>
+        <thead><tr><th>製品</th><th>カテゴリ</th><th>マイク構成</th><th>集音方式</th><th>狙う音源</th></tr></thead>
         <tbody>
-          <tr><td><b>MCU</b></td><td>チップ</td><td><span class="em">ESP32-S3</span>（BLE 5.0 / 2M PHY・デュアルI2S・PSRAM）</td></tr>
-          <tr><td><b>筐体</b></td><td>寸法 / 装着</td><td>40(H) × 30(W) × 10(D) mm・縦長／胸（鎖骨下）に下げる</td></tr>
-          <tr><td><b>マイク</b></td><td>構成</td><td>デジタルMEMS ×2、<span class="em">上端＋下端</span>の縦配置（間隔 ≈ 40mm）</td></tr>
-          <tr><td></td><td>向き</td><td>上①＝上向き（自分の声）／下②＝前下向き（相手）</td></tr>
-          <tr><td></td><td>処理</td><td>上①を自声リファレンスにした2ch差分／2音源分離 → 2ストリーム</td></tr>
-          <tr><td></td><td>実装</td><td>防風メッシュ＋体から1〜2mm浮かせ、服の擦れ音対策</td></tr>
-          <tr><td><b>カメラ</b></td><td>配置 / 光軸</td><td>筐体中央／前方 +15〜30° 上向き（胸→相手の顔補正）</td></tr>
-          <tr><td><b>表示</b></td><td>LED</td><td>録画インジケータ・前面上部（プライバシー対策）</td></tr>
-          <tr><td><b>スピーカー</b></td><td>—</td><td><span class="b no">なし</span> 音声出力はスマホにフォールバック</td></tr>
-          <tr><td><b>電源</b></td><td>電池</td><td>リチウムポリマー 300–500mAh（SP削除分を容量へ）</td></tr>
-          <tr><td><b>接続</b></td><td>無線</td><td>BLE（IMA-ADPCM）→ スマホ → OpenAI Realtime</td></tr>
-          <tr><td><b>入力</b></td><td>ボタン</td><td>PTT（Manual）／Auto（hands-free・VAD）</td></tr>
-          <tr><td><b>任意</b></td><td>骨伝導/加速度</td><td>背面・推奨。自声検知で話者分離とVADを強化</td></tr>
+          <tr><td><b>DJI Mic 2</b></td><td>クリップ式</td><td>無指向性MEMS <b>×1</b></td><td>DSPノイズキャンセル</td><td>近接＝本人</td></tr>
+          <tr><td><b>DJI Mic 3</b></td><td>クリップ式</td><td>内蔵 <b>×1</b>＋適応ゲイン</td><td>アクティブNC 2段</td><td>近接＝本人</td></tr>
+          <tr><td><b>AnkerWork M650</b></td><td>クリップ式</td><td>内蔵 <b>×1</b></td><td>VoiceShield NC（3段）</td><td>近接＝本人</td></tr>
+          <tr><td><b>PLAUD Note</b></td><td>AIレコーダー</td><td>MEMS <b>×2</b></td><td>ビームフォーミング</td><td>〜3m</td></tr>
+          <tr><td><b>PLAUD NotePin</b></td><td>ウェアラブル</td><td>デュアルMEMS <b>×2</b></td><td>ビームフォーミング(+3dB)</td><td>〜3m</td></tr>
+          <tr><td><b>PLAUD Note Pro</b></td><td>AIレコーダー</td><td>MEMS <b>×4</b>＋<span class="em">VPU ×1</span></td><td>AI-Beamforming＋VPU</td><td>〜5m</td></tr>
+          <tr class="row-self"><td><b><span class="star">★</span> 本機 Wiz</b></td><td>ウェアラブル</td><td>MEMS <b>×2</b>（上+下）＋骨伝導</td><td>2ch差分で自分/相手分離</td><td>対面1対1</td></tr>
         </tbody>
       </table>
     </div>
+    <p class="note">クリップ式（DJI・Anker）は近接＝本人狙いで単一マイク＋DSP。ウェアラブル（PLAUD）は離れた話者も録るためアレイ＋ビームフォーミング。本機は後者の系統。</p>
   </div>
 </section>
 
-<!-- ROUTING / OPEN ITEMS -->
-<section id="routing">
+<!-- OPEN -->
+<section id="open">
   <div class="wrap">
     <div class="sec-head">
-      <div class="kicker">07 — OPEN DECISION</div>
-      <h2>残る論点：2ストリームの行き先</h2>
-      <p>OpenAI Realtime の入力はモノラル1本。2マイクで分離した「自分」「相手」をどう振り分けるかだけ決めれば、要件は確定する。</p>
+      <div class="kicker">04 — OPEN</div>
+      <h2>未決事項</h2>
     </div>
-
-    <div class="grid cols-2">
-      <div class="opt a">
-        <div class="hd">
-          <div class="badge">A</div>
-          <h3>2系統に振り分け</h3>
-          <span class="b ok rec">話者ラベルが綺麗</span>
-        </div>
-        <ul class="clean">
-          <li>自分の声 → Realtime（会話 / 通訳・現状どおり）</li>
-          <li>相手の声 → transcription（Whisper等）</li>
-          <li>「誰が何を言ったか」を正確に記録できる</li>
-          <li>実装はやや増える（2系統管理）</li>
-        </ul>
-      </div>
-      <div class="opt b">
-        <div class="hd">
-          <div class="badge">B</div>
-          <h3>1本にmixして渡す</h3>
-          <span class="b warn rec">実装が軽い</span>
-        </div>
-        <ul class="clean">
-          <li>分離後にmixして Realtime へ1本で渡す</li>
-          <li>既存パイプラインの変更が最小</li>
-          <li>話者分離はAI任せ（精度は環境次第）</li>
-        </ul>
-      </div>
-    </div>
-
-    <p class="note">補足：ADPCMの量子化ノイズはchごとに独立のため深いヌルは作りにくい。<b>上下の大きなレベル差＋背面の骨伝導センサー</b>で「自分／相手」を判定する方式が、ADPCM前提では最も堅実。<br>既存の翻訳モード（対面通訳 英↔日）は元々両者の声が必要なので、この2マイク設計は<b>通訳と文字起こしの両方を強化</b>する。</p>
-
-    <div class="grid cols-3" style="margin-top:26px;">
-      <div class="card"><h3>① ルーティング</h3><p>A案 / B案 を決定する。</p></div>
-      <div class="card"><h3>② 骨伝導センサー</h3><p>採用するか（話者判定の堅牢性が大きく変わる）。</p></div>
-      <div class="card"><h3>③ 稼働時間目標</h3><p>連続何時間か → 電池容量を確定する。</p></div>
-    </div>
+    <ul class="clean">
+      <li><b>2ストリームの行き先</b> — A: 自分→Realtime / 相手→transcription（話者ラベルが綺麗）　B: mixして1本（実装が軽い）</li>
+      <li><b>骨伝導センサー</b> — 採用するか（話者判定の堅牢性が変わる）</li>
+      <li><b>稼働時間目標</b> — 連続何時間か → 電池容量を確定</li>
+    </ul>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
     <div>Wiz Necklace — AIネックレス ハードウェア要件</div>
-    <div>ファームウェアは別リポジトリ <span class="kbd">ai_voice_necklace</span>（ESP32-S3）／アプリは <span class="kbd">necklace2</span>（Flutter）</div>
-    <div style="color:#4a536b;">© 2026 Universal Pine</div>
+    <div>アプリ <span class="kbd">necklace2</span>（Flutter）／ファーム <span class="kbd">ai_voice_necklace</span>（ESP32-S3）</div>
   </div>
 </footer>
 
