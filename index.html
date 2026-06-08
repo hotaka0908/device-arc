@@ -47,92 +47,83 @@
   <div class="wrap">
     <div class="sec-head">
       <div class="kicker">01 — LAYOUT</div>
-      <h2>部品配置</h2>
+      <h2>部品配置（立体図）</h2>
     </div>
 
-    <div class="grid cols-2">
-      <!-- FRONT VIEW -->
-      <div class="diagram">
-        <svg viewBox="0 0 360 400" role="img" aria-label="正面図">
-          <line x1="105" y1="40" x2="255" y2="40" stroke="#5b8cff" stroke-width="1"/>
-          <line x1="105" y1="35" x2="105" y2="45" stroke="#5b8cff" stroke-width="1"/>
-          <line x1="255" y1="35" x2="255" y2="45" stroke="#5b8cff" stroke-width="1"/>
-          <text x="180" y="30" fill="#9aa3b8" font-size="12" text-anchor="middle">30 mm</text>
-          <line x1="90" y1="55" x2="90" y2="255" stroke="#5b8cff" stroke-width="1"/>
-          <line x1="85" y1="55" x2="95" y2="55" stroke="#5b8cff" stroke-width="1"/>
-          <line x1="85" y1="255" x2="95" y2="255" stroke="#5b8cff" stroke-width="1"/>
-          <text x="78" y="160" fill="#9aa3b8" font-size="12" text-anchor="middle" transform="rotate(-90 78 160)">40 mm</text>
+    <div class="diagram" style="max-width:none;">
+      <svg viewBox="0 0 480 470" role="img" aria-label="立体配置図">
+        <!-- ===== 3D box (oblique) ===== -->
+        <!-- right (side) face -->
+        <polygon points="270,110 270,300 308,276 308,86" fill="#141926" stroke="#3a4361" stroke-width="1.5"/>
+        <!-- top face -->
+        <polygon points="130,110 270,110 308,86 168,86" fill="#232b3e" stroke="#3a4361" stroke-width="1.5"/>
+        <!-- front face -->
+        <polygon points="130,110 270,110 270,300 130,300" fill="#1b2030" stroke="#3a4361" stroke-width="1.5"/>
 
-          <rect x="105" y="55" width="150" height="200" rx="26" fill="#1b2030" stroke="#3a4361" stroke-width="1.5"/>
+        <!-- ===== dimensions ===== -->
+        <!-- 40mm (front-left vertical) -->
+        <line x1="116" y1="110" x2="116" y2="300" stroke="#5b8cff" stroke-width="1"/>
+        <line x1="112" y1="110" x2="120" y2="110" stroke="#5b8cff" stroke-width="1"/>
+        <line x1="112" y1="300" x2="120" y2="300" stroke="#5b8cff" stroke-width="1"/>
+        <text x="106" y="205" fill="#9aa3b8" font-size="12" text-anchor="middle" transform="rotate(-90 106 205)">40 mm</text>
+        <!-- 10mm (depth edge) -->
+        <line x1="135" y1="100" x2="173" y2="76" stroke="#5b8cff" stroke-width="1"/>
+        <text x="142" y="80" fill="#9aa3b8" font-size="11">10 mm</text>
+        <!-- 30mm (front bottom) -->
+        <line x1="130" y1="312" x2="270" y2="312" stroke="#5b8cff" stroke-width="1"/>
+        <line x1="130" y1="308" x2="130" y2="316" stroke="#5b8cff" stroke-width="1"/>
+        <line x1="270" y1="308" x2="270" y2="316" stroke="#5b8cff" stroke-width="1"/>
+        <text x="200" y="328" fill="#9aa3b8" font-size="12" text-anchor="middle">30 mm</text>
 
-          <circle cx="180" cy="88" r="9" fill="none" stroke="#38e0c4" stroke-width="2"/>
-          <circle cx="180" cy="88" r="2.5" fill="#38e0c4"/>
-          <text x="270" y="84" fill="#38e0c4" font-size="12">上マイク</text>
-          <text x="270" y="99" fill="#9aa3b8" font-size="11">上向き／自分</text>
+        <!-- ===== camera (front center) ===== -->
+        <circle cx="200" cy="205" r="25" fill="#0e1422" stroke="#5b8cff" stroke-width="2"/>
+        <circle cx="200" cy="205" r="12" fill="none" stroke="#5b8cff" stroke-width="1.5"/>
+        <circle cx="200" cy="205" r="3" fill="#5b8cff"/>
+        <line x1="226" y1="200" x2="350" y2="195" stroke="#5b8cff" stroke-width="1"/>
+        <text x="356" y="192" fill="#5b8cff" font-size="12">カメラ</text>
+        <text x="356" y="207" fill="#9aa3b8" font-size="11">前面・中央</text>
 
-          <circle cx="142" cy="88" r="3.5" fill="#ffb454"/>
-          <text x="62" y="92" fill="#ffb454" font-size="11" text-anchor="end">LED</text>
+        <!-- ===== LED (front upper) ===== -->
+        <circle cx="162" cy="142" r="4" fill="#ffb454"/>
+        <line x1="158" y1="142" x2="96" y2="130" stroke="#ffb454" stroke-width="1"/>
+        <text x="90" y="127" fill="#ffb454" font-size="12" text-anchor="end">LED</text>
+        <text x="90" y="141" fill="#9aa3b8" font-size="11" text-anchor="end">前面上部</text>
 
-          <circle cx="180" cy="158" r="24" fill="#0e1422" stroke="#5b8cff" stroke-width="2"/>
-          <circle cx="180" cy="158" r="12" fill="none" stroke="#5b8cff" stroke-width="1.5"/>
-          <circle cx="180" cy="158" r="3" fill="#5b8cff"/>
-          <text x="270" y="155" fill="#5b8cff" font-size="12">カメラ</text>
-          <text x="270" y="170" fill="#9aa3b8" font-size="11">中央</text>
+        <!-- ===== TOP mic (on top face, up) ===== -->
+        <ellipse cx="219" cy="98" rx="12" ry="5.5" fill="none" stroke="#38e0c4" stroke-width="2"/>
+        <circle cx="219" cy="98" r="2" fill="#38e0c4"/>
+        <line x1="219" y1="90" x2="219" y2="54" stroke="#38e0c4" stroke-width="2"/>
+        <polygon points="219,46 214,58 224,58" fill="#38e0c4"/>
+        <text x="219" y="38" fill="#38e0c4" font-size="12" text-anchor="middle">上マイク</text>
+        <text x="232" y="74" fill="#9aa3b8" font-size="11">上面・上向き（自分）</text>
 
-          <circle cx="180" cy="226" r="9" fill="none" stroke="#38e0c4" stroke-width="2"/>
-          <circle cx="180" cy="226" r="2.5" fill="#38e0c4"/>
-          <text x="270" y="222" fill="#38e0c4" font-size="12">下マイク</text>
-          <text x="270" y="237" fill="#9aa3b8" font-size="11">前向き／相手</text>
+        <!-- ===== BOTTOM mic (on bottom face, down) ===== -->
+        <ellipse cx="200" cy="318" rx="12" ry="5.5" fill="none" stroke="#38e0c4" stroke-width="2" stroke-dasharray="4 3"/>
+        <circle cx="200" cy="318" r="2" fill="#38e0c4"/>
+        <line x1="200" y1="326" x2="200" y2="372" stroke="#38e0c4" stroke-width="2"/>
+        <polygon points="200,380 195,368 205,368" fill="#38e0c4"/>
+        <text x="200" y="400" fill="#38e0c4" font-size="12" text-anchor="middle">下マイク</text>
+        <text x="200" y="416" fill="#9aa3b8" font-size="11" text-anchor="middle">下面・下向き（相手）</text>
 
-          <line x1="148" y1="88" x2="148" y2="226" stroke="#38e0c4" stroke-width="1" stroke-dasharray="4 4" opacity=".7"/>
-          <text x="120" y="160" fill="#38e0c4" font-size="11" text-anchor="middle" transform="rotate(-90 120 160)">間隔 ≈ 40mm</text>
+        <!-- ===== bone sensor (back face) ===== -->
+        <circle cx="289" cy="235" r="5" fill="none" stroke="#ffb454" stroke-width="1.5" stroke-dasharray="3 2"/>
+        <line x1="294" y1="237" x2="356" y2="255" stroke="#ffb454" stroke-width="1" stroke-dasharray="3 2"/>
+        <text x="362" y="252" fill="#ffb454" font-size="12">骨伝導</text>
+        <text x="362" y="266" fill="#9aa3b8" font-size="11">背面・任意</text>
 
-          <rect x="168" y="44" width="24" height="9" rx="4" fill="none" stroke="#3a4361" stroke-width="1.5"/>
-        </svg>
-        <div class="caption">正面図 — 縦40 × 横30mm</div>
-      </div>
-
-      <!-- SIDE VIEW -->
-      <div class="diagram">
-        <svg viewBox="0 0 360 400" role="img" aria-label="側面図">
-          <text x="60" y="50" fill="#9aa3b8" font-size="12" text-anchor="middle">前（相手側）</text>
-          <text x="300" y="50" fill="#9aa3b8" font-size="12" text-anchor="middle">背（体側）</text>
-          <line x1="158" y1="300" x2="202" y2="300" stroke="#5b8cff" stroke-width="1"/>
-          <text x="180" y="318" fill="#9aa3b8" font-size="12" text-anchor="middle">10 mm</text>
-
-          <rect x="158" y="70" width="44" height="210" rx="16" fill="#1b2030" stroke="#3a4361" stroke-width="1.5"/>
-
-          <circle cx="180" cy="92" r="6" fill="none" stroke="#38e0c4" stroke-width="2"/>
-          <line x1="180" y1="84" x2="180" y2="40" stroke="#38e0c4" stroke-width="2"/>
-          <polygon points="180,32 175,44 185,44" fill="#38e0c4"/>
-          <text x="180" y="26" fill="#38e0c4" font-size="11" text-anchor="middle">自分の声 ↑</text>
-
-          <circle cx="158" cy="170" r="6" fill="none" stroke="#5b8cff" stroke-width="2"/>
-          <line x1="152" y1="168" x2="92" y2="138" stroke="#5b8cff" stroke-width="2"/>
-          <polygon points="84,134 97,135 92,146" fill="#5b8cff"/>
-          <text x="86" y="124" fill="#5b8cff" font-size="11" text-anchor="middle">カメラ +15〜30°</text>
-
-          <circle cx="158" cy="252" r="6" fill="none" stroke="#38e0c4" stroke-width="2"/>
-          <line x1="152" y1="256" x2="98" y2="286" stroke="#38e0c4" stroke-width="2"/>
-          <polygon points="90,290 103,284 105,295" fill="#38e0c4"/>
-          <text x="92" y="306" fill="#38e0c4" font-size="11" text-anchor="middle">相手 ↘ 前下</text>
-
-          <circle cx="202" cy="200" r="5" fill="#ffb454"/>
-          <line x1="208" y1="200" x2="262" y2="200" stroke="#ffb454" stroke-width="1.5" stroke-dasharray="3 3"/>
-          <text x="266" y="197" fill="#ffb454" font-size="11">骨伝導</text>
-          <text x="266" y="211" fill="#9aa3b8" font-size="10">背面・任意</text>
-        </svg>
-        <div class="caption">側面図（厚さ10mm）— 各部の向き</div>
-      </div>
+        <!-- strap loop on top face -->
+        <ellipse cx="240" cy="98" rx="0.1" ry="0.1" fill="none"/>
+      </svg>
+      <div class="caption">立体配置図 — 40(H) × 30(W) × 10(D) mm／マイクは上面・下面に配置</div>
     </div>
 
     <div class="legend">
-      <div class="it"><span class="sw" style="background:#38e0c4"></span> MEMSマイク ×2</div>
-      <div class="it"><span class="sw" style="background:#5b8cff"></span> カメラ</div>
-      <div class="it"><span class="sw" style="background:#ffb454"></span> LED / 骨伝導</div>
+      <div class="it"><span class="sw" style="background:#38e0c4"></span> MEMSマイク ×2（上面＋下面）</div>
+      <div class="it"><span class="sw" style="background:#5b8cff"></span> カメラ（前面）</div>
+      <div class="it"><span class="sw" style="background:#ffb454"></span> LED（前面）／骨伝導（背面）</div>
     </div>
 
-    <p class="note">マイクを上下に置く理由：自分の声＝真上（エンドファイア）、相手＝前（ブロードサイド）。縦40mm（筐体最長）の間隔で2音源を分離する。左右定位は捨て、対面1対1に最適化。</p>
+    <p class="note">マイクは上面（上向き）と下面（下向き）。自分の声＝真上（エンドファイア）、相手＝前（ブロードサイド）を、縦40mm（筐体最長）の間隔で分離する。左右定位は捨て、対面1対1に最適化。</p>
   </div>
 </section>
 
@@ -150,7 +141,7 @@
           <tr><td><b>MCU</b></td><td>チップ</td><td><span class="em">ESP32-S3</span>（BLE 5.0 / 2M PHY・デュアルI2S・PSRAM）</td></tr>
           <tr><td><b>筐体</b></td><td>寸法 / 装着</td><td>40 × 30 × 10 mm・縦長／胸（鎖骨下）</td></tr>
           <tr><td><b>マイク</b></td><td>構成</td><td>デジタルMEMS ×2、<span class="em">上端＋下端</span>（間隔 ≈ 40mm）</td></tr>
-          <tr><td></td><td>向き</td><td>上＝上向き（自分）／下＝前下向き（相手）</td></tr>
+          <tr><td></td><td>向き</td><td>上面＝上向き（自分）／下面＝下向き（相手）</td></tr>
           <tr><td></td><td>処理</td><td>2ch差分で自分／相手を分離 → 2ストリーム</td></tr>
           <tr><td><b>カメラ</b></td><td>配置 / 光軸</td><td>中央／前方 +15〜30° 上向き</td></tr>
           <tr><td><b>LED</b></td><td>表示</td><td>録画インジケータ・前面上部</td></tr>
