@@ -270,6 +270,7 @@
   <div class="wrap">
     <div class="thanks">THANK YOU FOR READING</div>
     <svg class="footer-bot" viewBox="0 0 16 18"><use href="#bot"/></svg>
+    <div class="foot-hint">クリックしてね ▼</div>
     <div class="foot-secret">
       <div>Wiz Necklace — AIネックレス ハードウェア要件</div>
       <div>アプリ <a href="https://github.com/hotaka0908/necklace2" target="_blank" rel="noopener"><span class="kbd">necklace2</span></a>／ファーム <a href="https://github.com/Riti0208/necklace" target="_blank" rel="noopener"><span class="kbd">necklace</span></a></div>
@@ -486,7 +487,11 @@
 (function () {
   var bot = document.querySelector('.footer-bot');
   var secret = document.querySelector('.foot-secret');
-  if (bot && secret) bot.addEventListener('click', function () { secret.classList.toggle('show'); });
+  var hint = document.querySelector('.foot-hint');
+  if (bot && secret) bot.addEventListener('click', function () {
+    var shown = secret.classList.toggle('show');
+    if (hint) hint.classList.toggle('hide', shown);
+  });
 })();
 </script>
 

@@ -190,6 +190,10 @@ footer a { text-decoration: none; }
 footer a:hover .kbd { border-color: var(--accent); background: rgba(16,185,129,.12); }
 .foot-secret { display: flex; flex-direction: column; gap: 6px; align-items: center; max-height: 0; opacity: 0; overflow: hidden; transition: max-height .4s ease, opacity .4s ease, margin-top .4s ease; }
 .foot-secret.show { max-height: 140px; opacity: 1; margin-top: 8px; }
+.foot-hint { font-family: var(--display); font-size: 11px; color: var(--dim); letter-spacing: .08em; margin-top: -6px; animation: hintbob 1.4s ease-in-out infinite; }
+.foot-hint.hide { display: none; }
+@keyframes hintbob { 0%,100% { transform: translateY(0); opacity: .55; } 50% { transform: translateY(2px); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .foot-hint { animation: none; } }
 @media (prefers-reduced-motion: reduce) { .footer-bot { animation: none; } }
 
 .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--panel-2); border: 1px solid var(--line); padding: 1px 7px; border-radius: 6px; font-size: 12.5px; color: var(--accent); }
