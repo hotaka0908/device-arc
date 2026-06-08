@@ -286,6 +286,12 @@
   var COUNT = window.innerWidth < 720 ? 3 : 6;
   function rand(a, b) { return a + Math.random() * (b - a); }
   function pageH() { return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight); }
+  function bonk(w) {
+    var inner = w.querySelector('.walk-inner');
+    inner.classList.remove('boing'); void inner.offsetWidth; inner.classList.add('boing');
+    setTimeout(function () { inner.classList.remove('boing'); }, 470);
+    if (window.__mascotBeep) window.__mascotBeep();
+  }
   function band() {
     return [130, Math.max(200, pageH() - 130)];
   }
@@ -322,15 +328,16 @@
       }, dur + 40);
     }
     setTimeout(go, rand(200, 1800));
-
-    w.addEventListener('click', function () {
-      var inner = w.querySelector('.walk-inner');
-      inner.classList.remove('boing'); void inner.offsetWidth; inner.classList.add('boing');
-      setTimeout(function () { inner.classList.remove('boing'); }, 470);
-      if (window.__mascotBeep) window.__mascotBeep();
-    });
   }
   for (var i = 0; i < COUNT; i++) makeWalker();
+
+  // コンテンツの裏にいてもクリックで反応できるよう座標判定
+  document.addEventListener('click', function (e) {
+    document.querySelectorAll('.walker').forEach(function (w) {
+      var r = w.getBoundingClientRect();
+      if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) bonk(w);
+    });
+  });
 })();
 </script>
 
