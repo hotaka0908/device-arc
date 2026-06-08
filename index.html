@@ -360,7 +360,7 @@
     return [130, Math.max(200, pageH() - 130)];
   }
 
-  function makeWalker(sym) {
+  function makeWalker(sym, atTopRight) {
     var size = rand(42, 60);
     var w = document.createElement('div');
     w.className = 'walker';
@@ -368,9 +368,15 @@
     w.innerHTML = '<svg viewBox="0 0 16 18" class="walk-inner"><use href="#' + (sym || 'bot') + '"/></svg>';
     document.body.appendChild(w);
 
-    var b = band();
-    var x = rand(20, Math.max(40, window.innerWidth - size - 20));
-    var y = rand(b[0], b[1]);
+    var x, y;
+    if (atTopRight) {                               // 最初の画面の右上から開始
+      x = Math.max(40, window.innerWidth - size - 70);
+      y = 150;
+    } else {
+      var b = band();
+      x = rand(20, Math.max(40, window.innerWidth - size - 20));
+      y = rand(b[0], b[1]);
+    }
     w.style.left = x + 'px';
     w.style.top = y + 'px';
 
@@ -393,7 +399,7 @@
     }
     setTimeout(go, rand(200, 1800));
   }
-  for (var i = 0; i < COUNT; i++) makeWalker(i === 0 ? 'bot2' : 'bot');
+  for (var i = 0; i < COUNT; i++) makeWalker(i === 0 ? 'bot2' : 'bot', i === 0);
 
   function overWalker(x, y) {
     var hit = false;
