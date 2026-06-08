@@ -252,10 +252,8 @@
   // 要件表の「区分」セルをホバー → ドレミファソラシド
   var SCALE = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25, 587.33];
   document.querySelectorAll('#spec table tbody tr').forEach(function (tr, i) {
-    var cell = tr.querySelector('td');
-    if (!cell) return;
-    cell.classList.add('note-cell');
-    cell.addEventListener('mouseenter', function () {
+    tr.classList.add('note-row');
+    tr.addEventListener('mouseenter', function () {
       tone(SCALE[i % SCALE.length], 0.22, 'square', 0.06);
     });
   });
