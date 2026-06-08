@@ -208,3 +208,22 @@ footer .wrap { display: flex; flex-direction: column; gap: 6px; align-items: cen
 }
 #sound-toggle:hover { border-color: var(--accent); transform: translateY(-2px); }
 #sound-toggle:active { transform: translateY(0) scale(.94); }
+
+/* ===== Roaming walkers（歩き回るロボット） ===== */
+.walker {
+  position: fixed; z-index: 4; left: 0; top: 0;
+  pointer-events: auto; cursor: pointer;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 3px 0 rgba(6,95,70,.10));
+  transform: scaleX(var(--dir, 1));
+  will-change: left, top;
+}
+.walker .walk-inner { display: block; width: 100%; height: auto; animation: idlebob 2.2s ease-in-out infinite; }
+.walker.moving .walk-inner { animation: stepbob .34s ease-in-out infinite; }
+.walker .walk-inner.boing { animation: boing .45s ease !important; }
+@keyframes idlebob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes stepbob { 0% { transform: translateY(0); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .walker { transition: none !important; }
+  .walker .walk-inner { animation: none !important; }
+}

@@ -58,8 +58,6 @@
 
 <!-- HERO -->
 <header class="hero">
-  <svg class="mascot m-hero" viewBox="0 0 16 18"><use href="#bot"/></svg>
-  <svg class="mascot m-hero2" viewBox="0 0 16 18"><use href="#bot"/></svg>
   <div class="wrap">
     <span class="eyebrow" style="text-transform:none;">Hardware Spec</span>
     <h1><span class="grad">AIネックレス</span></h1>
@@ -69,7 +67,6 @@
 <!-- LAYOUT -->
 <section id="layout">
   <svg class="mascot m-layout" viewBox="0 0 16 12"><use href="#peek"/></svg>
-  <svg class="mascot m-layoutb" viewBox="0 0 16 18"><use href="#bot"/></svg>
   <div class="wrap">
     <div class="sec-head">
       <div class="kicker">01 — LAYOUT</div>
@@ -147,7 +144,6 @@
 
 <!-- SPEC -->
 <section id="spec">
-  <svg class="mascot m-spec" viewBox="0 0 16 18"><use href="#bot"/></svg>
   <div class="wrap">
     <div class="sec-head">
       <div class="kicker">02 — REQUIREMENTS</div>
@@ -200,7 +196,6 @@
 
 <!-- OPEN -->
 <section id="open">
-  <svg class="mascot m-open" viewBox="0 0 16 18"><use href="#bot"/></svg>
   <div class="wrap">
     <div class="sec-head">
       <div class="kicker">04 — OPEN</div>
@@ -214,8 +209,6 @@
 </section>
 
 <footer>
-  <svg class="mascot m-foot1" viewBox="0 0 16 18"><use href="#bot"/></svg>
-  <svg class="mascot m-foot2" viewBox="0 0 16 18"><use href="#bot"/></svg>
   <div class="wrap">
     <div>Wiz Necklace — AIネックレス ハードウェア要件</div>
     <div>アプリ <span class="kbd">necklace2</span>（Flutter）／ファーム <span class="kbd">ai_voice_necklace</span>（ESP32-S3）</div>
@@ -254,6 +247,7 @@
     tone(f, 0.10, 'triangle', 0.07);
     tone(f * 1.5, 0.12, 'triangle', 0.05, 0.08);
   };
+  window.__mascotBeep = mascot;
   var startup = function () { tone(523,0.09,'square',0.05); tone(659,0.09,'square',0.05,0.09); tone(784,0.12,'square',0.05,0.18); };
 
   document.querySelectorAll('.nav .links a').forEach(function (a) {
@@ -273,6 +267,61 @@
     if (soundOn) { ctx(); startup(); }
   });
   window.addEventListener('pointerdown', function () { ctx(); }, { once: true });
+})();
+</script>
+
+<script>
+/* ===== 歩き回るロボット ===== */
+(function () {
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var COUNT = window.innerWidth < 720 ? 2 : 4;
+  function rand(a, b) { return a + Math.random() * (b - a); }
+  function band() {
+    var top = Math.max(120, window.innerHeight * 0.45);
+    var bottom = window.innerHeight - 110;
+    return [top, Math.max(top + 10, bottom)];
+  }
+
+  function makeWalker() {
+    var size = rand(42, 60);
+    var w = document.createElement('div');
+    w.className = 'walker';
+    w.style.width = size + 'px';
+    w.innerHTML = '<svg viewBox="0 0 16 18" class="walk-inner"><use href="#bot"/></svg>';
+    document.body.appendChild(w);
+
+    var b = band();
+    var x = rand(20, Math.max(40, window.innerWidth - size - 20));
+    var y = rand(b[0], b[1]);
+    w.style.left = x + 'px';
+    w.style.top = y + 'px';
+
+    function go() {
+      var bb = band();
+      var tx = rand(10, Math.max(20, window.innerWidth - size - 10));
+      var ty = rand(bb[0], bb[1]);
+      var cx = parseFloat(w.style.left), cy = parseFloat(w.style.top);
+      var dist = Math.hypot(tx - cx, ty - cy);
+      var dur = Math.max(900, dist / rand(45, 75) * 1000);
+      w.style.setProperty('--dir', (tx < cx) ? -1 : 1);
+      w.classList.add('moving');
+      w.style.transition = 'left ' + dur + 'ms linear, top ' + dur + 'ms linear';
+      requestAnimationFrame(function () { w.style.left = tx + 'px'; w.style.top = ty + 'px'; });
+      setTimeout(function () {
+        w.classList.remove('moving');
+        setTimeout(go, rand(500, 2400));
+      }, dur + 40);
+    }
+    setTimeout(go, rand(200, 1800));
+
+    w.addEventListener('click', function () {
+      var inner = w.querySelector('.walk-inner');
+      inner.classList.remove('boing'); void inner.offsetWidth; inner.classList.add('boing');
+      setTimeout(function () { inner.classList.remove('boing'); }, 470);
+      if (window.__mascotBeep) window.__mascotBeep();
+    });
+  }
+  for (var i = 0; i < COUNT; i++) makeWalker();
 })();
 </script>
 
