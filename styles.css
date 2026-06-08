@@ -222,7 +222,7 @@ footer .wrap { display: flex; flex-direction: column; gap: 6px; align-items: cen
   will-change: left, top;
 }
 .walker .walk-inner { display: block; width: 100%; height: auto; animation: idlebob 2.2s ease-in-out infinite; }
-.walker.moving .walk-inner { animation: stepbob .34s ease-in-out infinite; }
+.walker.moving .walk-inner { animation: stepbob .5s ease-in-out infinite; }
 .walker .walk-inner.boing { animation: boing .45s ease !important; }
 @keyframes idlebob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
 @keyframes stepbob { 0% { transform: translateY(0); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0); } }

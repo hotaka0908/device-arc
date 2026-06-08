@@ -302,7 +302,7 @@
       var ty = rand(bb[0], bb[1]);
       var cx = parseFloat(w.style.left), cy = parseFloat(w.style.top);
       var dist = Math.hypot(tx - cx, ty - cy);
-      var dur = Math.max(900, dist / rand(45, 75) * 1000);
+      var dur = Math.max(1600, dist / rand(18, 30) * 1000);
       w.style.setProperty('--dir', (tx < cx) ? -1 : 1);
       w.classList.add('moving');
       w.style.transition = 'left ' + dur + 'ms linear, top ' + dur + 'ms linear';
