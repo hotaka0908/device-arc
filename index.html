@@ -12,6 +12,37 @@
 </head>
 <body>
 
+<!-- ===== pixel mascot defs ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="bot" viewBox="0 0 16 18">
+      <g shape-rendering="crispEdges">
+        <rect x="7.5" y="0" width="1" height="3" fill="#065f46"/>
+        <rect x="7" y="0" width="2" height="1" fill="#10b981"/>
+        <rect x="2.5" y="3" width="11" height="9" fill="#ecfdf5" stroke="#065f46" stroke-width="1"/>
+        <rect x="5" y="6" width="2" height="2" fill="#065f46"/>
+        <rect x="9" y="6" width="2" height="2" fill="#065f46"/>
+        <rect x="6" y="9.5" width="4" height="1" fill="#10b981"/>
+        <rect x="4.5" y="12" width="1.6" height="3" fill="#065f46"/>
+        <rect x="9.9" y="12" width="1.6" height="3" fill="#065f46"/>
+        <rect x="3.5" y="14.5" width="2.6" height="1" fill="#065f46"/>
+        <rect x="9.9" y="14.5" width="2.6" height="1" fill="#065f46"/>
+        <rect x="13" y="5" width="2" height="1" fill="#065f46"/>
+        <rect x="14" y="3" width="1" height="2" fill="#065f46"/>
+      </g>
+    </symbol>
+    <symbol id="peek" viewBox="0 0 16 12">
+      <g shape-rendering="crispEdges">
+        <rect x="7.5" y="0" width="1" height="2" fill="#065f46"/>
+        <rect x="2.5" y="2" width="11" height="9" fill="#ecfdf5" stroke="#065f46" stroke-width="1"/>
+        <rect x="5" y="5" width="2" height="2" fill="#065f46"/>
+        <rect x="9" y="5" width="2" height="2" fill="#065f46"/>
+        <rect x="6" y="8.2" width="4" height="1" fill="#10b981"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
 <!-- NAV -->
 <nav class="nav">
   <div class="wrap">
@@ -27,6 +58,8 @@
 
 <!-- HERO -->
 <header class="hero">
+  <svg class="mascot m-hero" viewBox="0 0 16 18"><use href="#bot"/></svg>
+  <svg class="mascot m-hero2" viewBox="0 0 16 18"><use href="#bot"/></svg>
   <div class="wrap">
     <span class="eyebrow" style="text-transform:none;">Hardware Spec</span>
     <h1><span class="grad">AIネックレス</span></h1>
@@ -35,6 +68,8 @@
 
 <!-- LAYOUT -->
 <section id="layout">
+  <svg class="mascot m-layout" viewBox="0 0 16 12"><use href="#peek"/></svg>
+  <svg class="mascot m-layoutb" viewBox="0 0 16 18"><use href="#bot"/></svg>
   <div class="wrap">
     <div class="sec-head">
       <div class="kicker">01 — LAYOUT</div>
@@ -112,6 +147,7 @@
 
 <!-- SPEC -->
 <section id="spec">
+  <svg class="mascot m-spec" viewBox="0 0 16 18"><use href="#bot"/></svg>
   <div class="wrap">
     <div class="sec-head">
       <div class="kicker">02 — REQUIREMENTS</div>
@@ -138,6 +174,7 @@
 
 <!-- COMPARE -->
 <section id="compare">
+  <svg class="mascot m-compare" viewBox="0 0 16 12"><use href="#peek"/></svg>
   <div class="wrap">
     <div class="sec-head">
       <div class="kicker">03 — COMPARISON</div>
@@ -163,6 +200,7 @@
 
 <!-- OPEN -->
 <section id="open">
+  <svg class="mascot m-open" viewBox="0 0 16 18"><use href="#bot"/></svg>
   <div class="wrap">
     <div class="sec-head">
       <div class="kicker">04 — OPEN</div>
@@ -176,6 +214,8 @@
 </section>
 
 <footer>
+  <svg class="mascot m-foot1" viewBox="0 0 16 18"><use href="#bot"/></svg>
+  <svg class="mascot m-foot2" viewBox="0 0 16 18"><use href="#bot"/></svg>
   <div class="wrap">
     <div>Wiz Necklace — AIネックレス ハードウェア要件</div>
     <div>アプリ <span class="kbd">necklace2</span>（Flutter）／ファーム <span class="kbd">ai_voice_necklace</span>（ESP32-S3）</div>

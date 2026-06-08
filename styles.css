@@ -31,6 +31,7 @@ body {
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
   letter-spacing: .01em;
+  overflow-x: hidden;
 }
 
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
@@ -51,7 +52,7 @@ body {
 @media (max-width: 720px) { .nav .links { display: none; } }
 
 /* ===== Hero ===== */
-.hero { padding: 84px 0 56px; text-align: center; }
+.hero { padding: 84px 0 56px; text-align: center; position: relative; }
 .eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
   font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase;
@@ -72,7 +73,7 @@ body {
 .chip b { color: var(--accent); font-weight: 700; }
 
 /* ===== Section ===== */
-section { padding: 56px 0; border-top: 1px solid var(--line); }
+section { padding: 56px 0; border-top: 1px solid var(--line); position: relative; }
 .sec-head { margin-bottom: 30px; }
 .sec-head .kicker { color: var(--accent); font-size: 13px; letter-spacing: .1em; font-weight: 700; }
 .sec-head h2 { font-size: clamp(22px, 4vw, 30px); margin-top: 8px; }
@@ -158,7 +159,37 @@ ul.clean li::before { content: "›"; color: var(--accent); font-weight: 700; }
 .opt .rec { margin-left: auto; }
 
 /* ===== Footer ===== */
-footer { border-top: 1px solid var(--line); padding: 36px 0 60px; color: var(--dim); font-size: 13px; text-align: center; }
+footer { border-top: 1px solid var(--line); padding: 36px 0 60px; color: var(--dim); font-size: 13px; text-align: center; position: relative; }
 footer .wrap { display: flex; flex-direction: column; gap: 6px; align-items: center; }
 
 .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--panel-2); border: 1px solid var(--line); padding: 1px 7px; border-radius: 6px; font-size: 12.5px; color: var(--accent); }
+
+/* ===== Pixel mascots（遊び心） ===== */
+.mascot {
+  position: absolute; pointer-events: none; z-index: 3;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 3px 0 rgba(6,95,70,.08));
+}
+.mascot.flip { transform: scaleX(-1); }
+@keyframes bob   { 0%,100% { transform: translateY(0); }            50% { transform: translateY(-8px); } }
+@keyframes bobf  { 0%,100% { transform: translateY(0) scaleX(-1); } 50% { transform: translateY(-8px) scaleX(-1); } }
+@keyframes sway  { 0%,100% { transform: rotate(-5deg); }            50% { transform: rotate(5deg); } }
+@keyframes peek  { 0%,100% { transform: translateY(6px); }          50% { transform: translateY(0); } }
+
+.m-hero    { width: 64px; top: 28px;  right: 8%;  animation: bob 3s ease-in-out infinite; }
+.m-hero2   { width: 44px; bottom: 6px; left: 10%; animation: sway 4s ease-in-out infinite; transform-origin: 50% 90%; }
+.m-layout  { width: 52px; top: -24px; left: 7%;   animation: peek 3.6s ease-in-out infinite; }
+.m-layoutb { width: 56px; bottom: 18px; right: 4%; animation: bobf 2.8s ease-in-out infinite; }
+.m-spec    { width: 46px; top: 22px;  right: 5%;  animation: bob 3.3s ease-in-out infinite; }
+.m-compare { width: 50px; top: -22px; right: 14%; animation: peek 3.2s ease-in-out infinite; }
+.m-open    { width: 48px; top: 24px;  left: 4%;   animation: bobf 3.5s ease-in-out infinite; }
+.m-foot1   { width: 46px; top: -28px; left: 30%;  animation: bob 2.6s ease-in-out infinite; }
+.m-foot2   { width: 40px; top: -22px; right: 30%; animation: sway 4.2s ease-in-out infinite; transform-origin: 50% 90%; }
+
+@media (max-width: 720px) {
+  .m-hero2, .m-spec, .m-compare, .m-open, .m-foot2 { display: none; }
+  .m-hero { width: 48px; right: 4%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mascot { animation: none !important; }
+}
