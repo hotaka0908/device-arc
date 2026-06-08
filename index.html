@@ -274,12 +274,11 @@
 /* ===== 歩き回るロボット ===== */
 (function () {
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var COUNT = window.innerWidth < 720 ? 2 : 4;
+  var COUNT = window.innerWidth < 720 ? 3 : 6;
   function rand(a, b) { return a + Math.random() * (b - a); }
+  function pageH() { return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight); }
   function band() {
-    var top = Math.max(120, window.innerHeight * 0.45);
-    var bottom = window.innerHeight - 110;
-    return [top, Math.max(top + 10, bottom)];
+    return [130, Math.max(200, pageH() - 130)];
   }
 
   function makeWalker() {
@@ -298,11 +297,12 @@
 
     function go() {
       var bb = band();
-      var tx = rand(10, Math.max(20, window.innerWidth - size - 10));
-      var ty = rand(bb[0], bb[1]);
       var cx = parseFloat(w.style.left), cy = parseFloat(w.style.top);
+      var maxX = Math.max(20, window.innerWidth - size - 10);
+      var tx = Math.min(maxX, Math.max(10, cx + rand(-380, 380)));
+      var ty = Math.min(bb[1], Math.max(bb[0], cy + rand(-460, 460)));
       var dist = Math.hypot(tx - cx, ty - cy);
-      var dur = Math.max(1600, dist / rand(18, 30) * 1000);
+      var dur = Math.min(14000, Math.max(1600, dist / rand(18, 30) * 1000));
       w.style.setProperty('--dir', (tx < cx) ? -1 : 1);
       w.classList.add('moving');
       w.style.transition = 'left ' + dur + 'ms linear, top ' + dur + 'ms linear';

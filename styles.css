@@ -212,9 +212,9 @@ footer .wrap { display: flex; flex-direction: column; gap: 6px; align-items: cen
 #sound-toggle:hover { border-color: var(--accent); transform: translateY(-2px); }
 #sound-toggle:active { transform: translateY(0) scale(.94); }
 
-/* ===== Roaming walkers（歩き回るロボット・コンテンツの裏をくぐる） ===== */
+/* ===== Roaming walkers（ページ上を歩き回る・コンテンツの裏をくぐる） ===== */
 .walker {
-  position: fixed; z-index: -1; left: 0; top: 0;
+  position: absolute; z-index: -1; left: 0; top: 0;
   pointer-events: auto; cursor: pointer;
   image-rendering: pixelated;
   filter: drop-shadow(0 3px 0 rgba(6,95,70,.10));
