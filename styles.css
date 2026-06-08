@@ -186,6 +186,8 @@ footer .thanks { font-family: var(--display); font-size: clamp(20px, 4.5vw, 36px
 .footer-bot { width: 56px; height: auto; image-rendering: pixelated; cursor: inherit; margin: 2px 0 14px; transform-origin: 50% 90%; animation: wave 1.6s ease-in-out infinite; filter: drop-shadow(0 3px 0 rgba(6,95,70,.10)); }
 @keyframes wave { 0%,100% { transform: rotate(-7deg); } 50% { transform: rotate(7deg); } }
 .footer-bot.boing { animation: boing .45s ease; }
+footer a { text-decoration: none; }
+footer a:hover .kbd { border-color: var(--accent); background: rgba(16,185,129,.12); }
 @media (prefers-reduced-motion: reduce) { .footer-bot { animation: none; } }
 
 .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--panel-2); border: 1px solid var(--line); padding: 1px 7px; border-radius: 6px; font-size: 12.5px; color: var(--accent); }
