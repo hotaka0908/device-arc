@@ -403,35 +403,66 @@
 <!-- ARCH -->
 <section id="arch">
   <div class="wrap">
-    <div class="sec-head">
-      <div class="kicker">03 — ARCHITECTURE</div>
-      <h2>システム構成</h2>
+    <div class="sec-head sec-head--tabs">
+      <div>
+        <div class="kicker">03 — ARCHITECTURE</div>
+        <h2>システム構成</h2>
+      </div>
+      <div class="layout-tabs" role="tablist" aria-label="構成の表示切替">
+        <button class="layout-tab is-active" role="tab" aria-selected="true" data-view="ver3">ver3</button>
+        <button class="layout-tab" role="tab" aria-selected="false" data-view="ideal">理想</button>
+      </div>
     </div>
 
-    <div class="flow">
-      <div class="node hw">
-        <div class="badge">ハードウェア</div>
-        <div class="t">ネックレス（ESP32-S3）</div>
-        <div class="s">収音して送信</div>
+    <!-- ver3 -->
+    <div data-view="ver3">
+      <div class="flow">
+        <div class="node hw">
+          <div class="badge">ハードウェア</div>
+          <div class="t">ネックレス（ESP32-S3）</div>
+          <div class="s">収音して送信</div>
+        </div>
+        <div class="link">
+          <div class="lbl">BLE</div>
+          <div class="ar">→</div>
+        </div>
+        <div class="node hw">
+          <div class="badge">ハードウェア</div>
+          <div class="t">スマホ</div>
+          <div class="s">アプリで中継・処理</div>
+        </div>
+        <div class="link">
+          <div class="lbl">WebSocket</div>
+          <div class="ar">→</div>
+        </div>
+        <div class="node cloud">
+          <div class="badge">クラウドAPI</div>
+          <div class="t">OpenAI Realtime</div>
+          <div class="s">文字起こし / 通訳</div>
+        </div>
       </div>
-      <div class="link">
-        <div class="lbl">BLE</div>
-        <div class="ar">→</div>
+      <p class="note">※ スマホをハブにして処理。ネックレスは収音・送信に専念。</p>
+    </div>
+
+    <!-- 理想 -->
+    <div data-view="ideal" hidden>
+      <div class="flow">
+        <div class="node hw">
+          <div class="badge">ハードウェア</div>
+          <div class="t">AIネックレス（Snapdragon）</div>
+          <div class="s">収音＋オンデバイスAIで応答</div>
+        </div>
+        <div class="link">
+          <div class="lbl">Wi-Fi 6 / Starlink</div>
+          <div class="ar">→</div>
+        </div>
+        <div class="node cloud">
+          <div class="badge">クラウドAI</div>
+          <div class="t">クラウドLLM（必要時）</div>
+          <div class="s">重い処理・最新情報を補完</div>
+        </div>
       </div>
-      <div class="node hw">
-        <div class="badge">ハードウェア</div>
-        <div class="t">スマホ</div>
-        <div class="s">アプリで中継・処理</div>
-      </div>
-      <div class="link">
-        <div class="lbl">WebSocket</div>
-        <div class="ar">→</div>
-      </div>
-      <div class="node cloud">
-        <div class="badge">クラウドAPI</div>
-        <div class="t">OpenAI Realtime</div>
-        <div class="s">文字起こし / 通訳</div>
-      </div>
+      <p class="note">※ スマホ不要のスタンドアロン。基本はオンデバイスAI（NPU／ローカルLLM）で完結し、必要時のみ衛星/Wi-Fi経由でクラウドへ。</p>
     </div>
   </div>
 </section>
