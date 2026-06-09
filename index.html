@@ -228,37 +228,37 @@
         <text x="94" y="-83" fill="#64748b" font-size="12" text-anchor="end">電源(サブ)</text>
         <line x1="300" y1="30" x2="342" y2="30" stroke="#64748b" stroke-width="1"/>
         <text x="346" y="33" fill="#64748b" font-size="12">ストラップ</text>
-        <!-- ===== wired earphones (2) from the strap apex; magnetic dock (着=docked / 脱=in-use) ===== -->
-        <!-- magnetic dock built into the apex of the strap -->
-        <rect x="205" y="-124" width="26" height="8" rx="4" fill="#c4ccd6" stroke="#64748b" stroke-width="1"/>
-        <circle cx="212" cy="-120" r="1.3" fill="#eab308"/>
-        <circle cx="224" cy="-120" r="1.3" fill="#eab308"/>
+        <!-- ===== wired earphones: cable from apex, magnetic dock at the LOWER ends of the strap (着/脱) ===== -->
+        <!-- thin audio cables drape from the apex down inside the loop to the buds -->
+        <path d="M217,-116 C176,-55 150,-6 148,48" fill="none" stroke="#aab4c2" stroke-width="1.8"/>
+        <path d="M219,-116 C258,-56 294,-6 300,36" fill="none" stroke="#aab4c2" stroke-width="1.8"/>
 
-        <!-- LEFT earbud — docked (着): clipped onto the apex dock, hangs below -->
-        <g transform="translate(211,-118) rotate(-7)">
-          <rect x="-2.5" y="0" width="5" height="12" rx="2.5" fill="url(#budGrad)" stroke="#64748b" stroke-width="1.1"/>
-          <circle cx="0" cy="16" r="7.5" fill="url(#budGrad)" stroke="#64748b" stroke-width="1.2"/>
-          <ellipse cx="0" cy="16" rx="2.7" ry="3.2" fill="#7b8798"/>
-          <ellipse cx="-3" cy="13" rx="1.5" ry="2.2" fill="#ffffff" opacity="0.8"/>
+        <!-- LEFT bud — docked (着): magnet-clipped onto the lower-left end of the strap -->
+        <circle cx="141" cy="56" r="1.3" fill="#eab308"/>
+        <g transform="translate(148,48)">
+          <rect x="-2.5" y="0" width="5" height="11" rx="2.5" fill="url(#budGrad)" stroke="#64748b" stroke-width="1.1"/>
+          <circle cx="0" cy="15" r="7.5" fill="url(#budGrad)" stroke="#64748b" stroke-width="1.2"/>
+          <ellipse cx="0" cy="15" rx="2.7" ry="3.2" fill="#7b8798"/>
+          <ellipse cx="-3" cy="12" rx="1.5" ry="2.2" fill="#ffffff" opacity="0.8"/>
         </g>
-        <text x="189" y="-100" fill="#15803d" font-size="9.5" font-weight="700" text-anchor="middle">着</text>
+        <text x="124" y="58" fill="#15803d" font-size="9.5" font-weight="700" text-anchor="middle">着</text>
 
-        <!-- RIGHT earbud — detached (脱): pulled off, hangs by its wire from the apex -->
-        <path d="M222,-117 Q236,-86 250,-58" fill="none" stroke="#94a3b8" stroke-width="2.4"/>
-        <path d="M222,-117 Q236,-86 250,-58" fill="none" stroke="#ffffff" stroke-width="1"/>
-        <g transform="translate(250,-58) rotate(10)">
-          <rect x="-2.5" y="0" width="5" height="12" rx="2.5" fill="url(#budGrad)" stroke="#64748b" stroke-width="1.1"/>
-          <circle cx="0" cy="16" r="7.5" fill="url(#budGrad)" stroke="#64748b" stroke-width="1.2"/>
-          <ellipse cx="0" cy="16" rx="2.7" ry="3.2" fill="#7b8798"/>
-          <ellipse cx="-3" cy="13" rx="1.5" ry="2.2" fill="#ffffff" opacity="0.8"/>
+        <!-- RIGHT bud — detached (脱): pulled off the lower-right dock (empty), hangs by its cable -->
+        <circle cx="293" cy="55" r="2.3" fill="none" stroke="#64748b" stroke-width="0.9"/>
+        <circle cx="293" cy="55" r="1.2" fill="#eab308"/>
+        <g transform="translate(300,36) rotate(10)">
+          <rect x="-2.5" y="0" width="5" height="11" rx="2.5" fill="url(#budGrad)" stroke="#64748b" stroke-width="1.1"/>
+          <circle cx="0" cy="15" r="7.5" fill="url(#budGrad)" stroke="#64748b" stroke-width="1.2"/>
+          <ellipse cx="0" cy="15" rx="2.7" ry="3.2" fill="#7b8798"/>
+          <ellipse cx="-3" cy="12" rx="1.5" ry="2.2" fill="#ffffff" opacity="0.8"/>
           <circle cx="0" cy="1.4" r="1.5" fill="#eab308"/>
         </g>
-        <text x="270" y="-52" fill="#b91c1c" font-size="9.5" font-weight="700" text-anchor="middle">脱</text>
+        <text x="320" y="40" fill="#b91c1c" font-size="9.5" font-weight="700" text-anchor="middle">脱</text>
 
         <!-- label -->
-        <line x1="203" y1="-101" x2="124" y2="-62" stroke="#475569" stroke-width="1"/>
-        <text x="120" y="-64" fill="#334155" font-size="12" text-anchor="end">イヤホン</text>
-        <text x="120" y="-51" fill="#64748b" font-size="9.5" text-anchor="end">有線・マグネット着脱</text>
+        <line x1="141" y1="52" x2="108" y2="40" stroke="#475569" stroke-width="1"/>
+        <text x="104" y="42" fill="#334155" font-size="12" text-anchor="end">イヤホン</text>
+        <text x="104" y="55" fill="#64748b" font-size="9.5" text-anchor="end">有線・マグネット着脱</text>
         <!-- ===== strap attachment eyelets on top-face side edges (symmetric) ===== -->
         <circle cx="148" cy="98" r="4.5" fill="#cbd5e1" stroke="#475569" stroke-width="1.6"/>
         <circle cx="288" cy="98" r="4.5" fill="#cbd5e1" stroke="#475569" stroke-width="1.6"/>
