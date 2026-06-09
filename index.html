@@ -202,13 +202,13 @@
             <stop offset="1" stop-color="#dde3ec"/>
           </linearGradient>
         </defs>
-        <!-- ===== 3D box (oblique) ===== -->
+        <!-- ===== 3D box (oblique, slightly rounded corners r=5) ===== -->
         <!-- right (side) face -->
-        <polygon points="270,110 270,300 308,276 308,86" fill="#dfe7e1" stroke="#b9c7bf" stroke-width="1.5"/>
+        <path d="M270,115 L270,295 Q270,300 274.2,297.3 L303.8,278.7 Q308,276 308,271 L308,91 Q308,86 303.8,88.7 L274.2,107.3 Q270,110 270,115 Z" fill="#dfe7e1" stroke="#b9c7bf" stroke-width="1.5" stroke-linejoin="round"/>
         <!-- top face -->
-        <polygon points="130,110 270,110 308,86 168,86" fill="#f7faf9" stroke="#b9c7bf" stroke-width="1.5"/>
+        <path d="M135,110 L265,110 Q270,110 274.2,107.3 L303.8,88.7 Q308,86 303,86 L173,86 Q168,86 163.8,88.7 L134.2,107.3 Q130,110 135,110 Z" fill="#f7faf9" stroke="#b9c7bf" stroke-width="1.5" stroke-linejoin="round"/>
         <!-- front face = display (bezel frame + screen) -->
-        <polygon points="130,110 270,110 270,300 130,300" fill="#141d29" stroke="#b9c7bf" stroke-width="1.5"/>
+        <path d="M135,110 L265,110 Q270,110 270,115 L270,295 Q270,300 265,300 L135,300 Q130,300 130,295 L130,115 Q130,110 135,110 Z" fill="#141d29" stroke="#b9c7bf" stroke-width="1.5" stroke-linejoin="round"/>
         <rect x="135.5" y="115.5" width="129" height="179" rx="7" fill="url(#dispGrad)"/>
         <rect x="135.5" y="115.5" width="129" height="179" rx="7" fill="url(#dispGlow)"/>
         <rect x="135.5" y="115.5" width="129" height="179" rx="7" fill="url(#dispSheen)"/>
