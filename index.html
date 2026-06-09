@@ -176,6 +176,27 @@
             <stop offset="0" stop-color="#ffffff" stop-opacity="0.14"/>
             <stop offset="0.45" stop-color="#ffffff" stop-opacity="0"/>
           </linearGradient>
+          <radialGradient id="lensGrad" cx="0.4" cy="0.35" r="0.72">
+            <stop offset="0" stop-color="#2b4b5e"/>
+            <stop offset="0.6" stop-color="#0e2330"/>
+            <stop offset="1" stop-color="#070f18"/>
+          </radialGradient>
+          <linearGradient id="btnYes" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#eafff2"/>
+            <stop offset="1" stop-color="#b7f0cc"/>
+          </linearGradient>
+          <linearGradient id="btnNo" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffeef0"/>
+            <stop offset="1" stop-color="#fbccd1"/>
+          </linearGradient>
+          <linearGradient id="btnTalk" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#eef2f6"/>
+            <stop offset="1" stop-color="#d1dae2"/>
+          </linearGradient>
+          <linearGradient id="spkGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#eef2f7"/>
+            <stop offset="1" stop-color="#c1cad5"/>
+          </linearGradient>
         </defs>
         <!-- ===== 3D box (oblique) ===== -->
         <!-- right (side) face -->
@@ -240,10 +261,12 @@
         <line x1="270" y1="308" x2="270" y2="316" stroke="#0891b2" stroke-width="1"/>
         <text x="200" y="328" fill="#5d6b64" font-size="12" text-anchor="middle">30 mm</text>
 
-        <!-- ===== camera (front top-left, small) ===== -->
-        <circle cx="162" cy="132" r="13" fill="#e8f0ec" stroke="#0891b2" stroke-width="2"/>
-        <circle cx="162" cy="132" r="6.5" fill="none" stroke="#0891b2" stroke-width="1.5"/>
-        <circle cx="162" cy="132" r="2" fill="#0891b2"/>
+        <!-- ===== camera (front top-left, under-display lens) ===== -->
+        <circle cx="162" cy="132" r="12" fill="#0e1722" stroke="#0891b2" stroke-width="1.5"/>
+        <circle cx="162" cy="132" r="9" fill="url(#lensGrad)"/>
+        <circle cx="162" cy="132" r="4.2" fill="#06111b"/>
+        <circle cx="162" cy="132" r="4.2" fill="none" stroke="#22d3ee" stroke-width="0.7" opacity="0.55"/>
+        <ellipse cx="159" cy="129" rx="2.3" ry="1.5" fill="#ffffff" opacity="0.6" transform="rotate(-35 159 129)"/>
         <line x1="150" y1="131" x2="96" y2="128" stroke="#0891b2" stroke-width="1"/>
         <text x="92" y="131" fill="#0891b2" font-size="12" text-anchor="end">カメラ</text>
 
@@ -263,26 +286,29 @@
         <line x1="242" y1="283" x2="280" y2="360" stroke="#059669" stroke-width="1"/>
         <text x="200" y="378" fill="#059669" font-size="12" text-anchor="middle">下マイク×2（相手）</text>
 
-        <!-- ===== SPEAKER (front bottom center, aligned with front mics) ===== -->
-        <rect x="186" y="269" width="28" height="18" rx="3" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
-        <line x1="192" y1="274" x2="192" y2="282" stroke="#7c3aed" stroke-width="1.4"/>
-        <line x1="198" y1="274" x2="198" y2="282" stroke="#7c3aed" stroke-width="1.4"/>
-        <line x1="204" y1="274" x2="204" y2="282" stroke="#7c3aed" stroke-width="1.4"/>
-        <line x1="208" y1="274" x2="208" y2="282" stroke="#7c3aed" stroke-width="1.4"/>
-        <line x1="214" y1="287" x2="350" y2="314" stroke="#7c3aed" stroke-width="1"/>
+        <!-- ===== SPEAKER (front bottom center, grille pill) ===== -->
+        <rect x="183" y="269" width="34" height="18" rx="9" fill="url(#spkGrad)" stroke="#7c3aed" stroke-width="1.4"/>
+        <g fill="#7c3aed" opacity="0.7">
+          <circle cx="191" cy="275" r="1.1"/><circle cx="197" cy="275" r="1.1"/><circle cx="203" cy="275" r="1.1"/><circle cx="209" cy="275" r="1.1"/>
+          <circle cx="191" cy="281" r="1.1"/><circle cx="197" cy="281" r="1.1"/><circle cx="203" cy="281" r="1.1"/><circle cx="209" cy="281" r="1.1"/>
+        </g>
+        <line x1="216" y1="284" x2="350" y2="314" stroke="#7c3aed" stroke-width="1"/>
         <text x="356" y="317" fill="#7c3aed" font-size="12">スピーカー</text>
 
         <!-- ===== buttons (on side face): yes / no / talk ===== -->
         <!-- yes -->
-        <polygon points="279.5,150.5 298.3,138.8 298.3,151.8 279.5,163.5" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+        <polygon points="279.5,150.5 298.3,138.8 298.3,151.8 279.5,163.5" fill="url(#btnYes)" stroke="#16a34a" stroke-width="1.5"/>
+        <line x1="281.5" y1="150.1" x2="296.6" y2="139.4" stroke="#ffffff" stroke-width="1.2" opacity="0.55"/>
         <line x1="298.3" y1="151" x2="352" y2="151" stroke="#16a34a" stroke-width="1"/>
         <text x="358" y="154" fill="#15803d" font-size="12">ボタン(yes)</text>
         <!-- no -->
-        <polygon points="279.5,176 298.3,164.3 298.3,177.3 279.5,189" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+        <polygon points="279.5,176 298.3,164.3 298.3,177.3 279.5,189" fill="url(#btnNo)" stroke="#dc2626" stroke-width="1.5"/>
+        <line x1="281.5" y1="175.6" x2="296.6" y2="164.9" stroke="#ffffff" stroke-width="1.2" opacity="0.55"/>
         <line x1="298.3" y1="177" x2="352" y2="177" stroke="#dc2626" stroke-width="1"/>
         <text x="358" y="180" fill="#b91c1c" font-size="12">ボタン(no)</text>
         <!-- talk -->
-        <polygon points="279.7,221.85 298.3,210.15 298.3,226.15 279.7,237.85" fill="#e2e8e4" stroke="#64748b" stroke-width="1.5"/>
+        <polygon points="279.7,221.85 298.3,210.15 298.3,226.15 279.7,237.85" fill="url(#btnTalk)" stroke="#64748b" stroke-width="1.5"/>
+        <line x1="281.7" y1="221.4" x2="296.6" y2="210.75" stroke="#ffffff" stroke-width="1.2" opacity="0.55"/>
         <line x1="298" y1="224" x2="352" y2="227" stroke="#64748b" stroke-width="1"/>
         <text x="358" y="230" fill="#334155" font-size="12">ボタン(talk)</text>
       </svg>
