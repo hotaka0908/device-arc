@@ -197,9 +197,6 @@
             <stop offset="0" stop-color="#eef2f7"/>
             <stop offset="1" stop-color="#c1cad5"/>
           </linearGradient>
-          <marker id="dimArrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
-            <path d="M0,1.2 L7,4.5 L0,7.8 Z" fill="#0891b2"/>
-          </marker>
         </defs>
         <!-- ===== 3D box (oblique) ===== -->
         <!-- right (side) face -->
@@ -255,8 +252,10 @@
         <line x1="112" y1="110" x2="120" y2="110" stroke="#0891b2" stroke-width="1"/>
         <line x1="112" y1="300" x2="120" y2="300" stroke="#0891b2" stroke-width="1"/>
         <text x="106" y="205" fill="#5d6b64" font-size="12" text-anchor="middle" transform="rotate(-90 106 205)">40 mm</text>
-        <!-- 10mm (depth, double-headed dimension, upper-left) -->
-        <line x1="100" y1="99" x2="135" y2="77" stroke="#0891b2" stroke-width="1.3" marker-start="url(#dimArrow)" marker-end="url(#dimArrow)"/>
+        <!-- 10mm (depth, |--| style, upper-left) -->
+        <line x1="100" y1="99" x2="135" y2="77" stroke="#0891b2" stroke-width="1"/>
+        <line x1="97.9" y1="95.6" x2="102.1" y2="102.4" stroke="#0891b2" stroke-width="1"/>
+        <line x1="132.9" y1="73.6" x2="137.1" y2="80.4" stroke="#0891b2" stroke-width="1"/>
         <text x="112" y="79" fill="#5d6b64" font-size="11" text-anchor="middle" transform="rotate(-32 112 79)">10 mm</text>
         <!-- 30mm (front bottom) -->
         <line x1="130" y1="312" x2="270" y2="312" stroke="#0891b2" stroke-width="1"/>
