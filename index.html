@@ -162,13 +162,24 @@
     <!-- ===== 理想 (ideal) ===== -->
     <div class="diagram" data-view="ideal" hidden style="max-width:none;">
       <svg viewBox="0 0 480 470" role="img" aria-label="立体配置図（理想）">
+        <defs>
+          <linearGradient id="dispGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1e293b"/>
+            <stop offset="1" stop-color="#0f172a"/>
+          </linearGradient>
+        </defs>
         <!-- ===== 3D box (oblique) ===== -->
         <!-- right (side) face -->
         <polygon points="270,110 270,300 308,276 308,86" fill="#dfe7e1" stroke="#b9c7bf" stroke-width="1.5"/>
         <!-- top face -->
         <polygon points="130,110 270,110 308,86 168,86" fill="#f7faf9" stroke="#b9c7bf" stroke-width="1.5"/>
-        <!-- front face -->
-        <polygon points="130,110 270,110 270,300 130,300" fill="#eef3f0" stroke="#b9c7bf" stroke-width="1.5"/>
+        <!-- front face = full display -->
+        <polygon points="130,110 270,110 270,300 130,300" fill="url(#dispGrad)" stroke="#0f172a" stroke-width="1.5"/>
+        <!-- screen reflection -->
+        <polygon points="130,110 270,110 270,150 130,166" fill="#ffffff" opacity="0.07"/>
+        <!-- display label -->
+        <line x1="130" y1="138" x2="74" y2="122" stroke="#334155" stroke-width="1"/>
+        <text x="70" y="125" fill="#334155" font-size="12" text-anchor="end">ディスプレイ</text>
 
         <!-- ===== dimensions ===== -->
         <!-- 40mm (front-left vertical) -->
