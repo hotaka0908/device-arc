@@ -84,6 +84,17 @@ section { padding: 56px 0; border-top: 1px solid var(--line); position: relative
 .sec-head h2 { font-family: var(--display); font-size: clamp(24px, 4.4vw, 34px); margin-top: 8px; letter-spacing: .03em; }
 .sec-head p { color: var(--muted); margin-top: 10px; max-width: 720px; }
 
+/* ===== Layout tabs (ver3 / 理想) ===== */
+.sec-head--tabs { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.layout-tabs { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel-2); }
+.layout-tab {
+  font-family: var(--display); font-size: 13px; letter-spacing: .04em;
+  padding: 7px 16px; border: 0; border-radius: 999px; cursor: pointer;
+  background: transparent; color: var(--muted); transition: background .15s, color .15s;
+}
+.layout-tab:hover { color: var(--text); }
+.layout-tab.is-active { background: var(--accent); color: #fff; }
+
 /* ===== Cards / grid ===== */
 .grid { display: grid; gap: 18px; }
 .grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
@@ -106,6 +117,7 @@ section { padding: 56px 0; border-top: 1px solid var(--line); position: relative
   padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 8px;
   box-shadow: 0 1px 2px rgba(16,40,30,.04);
 }
+.diagram[hidden] { display: none; }
 .diagram svg { width: 100%; height: auto; max-width: 460px; }
 .caption { font-family: var(--display); color: var(--muted); font-size: 13px; text-align: center; letter-spacing: .02em; }
 
