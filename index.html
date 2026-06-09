@@ -562,6 +562,16 @@
   };
   window.__mascotBeep = mascot;
 
+  // フッターのロボット専用：ちょっと特別な「ありがとう」ジングル
+  var fanfare = function () {
+    tone(523, 0.12, 'triangle', 0.07, 0);
+    tone(659, 0.12, 'triangle', 0.07, 0.11);
+    tone(784, 0.12, 'triangle', 0.07, 0.22);
+    tone(1047, 0.26, 'triangle', 0.08, 0.33);
+    tone(784, 0.26, 'sine', 0.04, 0.33);
+    tone(1568, 0.20, 'sine', 0.05, 0.47);
+  };
+
   // 要件表の「区分」セルをホバー → ドレミファソラシド
   var SCALE = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25, 587.33];
   document.querySelectorAll('#spec table tbody tr').forEach(function (tr, i) {
@@ -576,12 +586,19 @@
     a.addEventListener('mouseenter', hover);
     a.addEventListener('click', click);
   });
-  document.querySelectorAll('.mascot, .footer-bot').forEach(function (m) {
+  document.querySelectorAll('.mascot').forEach(function (m) {
     m.addEventListener('click', function () {
       mascot();
       m.classList.remove('boing'); void m.offsetWidth; m.classList.add('boing');
       setTimeout(function () { m.classList.remove('boing'); }, 460);
     });
+  });
+  // フッターのロボットだけ特別なジングル
+  var footerBot = document.querySelector('.footer-bot');
+  if (footerBot) footerBot.addEventListener('click', function () {
+    fanfare();
+    footerBot.classList.remove('boing'); void footerBot.offsetWidth; footerBot.classList.add('boing');
+    setTimeout(function () { footerBot.classList.remove('boing'); }, 460);
   });
   btn.addEventListener('click', function () {
     soundOn = !soundOn;
