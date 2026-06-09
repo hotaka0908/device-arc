@@ -228,25 +228,30 @@
         <text x="94" y="-83" fill="#64748b" font-size="12" text-anchor="end">電源(サブ)</text>
         <line x1="300" y1="30" x2="342" y2="30" stroke="#64748b" stroke-width="1"/>
         <text x="346" y="33" fill="#64748b" font-size="12">ストラップ</text>
-        <!-- ===== earphones extending from strap apex (white wired) ===== -->
-        <circle cx="218" cy="-118" r="3.5" fill="#ffffff" stroke="#94a3b8" stroke-width="1.4"/>
-        <path d="M218,-117 Q168,-102 150,-45" fill="none" stroke="#94a3b8" stroke-width="3.5"/>
-        <path d="M218,-117 Q268,-102 286,-45" fill="none" stroke="#94a3b8" stroke-width="3.5"/>
-        <path d="M218,-117 Q168,-102 150,-45" fill="none" stroke="#ffffff" stroke-width="2"/>
-        <path d="M218,-117 Q268,-102 286,-45" fill="none" stroke="#ffffff" stroke-width="2"/>
-        <!-- left earbud (AirPods-style: head + stem + speaker + highlight) -->
-        <rect x="147.5" y="-38" width="5" height="22" rx="2.5" fill="url(#budGrad)" stroke="#64748b" stroke-width="1.1"/>
-        <circle cx="150" cy="-38" r="8" fill="url(#budGrad)" stroke="#64748b" stroke-width="1.2"/>
-        <ellipse cx="150" cy="-39" rx="3" ry="3.6" fill="#7b8798"/>
-        <ellipse cx="147" cy="-41.5" rx="1.8" ry="2.6" fill="#ffffff" opacity="0.85" transform="rotate(-22 147 -41.5)"/>
+        <!-- ===== earphones docked on the strap (magnetic, charge from strap battery) ===== -->
+        <!-- left earbud (docked against strap, AirPods-style) -->
+        <g transform="rotate(-13 150 -38)">
+          <rect x="147.5" y="-38" width="5" height="22" rx="2.5" fill="url(#budGrad)" stroke="#64748b" stroke-width="1.1"/>
+          <circle cx="150" cy="-38" r="8" fill="url(#budGrad)" stroke="#64748b" stroke-width="1.2"/>
+          <ellipse cx="150" cy="-39" rx="3" ry="3.6" fill="#7b8798"/>
+          <ellipse cx="147" cy="-41.5" rx="1.8" ry="2.6" fill="#ffffff" opacity="0.85" transform="rotate(-22 147 -41.5)"/>
+        </g>
         <!-- right earbud -->
-        <rect x="283.5" y="-38" width="5" height="22" rx="2.5" fill="url(#budGrad)" stroke="#64748b" stroke-width="1.1"/>
-        <circle cx="286" cy="-38" r="8" fill="url(#budGrad)" stroke="#64748b" stroke-width="1.2"/>
-        <ellipse cx="286" cy="-39" rx="3" ry="3.6" fill="#7b8798"/>
-        <ellipse cx="283" cy="-41.5" rx="1.8" ry="2.6" fill="#ffffff" opacity="0.85" transform="rotate(-22 283 -41.5)"/>
+        <g transform="rotate(13 286 -38)">
+          <rect x="283.5" y="-38" width="5" height="22" rx="2.5" fill="url(#budGrad)" stroke="#64748b" stroke-width="1.1"/>
+          <circle cx="286" cy="-38" r="8" fill="url(#budGrad)" stroke="#64748b" stroke-width="1.2"/>
+          <ellipse cx="286" cy="-39" rx="3" ry="3.6" fill="#7b8798"/>
+          <ellipse cx="283" cy="-41.5" rx="1.8" ry="2.6" fill="#ffffff" opacity="0.85" transform="rotate(-22 283 -41.5)"/>
+        </g>
+        <!-- magnetic charge/dock contacts (earbuds snap onto the strap) -->
+        <circle cx="144" cy="-44" r="1.2" fill="#eab308"/>
+        <circle cx="146" cy="-37" r="1.2" fill="#eab308"/>
+        <circle cx="292" cy="-44" r="1.2" fill="#eab308"/>
+        <circle cx="290" cy="-37" r="1.2" fill="#eab308"/>
         <!-- label -->
-        <line x1="294" y1="-37" x2="342" y2="-30" stroke="#475569" stroke-width="1"/>
-        <text x="346" y="-27" fill="#334155" font-size="12">イヤホン</text>
+        <line x1="294" y1="-38" x2="340" y2="-34" stroke="#475569" stroke-width="1"/>
+        <text x="344" y="-37" fill="#334155" font-size="12">イヤホン</text>
+        <text x="344" y="-24" fill="#64748b" font-size="9.5">マグネットで着脱・充電</text>
         <!-- ===== strap attachment eyelets on top-face side edges (symmetric) ===== -->
         <circle cx="148" cy="98" r="4.5" fill="#cbd5e1" stroke="#475569" stroke-width="1.6"/>
         <circle cx="288" cy="98" r="4.5" fill="#cbd5e1" stroke="#475569" stroke-width="1.6"/>
@@ -372,6 +377,7 @@
             <tr><td><b>ディスプレイ</b></td><td>前面 全面タッチディスプレイ（有機EL想定）</td></tr>
             <tr><td><b>マイク</b></td><td>MEMS ×3（上面 ×1＝自分／下面 左右 ×2＝相手）</td></tr>
             <tr><td><b>スピーカー</b></td><td>前面下中央 ×1（本体から音声出力）</td></tr>
+            <tr><td><b>イヤホン</b></td><td>ワイヤレス ×2・<b>ストラップにマグネット着脱／充電</b>（未使用時はストラップに収納し一体化）</td></tr>
             <tr><td><b>カメラ</b></td><td>前面左上・小型（スマホ相当センサ／静止画・動画）</td></tr>
             <tr><td><b>電源</b></td><td>本体 LiPo 640mAh ＋ <b>ストラップ内蔵バッテリー</b>（ネックレスのひも部分にセル分散・本体給電し容量を拡張）</td></tr>
             <tr><td><b>充電</b></td><td>USB-C（PD）＋ ワイヤレス充電（Qi）</td></tr>
