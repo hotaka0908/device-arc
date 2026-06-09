@@ -163,9 +163,18 @@
     <div class="diagram" data-view="ideal" hidden style="max-width:none;">
       <svg viewBox="0 -150 480 620" role="img" aria-label="立体配置図（理想・ネックレス型）">
         <defs>
-          <linearGradient id="dispGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#1e293b"/>
-            <stop offset="1" stop-color="#0f172a"/>
+          <linearGradient id="dispGrad" x1="0" y1="0" x2="0.3" y2="1">
+            <stop offset="0" stop-color="#1e2e40"/>
+            <stop offset="0.55" stop-color="#101b28"/>
+            <stop offset="1" stop-color="#0b1320"/>
+          </linearGradient>
+          <radialGradient id="dispGlow" cx="0.32" cy="0.12" r="0.85">
+            <stop offset="0" stop-color="#0891b2" stop-opacity="0.20"/>
+            <stop offset="1" stop-color="#0891b2" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="dispSheen" x1="0" y1="0" x2="1" y2="1.1">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0.14"/>
+            <stop offset="0.45" stop-color="#ffffff" stop-opacity="0"/>
           </linearGradient>
         </defs>
         <!-- ===== 3D box (oblique) ===== -->
@@ -173,10 +182,12 @@
         <polygon points="270,110 270,300 308,276 308,86" fill="#dfe7e1" stroke="#b9c7bf" stroke-width="1.5"/>
         <!-- top face -->
         <polygon points="130,110 270,110 308,86 168,86" fill="#f7faf9" stroke="#b9c7bf" stroke-width="1.5"/>
-        <!-- front face = full display -->
-        <polygon points="130,110 270,110 270,300 130,300" fill="url(#dispGrad)" stroke="#0f172a" stroke-width="1.5"/>
-        <!-- screen reflection -->
-        <polygon points="130,110 270,110 270,150 130,166" fill="#ffffff" opacity="0.07"/>
+        <!-- front face = display (bezel frame + screen) -->
+        <polygon points="130,110 270,110 270,300 130,300" fill="#141d29" stroke="#b9c7bf" stroke-width="1.5"/>
+        <rect x="135.5" y="115.5" width="129" height="179" rx="7" fill="url(#dispGrad)"/>
+        <rect x="135.5" y="115.5" width="129" height="179" rx="7" fill="url(#dispGlow)"/>
+        <rect x="135.5" y="115.5" width="129" height="179" rx="7" fill="url(#dispSheen)"/>
+        <rect x="135.5" y="115.5" width="129" height="179" rx="7" fill="none" stroke="#33475e" stroke-width="1"/>
         <!-- ===== necklace strap (light gray, drawn in front so both ends connect cleanly) ===== -->
         <!-- thin sides -->
         <path d="M148,98 C116,-8 152,-120 218,-120 C284,-120 320,-8 288,98"
