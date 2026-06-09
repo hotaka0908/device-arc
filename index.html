@@ -197,6 +197,10 @@
             <stop offset="0" stop-color="#eef2f7"/>
             <stop offset="1" stop-color="#c1cad5"/>
           </linearGradient>
+          <linearGradient id="budGrad" x1="0" y1="0" x2="0.4" y2="1">
+            <stop offset="0" stop-color="#ffffff"/>
+            <stop offset="1" stop-color="#dde3ec"/>
+          </linearGradient>
         </defs>
         <!-- ===== 3D box (oblique) ===== -->
         <!-- right (side) face -->
@@ -230,14 +234,16 @@
         <path d="M218,-117 Q268,-102 286,-45" fill="none" stroke="#94a3b8" stroke-width="3.5"/>
         <path d="M218,-117 Q168,-102 150,-45" fill="none" stroke="#ffffff" stroke-width="2"/>
         <path d="M218,-117 Q268,-102 286,-45" fill="none" stroke="#ffffff" stroke-width="2"/>
-        <!-- left earbud (head + stem) -->
-        <rect x="147" y="-34" width="6" height="18" rx="3" fill="#ffffff" stroke="#475569" stroke-width="1.4"/>
-        <ellipse cx="150" cy="-37" rx="7.5" ry="8.5" fill="#ffffff" stroke="#475569" stroke-width="1.4"/>
-        <ellipse cx="150" cy="-38" rx="3.4" ry="3.8" fill="#94a3b8"/>
+        <!-- left earbud (AirPods-style: head + stem + speaker + highlight) -->
+        <rect x="147.5" y="-38" width="5" height="22" rx="2.5" fill="url(#budGrad)" stroke="#64748b" stroke-width="1.1"/>
+        <circle cx="150" cy="-38" r="8" fill="url(#budGrad)" stroke="#64748b" stroke-width="1.2"/>
+        <ellipse cx="150" cy="-39" rx="3" ry="3.6" fill="#7b8798"/>
+        <ellipse cx="147" cy="-41.5" rx="1.8" ry="2.6" fill="#ffffff" opacity="0.85" transform="rotate(-22 147 -41.5)"/>
         <!-- right earbud -->
-        <rect x="283" y="-34" width="6" height="18" rx="3" fill="#ffffff" stroke="#475569" stroke-width="1.4"/>
-        <ellipse cx="286" cy="-37" rx="7.5" ry="8.5" fill="#ffffff" stroke="#475569" stroke-width="1.4"/>
-        <ellipse cx="286" cy="-38" rx="3.4" ry="3.8" fill="#94a3b8"/>
+        <rect x="283.5" y="-38" width="5" height="22" rx="2.5" fill="url(#budGrad)" stroke="#64748b" stroke-width="1.1"/>
+        <circle cx="286" cy="-38" r="8" fill="url(#budGrad)" stroke="#64748b" stroke-width="1.2"/>
+        <ellipse cx="286" cy="-39" rx="3" ry="3.6" fill="#7b8798"/>
+        <ellipse cx="283" cy="-41.5" rx="1.8" ry="2.6" fill="#ffffff" opacity="0.85" transform="rotate(-22 283 -41.5)"/>
         <!-- label -->
         <line x1="294" y1="-37" x2="342" y2="-30" stroke="#475569" stroke-width="1"/>
         <text x="346" y="-27" fill="#334155" font-size="12">イヤホン</text>
