@@ -161,19 +161,19 @@
 
     <!-- ===== 理想 (ideal) ===== -->
     <div class="diagram" data-view="ideal" hidden style="max-width:none;">
-      <svg viewBox="0 -140 480 610" role="img" aria-label="立体配置図（理想・ネックレス型）">
+      <svg viewBox="0 -150 480 620" role="img" aria-label="立体配置図（理想・ネックレス型）">
         <defs>
           <linearGradient id="dispGrad" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stop-color="#1e293b"/>
             <stop offset="1" stop-color="#0f172a"/>
           </linearGradient>
         </defs>
-        <!-- ===== necklace strap (battery built-in) ===== -->
-        <path d="M148,104 C108,-12 150,-112 219,-112 C288,-112 332,-12 290,94"
+        <!-- ===== necklace strap (battery built-in) — attaches at top corners (130,110) & (308,86) ===== -->
+        <path d="M130,110 C96,-10 152,-120 219,-120 C286,-120 342,-10 308,86"
               fill="none" stroke="#475569" stroke-width="6" stroke-linecap="round"/>
-        <path d="M148,104 C108,-12 150,-112 219,-112 C288,-112 332,-12 290,94"
+        <path d="M130,110 C96,-10 152,-120 219,-120 C286,-120 342,-10 308,86"
               fill="none" stroke="#10b981" stroke-width="6" stroke-linecap="round" stroke-dasharray="13 9" opacity="0.92"/>
-        <text x="219" y="-120" fill="#0f766e" font-size="12" text-anchor="middle">ストラップ（バッテリー内蔵）</text>
+        <text x="219" y="-130" fill="#0f766e" font-size="12" text-anchor="middle">ストラップ（バッテリー内蔵）</text>
         <!-- ===== 3D box (oblique) ===== -->
         <!-- right (side) face -->
         <polygon points="270,110 270,300 308,276 308,86" fill="#dfe7e1" stroke="#b9c7bf" stroke-width="1.5"/>
@@ -183,6 +183,9 @@
         <polygon points="130,110 270,110 270,300 130,300" fill="url(#dispGrad)" stroke="#0f172a" stroke-width="1.5"/>
         <!-- screen reflection -->
         <polygon points="130,110 270,110 270,150 130,166" fill="#ffffff" opacity="0.07"/>
+        <!-- ===== strap attachment eyelets at top corners ===== -->
+        <circle cx="130" cy="110" r="4.5" fill="#cbd5e1" stroke="#475569" stroke-width="1.6"/>
+        <circle cx="308" cy="86" r="4.5" fill="#cbd5e1" stroke="#475569" stroke-width="1.6"/>
         <!-- display label -->
         <line x1="130" y1="138" x2="74" y2="122" stroke="#334155" stroke-width="1"/>
         <text x="70" y="125" fill="#334155" font-size="12" text-anchor="end">ディスプレイ</text>
