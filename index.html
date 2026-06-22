@@ -344,20 +344,30 @@
         <line x1="242" y1="283" x2="210" y2="358" stroke="#64748b" stroke-width="1"/>
         <text x="200" y="378" fill="#64748b" font-size="12" text-anchor="middle">下マイク×2（相手）</text>
 
-        <!-- ===== laser pointer (AI が見て理解している対象を指し示す) ===== -->
-        <!-- projected beam hitting the ground -->
-        <line x1="140" y1="278" x2="95" y2="356" stroke="#22c55e" stroke-width="2.6" opacity="0.16"/>
-        <line x1="140" y1="278" x2="95" y2="356" stroke="#22c55e" stroke-width="0.9" opacity="0.7"/>
-        <ellipse cx="95" cy="356" rx="21" ry="7.5" fill="#22c55e" opacity="0.16"/>
-        <ellipse cx="95" cy="356" rx="13" ry="4.6" fill="none" stroke="#22c55e" stroke-width="1.4" opacity="0.75"/>
-        <ellipse cx="95" cy="356" rx="4.6" ry="1.8" fill="#22c55e"/>
-        <!-- emitter -->
+        <!-- ===== laser projector (MEMS 2軸ミラーで点・矢印・枠を投影／ToFで測距) ===== -->
+        <!-- steered beam hitting the ground -->
+        <line x1="140" y1="278" x2="92" y2="354" stroke="#22c55e" stroke-width="2.6" opacity="0.14"/>
+        <line x1="140" y1="278" x2="92" y2="354" stroke="#22c55e" stroke-width="0.9" opacity="0.7"/>
+        <!-- projected patterns on the ground: 枠（認識範囲）＋点（対象）＋矢印（方向） -->
+        <g>
+          <rect x="66" y="340" width="52" height="28" rx="4" fill="#22c55e" opacity="0.10"/>
+          <rect x="66" y="340" width="52" height="28" rx="4" fill="none" stroke="#22c55e" stroke-width="1.3" opacity="0.8"/>
+          <circle cx="92" cy="354" r="4" fill="#22c55e" opacity="0.25"/>
+          <circle cx="92" cy="354" r="1.8" fill="#22c55e"/>
+          <line x1="100" y1="363" x2="112" y2="349" stroke="#22c55e" stroke-width="1.6"/>
+          <path d="M112,349 L106.2,350.3 L110,354 Z" fill="#22c55e"/>
+        </g>
+        <line x1="84" y1="372" x2="84" y2="384" stroke="#16a34a" stroke-width="1"/>
+        <text x="84" y="396" fill="#16a34a" font-size="12" text-anchor="middle">点・矢印・枠</text>
+        <!-- emitter (laser + MEMS) と co-located ToF（基線を小さく） -->
         <circle cx="140" cy="278" r="6" fill="#22c55e" opacity="0.22"/>
         <circle cx="140" cy="278" r="4" fill="none" stroke="#22c55e" stroke-width="1.6"/>
         <circle cx="140" cy="278" r="1.8" fill="#22c55e"/>
         <circle cx="139.2" cy="277.2" r="0.7" fill="#bbf7d0"/>
-        <line x1="134" y1="278" x2="96" y2="276" stroke="#16a34a" stroke-width="1"/>
-        <text x="92" y="280" fill="#16a34a" font-size="12" text-anchor="end">レーザー</text>
+        <circle cx="131" cy="278" r="2.4" fill="none" stroke="#38bdf8" stroke-width="1.4"/>
+        <circle cx="131" cy="278" r="0.9" fill="#38bdf8"/>
+        <line x1="128" y1="278" x2="96" y2="270" stroke="#16a34a" stroke-width="1"/>
+        <text x="92" y="272" fill="#16a34a" font-size="12" text-anchor="end">レーザー＋ToF</text>
 
         <!-- ===== SPEAKER (front bottom center, grille pill) ===== -->
         <rect x="183" y="269" width="34" height="18" rx="9" fill="#1b2734" stroke="#2e3d4f" stroke-width="1.3"/>
@@ -438,7 +448,7 @@
             <tr><td><b>カメラ</b></td><td>前面左上・小型（静止画・動画）</td></tr>
             <tr><td><b>マイク</b></td><td>MEMS ×3（上面 ×1＝自分／前面下 左右 ×2＝相手）</td></tr>
             <tr><td><b>スピーカー</b></td><td>前面下中央 ×1</td></tr>
-            <tr><td><b>レーザー</b></td><td>前面下・左（AIの「指差し」＝AIが見て理解している対象を実空間に指し示す）</td></tr>
+            <tr><td><b>レーザー</b></td><td>前面下・左。小型レーザー＋<b>MEMS 2軸ミラー</b>で手のひら・机・床に「<b>点・矢印・枠</b>」の3図形を投影し、AIが見ている対象・方向・認識範囲を指し示す。カメラ直近に実装＋<b>ToF測距</b>で視差（パララックス）を補正し、投影点をカメラで見て狙いに追い込む<b>クローズドループ制御</b>で任意位置に照準。文字・画像は投影せず、短時間・低出力（<b>クラス1相当</b>・顔/至近距離検知で自動消灯）で安全に使用</td></tr>
             <tr><td><b>イヤホン</b></td><td><b>有線</b>（頂部から配線）・<b>ストラップにマグネット着脱</b>（未使用時はストラップと一体化）</td></tr>
             <tr><td><b>ボタン</b></td><td>側面 ×3 — <b>yes</b>（確定）／<b>no</b>（取消）／<b>talk</b>（押して話す）</td></tr>
             <tr><td><b>ストラップ</b></td><td>ネックレス型。<b>電源サブ（バッテリー内蔵）</b>とイヤホンのマグネットドック／充電を兼ねる</td></tr>
