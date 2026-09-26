@@ -81,7 +81,7 @@ function dimLine(a, b, tick) {
     new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.55 }));
 }
 
-/* ---------- スタジオ（背景・床・影） ---------- */
+/* ---------- スタジオ（背景・床の影） ---------- */
 function buildStudio(scene) {
   scene.background = canvasTex(512, 512, (g, w, h) => {
     const r = g.createRadialGradient(w * 0.5, h * 0.32, 10, w * 0.5, h * 0.5, w * 0.78);
@@ -89,17 +89,6 @@ function buildStudio(scene) {
     g.fillStyle = r; g.fillRect(0, 0, w, h);
   });
   const floor = new THREE.Group(); floor.position.y = FLOOR_Y; scene.add(floor);
-  const glow = mesh(new THREE.CircleGeometry(80, 64), new THREE.MeshBasicMaterial({
-    transparent: true, depthWrite: false,
-    map: canvasTex(512, 512, (g, w) => {
-      const r = g.createRadialGradient(w / 2, w / 2, 0, w / 2, w / 2, w / 2);
-      r.addColorStop(0, 'rgba(52,211,153,0.08)'); r.addColorStop(0.5, 'rgba(52,211,153,0.025)'); r.addColorStop(1, 'rgba(52,211,153,0)');
-      g.fillStyle = r; g.fillRect(0, 0, w, w);
-      g.strokeStyle = 'rgba(110,231,183,0.07)'; g.lineWidth = 1.5;
-      [0.36, 0.62].forEach(k => { g.beginPath(); g.arc(w / 2, w / 2, w / 2 * k, 0, Math.PI * 2); g.stroke(); });
-    }),
-  }), null, floor);
-  glow.rotation.x = -Math.PI / 2;
   const shadow = mesh(new THREE.PlaneGeometry(52, 34), new THREE.MeshBasicMaterial({
     transparent: true, depthWrite: false,
     map: canvasTex(256, 256, (g, w) => {
@@ -421,7 +410,7 @@ function createViewer(host) {
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'v3d-item';
       b.style.setProperty('--c', it.color);
-      b.innerHTML = `<i></i>${it.label}`;
+      b.textContent = it.label;
       b.addEventListener('click', () => select(selected === it ? null : it));
       it.btn = b; wrap.appendChild(b);
     });
