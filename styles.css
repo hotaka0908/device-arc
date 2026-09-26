@@ -143,10 +143,9 @@ section { padding: 56px 0; border-top: 1px solid var(--line); position: relative
 .v3d-label {
   position: absolute; left: 0; top: 0; pointer-events: none;
   display: flex; flex-direction: column; gap: 2px; max-width: 230px;
-  padding: 10px 14px 10px 16px; border-radius: 12px;
-  background: rgba(10,16,14,.72); border: 1px solid rgba(255,255,255,.1);
+  padding: 9px 14px; border-radius: 10px;
+  background: rgba(10,16,14,.72); border: 1px solid rgba(255,255,255,.08);
   -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
-  box-shadow: 0 10px 30px rgba(0,0,0,.45), inset 3px 0 0 var(--c);
 }
 .v3d-label[hidden] { display: none; }
 .v3d-label.is-in { animation: v3dIn .35s cubic-bezier(.2,.8,.2,1); }
