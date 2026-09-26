@@ -176,6 +176,8 @@ section { padding: 56px 0; border-top: 1px solid var(--line); position: relative
   transition: background .15s, color .15s, border-color .15s;
 }
 .v3d-item:hover { background: rgba(255,255,255,.04); color: #fff; }
+.v3d-item:focus { outline: none; }
+.v3d-item:focus-visible { outline: 1px solid rgba(255,255,255,.35); }
 .v3d-item.is-active { color: #fff; font-weight: 700; background: rgba(255,255,255,.08); }
 .v3d-fallback { padding: 40px; text-align: center; color: #9fb0a8; }
 @media (max-width: 760px) {

@@ -282,7 +282,7 @@ function buildIdeal(root) {
     groups: [
       { name: '前面', items: [
         { id: 'cam', label: 'カメラ', desc: '前面左上・静止画/動画', color: '#22d3ee', objs: [cam], anchor: [-8.1, 15.3, FZ + 0.5], view: 'front' },
-        { id: 'disp', label: 'ディスプレイ', desc: '全面・有機EL想定', color: '#34d399', objs: [disp], anchor: [6, 4, FZ + 0.2], view: 'front' },
+        { id: 'disp', label: 'ディスプレイ', desc: '全面・有機EL想定', color: '#34d399', objs: [disp], anchor: [6, 4, FZ + 0.2], view: 'front', soft: true },
         { id: 'laser', label: 'レーザー＋ToF', desc: '点・矢印・枠を投影／ToFで測距', color: '#4ade80', objs: [laser], anchor: [-11.4, -16, FZ + 0.5], view: LASER_VIEW, beam: true },
         { id: 'mics', label: '下マイク×2（相手）', desc: '相手の声を拾う', color: '#38bdf8', objs: mics, anchor: [8.4, -16, FZ + 0.5], view: 'front' },
         { id: 'spk', label: 'スピーカー', desc: '前面下中央', color: '#38bdf8', objs: [spk], anchor: [0, -16, FZ + 0.5], view: 'front' },
@@ -580,6 +580,10 @@ function createViewer(host) {
       const s = 0.5 + 0.5 * Math.sin(now / 180);
       selected.meshes.forEach(m => {
         const b = m.userData.base;
+        if (selected.soft) { // 画面は色で塗らず、中身のまま少しだけ明るく脈打たせる
+          m.material.emissiveIntensity = b.i * (1 + 0.2 * s);
+          return;
+        }
         m.material.color.copy(b.c).lerp(hlColor, 0.4 + 0.35 * s);
         m.material.emissive.copy(hlColor); m.material.emissiveIntensity = Math.max(b.i, 0.3 + 0.9 * s);
       });
