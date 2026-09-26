@@ -33,8 +33,9 @@ const LASER_VIEW = { dir: [-0.3, 0.32, 1], dist: 200, target: [-10, -12, 16] };
 function std(color, o = {}) {
   return new THREE.MeshStandardMaterial(Object.assign({ color, roughness: 0.5, metalness: 0.05 }, o));
 }
-const alu = (color = 0xc9cfd3) => new THREE.MeshPhysicalMaterial({
-  color, metalness: 0.85, roughness: 0.48,
+// 梨地のマットなアルミ。映り込みで眩しくならないよう金属感・つやは控えめ
+const alu = (color = 0xaab2b8) => new THREE.MeshPhysicalMaterial({
+  color, metalness: 0.45, roughness: 0.68,
 });
 function canvasTex(w, h, draw) {
   const c = document.createElement('canvas'); c.width = w; c.height = h;
@@ -92,9 +93,9 @@ function buildStudio(scene) {
     transparent: true, depthWrite: false,
     map: canvasTex(512, 512, (g, w) => {
       const r = g.createRadialGradient(w / 2, w / 2, 0, w / 2, w / 2, w / 2);
-      r.addColorStop(0, 'rgba(52,211,153,0.16)'); r.addColorStop(0.5, 'rgba(52,211,153,0.05)'); r.addColorStop(1, 'rgba(52,211,153,0)');
+      r.addColorStop(0, 'rgba(52,211,153,0.08)'); r.addColorStop(0.5, 'rgba(52,211,153,0.025)'); r.addColorStop(1, 'rgba(52,211,153,0)');
       g.fillStyle = r; g.fillRect(0, 0, w, w);
-      g.strokeStyle = 'rgba(110,231,183,0.13)'; g.lineWidth = 1.5;
+      g.strokeStyle = 'rgba(110,231,183,0.07)'; g.lineWidth = 1.5;
       [0.36, 0.62].forEach(k => { g.beginPath(); g.arc(w / 2, w / 2, w / 2 * k, 0, Math.PI * 2); g.stroke(); });
     }),
   }), null, floor);
@@ -122,10 +123,10 @@ function makeScreen() {
     g.fillStyle = bg; g.fillRect(0, 0, w, h);
     const orbY = 330, pulse = 1 + 0.04 * Math.sin(t * 2.2);
     const halo = g.createRadialGradient(w / 2, orbY, 0, w / 2, orbY, 250);
-    halo.addColorStop(0, 'rgba(52,211,153,0.40)'); halo.addColorStop(1, 'rgba(52,211,153,0)');
+    halo.addColorStop(0, 'rgba(52,211,153,0.2)'); halo.addColorStop(1, 'rgba(52,211,153,0)');
     g.fillStyle = halo; g.fillRect(0, 0, w, h);
     const core = g.createRadialGradient(w / 2 - 20, orbY - 24, 4, w / 2, orbY, 78 * pulse);
-    core.addColorStop(0, '#d1fae5'); core.addColorStop(0.45, '#34d399'); core.addColorStop(1, 'rgba(16,185,129,0.15)');
+    core.addColorStop(0, '#a7f3d0'); core.addColorStop(0.45, '#10b981'); core.addColorStop(1, 'rgba(16,185,129,0.15)');
     g.fillStyle = core; g.beginPath(); g.arc(w / 2, orbY, 78 * pulse, 0, Math.PI * 2); g.fill();
     g.fillStyle = 'rgba(255,255,255,0.88)';
     g.font = '300 46px "Noto Sans JP", sans-serif'; g.textAlign = 'center';
@@ -146,7 +147,7 @@ function makeScreen() {
 
 /* ---------- ver3（現行） ---------- */
 function buildVer3(root) {
-  mesh(new RoundedBoxGeometry(W, H, D, 5, 1.6), alu(0xcfd5d8), null, root);
+  mesh(new RoundedBoxGeometry(W, H, D, 5, 1.6), alu(0xb2babf), null, root);
   const teal = 0x22d3ee, green = 0x34d399;
 
   const cam = new THREE.Group();
@@ -198,7 +199,7 @@ function buildIdeal(root) {
   const screen = makeScreen();
   const disp = mesh(rrPlane(W - 3.4, H - 3.4, 1.4),
     new THREE.MeshPhysicalMaterial({
-      color: 0x000000, emissive: 0xffffff, emissiveMap: screen.tex, emissiveIntensity: 1,
+      color: 0x000000, emissive: 0xffffff, emissiveMap: screen.tex, emissiveIntensity: 0.75,
       roughness: 0.2, clearcoat: 0.5, clearcoatRoughness: 0.1, envMapIntensity: 0.2,
     }),
     [0, 0, FZ + 0.01], root);
@@ -351,17 +352,17 @@ function createViewer(host) {
   const DPR = Math.min(window.devicePixelRatio || 1, 2);
   renderer.setPixelRatio(DPR);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 0.9;
+  renderer.toneMappingExposure = 0.78;
   stage.prepend(renderer.domElement);
 
   const scene = new THREE.Scene();
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-  scene.environmentIntensity = 0.4;
+  scene.environmentIntensity = 0.3;
   scene.environmentRotation.set(1.0, 0.6, 0); // 天井の強い照明が上面に真上から映り込んで白飛びしないよう傾ける
   buildStudio(scene);
-  const key = new THREE.DirectionalLight(0xfff4e6, 1.1); key.position.set(80, 35, 90); scene.add(key);
-  const rim = new THREE.DirectionalLight(0x7dd3fc, 1.0); rim.position.set(-80, 40, -90); scene.add(rim);
+  const key = new THREE.DirectionalLight(0xfff4e6, 0.9); key.position.set(80, 35, 90); scene.add(key);
+  const rim = new THREE.DirectionalLight(0x7dd3fc, 0.7); rim.position.set(-80, 40, -90); scene.add(rim);
   const rim2 = new THREE.DirectionalLight(0x6ee7b7, 0.3); rim2.position.set(90, -10, -60); scene.add(rim2);
   scene.add(new THREE.HemisphereLight(0xffffff, 0x0b1210, 0.35));
 
@@ -376,7 +377,7 @@ function createViewer(host) {
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
   // にじみは発光させた部品（レーザー・LED・選択中）だけに効くよう閾値を高く・弱めに。金属の反射はにじませない
-  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.3, 0.3, 1.8);
+  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.18, 0.25, 2.2);
   composer.addPass(bloom);
   composer.addPass(new OutputPass());
 
