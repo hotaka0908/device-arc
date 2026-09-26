@@ -409,7 +409,6 @@ function createViewer(host) {
     g.items.forEach(it => {
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'v3d-item';
-      b.style.setProperty('--c', it.color);
       b.textContent = it.label;
       b.addEventListener('click', () => select(selected === it ? null : it));
       it.btn = b; wrap.appendChild(b);
@@ -472,7 +471,6 @@ function createViewer(host) {
     stage.classList.toggle('has-selection', !!it);
     if (it) {
       it.btn.classList.add('is-active');
-      labelEl.style.setProperty('--c', it.color);
       labelEl.querySelector('b').textContent = it.label;
       labelEl.querySelector('span').textContent = it.desc;
       labelEl.hidden = false;
