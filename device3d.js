@@ -34,7 +34,7 @@ function std(color, o = {}) {
   return new THREE.MeshStandardMaterial(Object.assign({ color, roughness: 0.5, metalness: 0.05 }, o));
 }
 const alu = (color = 0xc9cfd3) => new THREE.MeshPhysicalMaterial({
-  color, metalness: 0.92, roughness: 0.36,
+  color, metalness: 0.85, roughness: 0.48,
 });
 function canvasTex(w, h, draw) {
   const c = document.createElement('canvas'); c.width = w; c.height = h;
@@ -156,7 +156,7 @@ function buildVer3(root) {
   mesh(new THREE.CircleGeometry(1.3, 24), std(0x020406, { roughness: 0.1 }), [0, 0, 0.02], cam);
   cam.position.set(0, 0, FZ + 0.02); root.add(cam);
 
-  const led = mesh(new THREE.SphereGeometry(0.85, 20, 12), std(0xf59e0b, { emissive: 0xf59e0b, emissiveIntensity: 1.6 }), [10.3, 13.6, FZ], root);
+  const led = mesh(new THREE.SphereGeometry(0.85, 20, 12), std(0xf59e0b, { emissive: 0xf59e0b, emissiveIntensity: 2.6 }), [10.3, 13.6, FZ], root);
 
   const ringMic = (rotX, pos) => {
     const g = new THREE.Group();
@@ -213,7 +213,7 @@ function buildIdeal(root) {
 
   // レーザー + ToF（前面下・左）
   const laser = new THREE.Group();
-  mesh(new THREE.CircleGeometry(0.8, 24), std(0x22c55e, { emissive: 0x22c55e, emissiveIntensity: 2 }), [-11.4, -16, 0], laser);
+  mesh(new THREE.CircleGeometry(0.8, 24), std(0x22c55e, { emissive: 0x22c55e, emissiveIntensity: 3 }), [-11.4, -16, 0], laser);
   mesh(new THREE.TorusGeometry(0.8, 0.14, 8, 28), alu(0x8b949b), [-11.4, -16, 0], laser);
   mesh(new THREE.CircleGeometry(0.45, 20), std(0x38bdf8, { emissive: 0x38bdf8, emissiveIntensity: 1.2 }), [-12.85, -16, 0], laser);
   laser.position.z = FZ + 0.03; root.add(laser);
@@ -351,18 +351,18 @@ function createViewer(host) {
   const DPR = Math.min(window.devicePixelRatio || 1, 2);
   renderer.setPixelRatio(DPR);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.05;
+  renderer.toneMappingExposure = 0.9;
   stage.prepend(renderer.domElement);
 
   const scene = new THREE.Scene();
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-  scene.environmentIntensity = 0.5;
+  scene.environmentIntensity = 0.4;
   scene.environmentRotation.set(1.0, 0.6, 0); // 天井の強い照明が上面に真上から映り込んで白飛びしないよう傾ける
   buildStudio(scene);
-  const key = new THREE.DirectionalLight(0xfff4e6, 1.5); key.position.set(80, 35, 90); scene.add(key);
-  const rim = new THREE.DirectionalLight(0x7dd3fc, 2.6); rim.position.set(-80, 40, -90); scene.add(rim);
-  const rim2 = new THREE.DirectionalLight(0x6ee7b7, 0.6); rim2.position.set(90, -10, -60); scene.add(rim2);
+  const key = new THREE.DirectionalLight(0xfff4e6, 1.1); key.position.set(80, 35, 90); scene.add(key);
+  const rim = new THREE.DirectionalLight(0x7dd3fc, 1.0); rim.position.set(-80, 40, -90); scene.add(rim);
+  const rim2 = new THREE.DirectionalLight(0x6ee7b7, 0.3); rim2.position.set(90, -10, -60); scene.add(rim2);
   scene.add(new THREE.HemisphereLight(0xffffff, 0x0b1210, 0.35));
 
   const camera = new THREE.PerspectiveCamera(30, 1, 1, 3000);
@@ -375,7 +375,8 @@ function createViewer(host) {
 
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
-  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.5, 0.45, 1.25);
+  // にじみは発光させた部品（レーザー・LED・選択中）だけに効くよう閾値を高く・弱めに。金属の反射はにじませない
+  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.3, 0.3, 1.8);
   composer.addPass(bloom);
   composer.addPass(new OutputPass());
 
@@ -596,7 +597,7 @@ function createViewer(host) {
       selected.meshes.forEach(m => {
         const b = m.userData.base;
         m.material.color.copy(b.c).lerp(hlColor, 0.4 + 0.35 * s);
-        m.material.emissive.copy(hlColor); m.material.emissiveIntensity = Math.max(b.i, 0.4 + 1.2 * s);
+        m.material.emissive.copy(hlColor); m.material.emissiveIntensity = Math.max(b.i, 0.3 + 0.9 * s);
       });
     }
     if (model.screen && now - lastScreen > 66) { model.screen.draw(now / 1000); lastScreen = now; }
