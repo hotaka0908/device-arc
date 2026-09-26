@@ -66,6 +66,13 @@ function mesh(geo, mat, pos, parent) {
   if (parent) parent.add(m);
   return m;
 }
+/* 右側面の丸ボタン（外周を少し面取りした円柱、軸は x） */
+function sideButton(r, y, mat, parent) {
+  const prof = [[0, -0.8], [r, -0.8], [r, 0.5], [r - 0.3, 0.8], [0, 0.8]].map(([a, b]) => new THREE.Vector2(a, b));
+  const m = mesh(new THREE.LatheGeometry(prof, 48), mat, [W / 2, y, 0], parent);
+  m.rotation.z = -Math.PI / 2;
+  return m;
+}
 function frontMic(x, y, parent) {
   const g = new THREE.Group();
   mesh(new THREE.TorusGeometry(1.0, 0.2, 12, 32), alu(0x8b949b), null, g);
@@ -158,7 +165,7 @@ function buildVer3(root) {
   const top = ringMic(-Math.PI / 2, [9.6, H / 2 + 0.02, 0]);
   const bot = ringMic(Math.PI / 2, [0, -H / 2 - 0.02, 0]);
 
-  const btn = mesh(new RoundedBoxGeometry(1.6, 3.4, 5, 2, 0.5), alu(0x9ea7ad), [W / 2, -7, 0], root);
+  const btn = sideButton(1.9, -7, alu(0x9ea7ad), root);
 
   return {
     groups: [
@@ -248,8 +255,9 @@ function buildIdeal(root) {
   top.rotation.x = -Math.PI / 2; top.position.set(8.6, H / 2 + 0.02, 0); root.add(top);
 
   // 側面ボタン ×3（アルミに色を差す）
-  const btn = (y, h, color) => mesh(new RoundedBoxGeometry(1.6, h, 5, 2, 0.5), alu(color), [W / 2, y, 0], root);
-  const yes = btn(9.0, 3.6, 0x86efac), no = btn(3.4, 3.6, 0xfca5a5), talk = btn(-6.6, 6.2, 0xaab3ba);
+  const yes = sideButton(2.0, 9.0, alu(0x86efac), root);
+  const no = sideButton(2.0, 3.4, alu(0xfca5a5), root);
+  const talk = sideButton(2.8, -6.6, alu(0xaab3ba), root);
 
   // ---- ネックレス型ストラップ（全体表示のときだけ） ----
   const strap = new THREE.Group(); strap.visible = false; root.add(strap);
