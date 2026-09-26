@@ -330,7 +330,6 @@ function createViewer(host) {
         </svg>
         <div class="v3d-overlay"></div>
         <div class="v3d-label" hidden><b></b><span></span></div>
-        <div class="v3d-hint">ドラッグで回転・部品をタップ</div>
         <div class="v3d-views" role="group" aria-label="向き"></div>
       </div>
       <div class="v3d-list"></div>
@@ -340,7 +339,6 @@ function createViewer(host) {
   const labelEl = host.querySelector('.v3d-label');
   const lineEl = host.querySelector('.v3d-lines line');
   const dotEls = host.querySelectorAll('.v3d-lines circle');
-  const hint = host.querySelector('.v3d-hint');
 
   let renderer;
   try {
@@ -494,14 +492,12 @@ function createViewer(host) {
       viewName = typeof it.view === 'string' ? it.view : null;
       updateVisibility();
       goTo(typeof it.view === 'string' ? VIEWS[it.view] : it.view);
-      hideHint();
       if (window.__mascotBeep) window.__mascotBeep();
     } else {
       labelEl.hidden = true;
       if (!keepView) updateVisibility();
     }
   }
-  function hideHint() { hint.classList.add('is-hidden'); }
 
   /* ---- タップで部品を選ぶ ---- */
   const ray = new THREE.Raycaster(), ptr = new THREE.Vector2();
@@ -523,7 +519,7 @@ function createViewer(host) {
     if (!e.buttons) stage.classList.toggle('is-over', !!pick(e));
   });
   function isShown(o) { for (let p = o; p; p = p.parent) if (!p.visible) return false; return true; }
-  controls.addEventListener('start', () => { tween = null; lastTouch = performance.now(); hideHint(); });
+  controls.addEventListener('start', () => { tween = null; lastTouch = performance.now(); });
   controls.addEventListener('end', () => { lastTouch = performance.now(); });
 
   /* ---- 画面上の位置を求める ---- */
