@@ -18,15 +18,17 @@ const REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion:
 
 const VIEWS = {
   angle:  { label: '斜め', dir: [0.75, 0.42, 1],  dist: 125, target: [0, 0, 0] },
+  angleL: { label: '斜め', dir: [-0.75, 0.42, 1], dist: 125, target: [0, 0, 0] },  // 左側面が見える斜め（rev4: ボタンが左）
   front:  { label: '前',   dir: [0.12, 0.08, 1],  dist: 112, target: [0, 0, 0] },
   side:   { label: '横',   dir: [1, 0.14, 0.32],  dist: 112, target: [0, 0, 0] },
+  sideL:  { label: '横',   dir: [-1, 0.14, 0.32], dist: 112, target: [0, 0, 0] },
   top:    { label: '上',   dir: [0.22, 1, 0.6],   dist: 112, target: [0, 3, 0] },
   bottom: { label: '下',   dir: [0.22, -1, 0.6],  dist: 112, target: [0, -3, 0] },
   inside: { label: '中',   dir: [0.55, 0.35, 1],  dist: 118, target: [0, 0, 0] },
   full:   { label: '全体', dir: [0.5, 0.22, 1],   dist: 235, target: [0, 24, -8] },
 };
 const corners = (x0, x1, y0, y1, z0, z1) => [x0, x1].flatMap(x => [y0, y1].flatMap(y => [z0, z1].map(z => new THREE.Vector3(x, y, z))));
-const BODY_BOX = corners(-W / 2, W / 2 + 0.8, -H / 2, H / 2, -FZ, FZ);
+const BODY_BOX = corners(-W / 2 - 0.8, W / 2 + 0.8, -H / 2, H / 2, -FZ, FZ);
 const STRAP_BOX = corners(-20, 20, -H / 2, 73, -28, FZ);
 const LASER_VIEW = { dir: [-0.3, 0.32, 1], dist: 200, target: [-10, -12, 16] };
 
@@ -68,11 +70,15 @@ function mesh(geo, mat, pos, parent) {
   return m;
 }
 /* 右側面の丸ボタン（外周を少し面取りした円柱、軸は x） */
-function sideButton(r, y, mat, parent, z = 0) {
+function sideButton(r, y, mat, parent, z = 0, side = 1) {
   const prof = [[0, -0.8], [r, -0.8], [r, 0.5], [r - 0.3, 0.8], [0, 0.8]].map(([a, b]) => new THREE.Vector2(a, b));
-  const m = mesh(new THREE.LatheGeometry(prof, 48), mat, [W / 2, y, z], parent);
-  m.rotation.z = -Math.PI / 2;
+  const m = mesh(new THREE.LatheGeometry(prof, 48), mat, [side * W / 2, y, z], parent);
+  m.rotation.z = -side * Math.PI / 2;
   return m;
+}
+/* 前面のマイク穴（点だけ） */
+function micHole(x, y, parent) {
+  return mesh(new THREE.CircleGeometry(0.45, 20), std(0x020406), [x, y, FZ + 0.03], parent);
 }
 function frontMic(x, y, parent, z = FZ + 0.03, rotY = 0) {
   const g = new THREE.Group();
@@ -197,32 +203,32 @@ function buildVer3(root) {
 }
 
 /* ---------- rev4（次の基板） ----------
- * ver3 との違い: 前面は上に LED・下に小さなカメラ・右にマイク 1 つ。ボタン 3 つは側面、USB-C は底面で、どちらも厚みの中央。
+ * ver3 との違い: 前面は上に縦 3 灯の LED・下に小さなカメラ・右にマイク穴 1 つ。ボタン 3 つ（同じ大きさ）は正面から見て左の側面、USB-C は底面で、どちらも厚みの中央。
  * スピーカーをなくし、空いた分で薄く。中身に加速度センサと 32kHz 水晶（選ぶと本体が透ける）。
  */
 function buildRev4(root) {
   const shell = mesh(new RoundedBoxGeometry(W, H, D, 5, 1.6), alu(0xb2babf), null, root);
   const white = 0xf8fafc;
-  const CAM_Y = -10, LED_Y = 13, MIC = [10.5, 3];
+  const CAM_Y = -10, LED_YS = [16, 12.5, 9], MIC = [10.5, 3], SIDE = -1; // SIDE = -1: ボタンは正面から見て左
 
   // 前面: カメラ（下）。小さく簡素に: 黒いガラス窓 + 細い縁 + レンズ
   const cam = new THREE.Group();
-  mesh(new THREE.CircleGeometry(2.6, 48), new THREE.MeshPhysicalMaterial({ color: 0x0b1419, roughness: 0.08, clearcoat: 1 }), null, cam);
+  mesh(new THREE.CircleGeometry(2.6, 48), new THREE.MeshPhysicalMaterial({ color: 0x0b1419, roughness: 0.25, clearcoat: 0.6, envMapIntensity: 0.25 }), null, cam);
   mesh(new THREE.TorusGeometry(2.6, 0.18, 12, 64), alu(0x9aa3a9), null, cam);
   mesh(new THREE.CircleGeometry(1.0, 32), std(0x020406, { roughness: 0.1 }), [0, 0, 0.02], cam);
   mesh(new THREE.CircleGeometry(0.22, 16), std(0x8fd3ff, { emissive: 0x8fd3ff, emissiveIntensity: 0.6 }), [-0.45, 0.45, 0.04], cam);
   cam.position.set(0, CAM_Y, FZ + 0.02); root.add(cam);
 
-  // 前面: 白 LED（上に横一列。3〜5 灯は検討中なので 3 で描く）
-  const leds = [-4, 0, 4].map(x => mesh(new THREE.SphereGeometry(0.7, 20, 12), std(white, { emissive: white, emissiveIntensity: 1.8 }), [x, LED_Y, FZ], root));
+  // 前面: 白 LED（上に縦 3 灯）
+  const leds = LED_YS.map(y => mesh(new THREE.SphereGeometry(0.7, 20, 12), std(white, { emissive: white, emissiveIntensity: 1.8 }), [0, y, FZ], root));
 
-  // 前面マイク（右）: 1 つだけ
-  const micF = frontMic(MIC[0], MIC[1], root);
+  // 前面マイク穴（右）: 点 1 つだけ
+  const micF = micHole(MIC[0], MIC[1], root);
 
-  // 側面（厚みの中央）: ボタン 3 つ。色分けはしない（上 Yes / 中 No / 下 PTT）
-  const yes = sideButton(2.0, 9.0, alu(0x9ea7ad), root);
-  const no = sideButton(2.0, 3.4, alu(0x9ea7ad), root);
-  const talk = sideButton(2.8, -6.6, alu(0x9ea7ad), root);
+  // 左側面（厚みの中央）: 同じ大きさのボタン 3 つ。色分けはしない（上 Yes / 中 No / 下 PTT）
+  const yes = sideButton(2.0, 8.4, alu(0x9ea7ad), root, 0, SIDE);
+  const no = sideButton(2.0, 2.0, alu(0x9ea7ad), root, 0, SIDE);
+  const talk = sideButton(2.0, -4.4, alu(0x9ea7ad), root, 0, SIDE);
 
   // 底面（厚みの中央）: USB-C
   const usb = new THREE.Group();
@@ -240,14 +246,14 @@ function buildRev4(root) {
     shell, inside: [accel, xtal, battery],
     groups: [
       { name: '前面', items: [
-        { id: 'led', label: 'LED（白）', desc: '上に横一列。聞いてる合図。3〜5 灯を検討中', color: '#f8fafc', objs: leds, anchor: [4, LED_Y, FZ + 0.6], view: 'front' },
-        { id: 'mic-f', label: 'マイク', desc: '前面の右に 1 つ。背面マイクはなし', color: '#34d399', objs: [micF], anchor: [MIC[0], MIC[1], FZ + 0.5], view: 'front' },
+        { id: 'led', label: 'LED（白 ×3）', desc: '上に縦 3 灯。聞いてる合図', color: '#f8fafc', objs: leds, anchor: [0, LED_YS[1], FZ + 0.6], view: 'front' },
+        { id: 'mic-f', label: 'マイク', desc: '前面の右に穴 1 つ。背面マイクはなし', color: '#34d399', objs: [micF], anchor: [MIC[0], MIC[1], FZ + 0.5], view: 'front' },
         { id: 'cam', label: 'カメラ', desc: '前面の下・前方', color: '#22d3ee', objs: [cam], anchor: [0, CAM_Y, FZ + 0.5], view: 'front' },
       ] },
-      { name: '側面・底面', items: [
-        { id: 'yes', label: 'ボタン（上 = Yes）', desc: '写真を撮る・はい。deep sleep から起こせる', color: '#38bdf8', objs: [yes], anchor: [W / 2 + 0.8, 9.0, 0], view: 'side' },
-        { id: 'no', label: 'ボタン（中 = No）', desc: 'いいえ・お知らせの読み上げ。3 秒長押しでペアリング', color: '#38bdf8', objs: [no], anchor: [W / 2 + 0.8, 3.4, 0], view: 'side' },
-        { id: 'talk', label: 'ボタン（下 = 話す）', desc: '押して話す（PTT）', color: '#38bdf8', objs: [talk], anchor: [W / 2 + 0.8, -6.6, 0], view: 'side' },
+      { name: '左側面・底面', items: [
+        { id: 'yes', label: 'ボタン（上 = Yes）', desc: '写真を撮る・はい。deep sleep から起こせる', color: '#38bdf8', objs: [yes], anchor: [SIDE * (W / 2 + 0.8), 8.4, 0], view: 'sideL' },
+        { id: 'no', label: 'ボタン（中 = No）', desc: 'いいえ・お知らせの読み上げ。3 秒長押しでペアリング', color: '#38bdf8', objs: [no], anchor: [SIDE * (W / 2 + 0.8), 2.0, 0], view: 'sideL' },
+        { id: 'talk', label: 'ボタン（下 = 話す）', desc: '押して話す（PTT）。大きさは Yes / No と同じ', color: '#38bdf8', objs: [talk], anchor: [SIDE * (W / 2 + 0.8), -4.4, 0], view: 'sideL' },
         { id: 'usb', label: 'USB-C', desc: '底面の中央。充電とファーム書き込み', color: '#38bdf8', objs: [usb], anchor: [0, -H / 2 - 0.4, 0], view: 'bottom' },
       ] },
       { name: '中身（新しく載せる）', items: [
@@ -260,7 +266,7 @@ function buildRev4(root) {
         { id: 'mic-b', label: '背面マイク', desc: 'マイクは前面右の 1 つだけに', color: '#f87171', objs: [], anchor: [0, 15.5, -FZ - 0.5], view: 'angle', gone: true },
       ] },
     ],
-    views: ['angle', 'front', 'side', 'bottom', 'inside'],
+    views: ['angleL', 'front', 'sideL', 'bottom', 'inside'],
   };
 }
 
@@ -652,8 +658,9 @@ function createViewer(host) {
         goTo(typeof selected.view === 'string' ? VIEWS[selected.view] : selected.view, true);
       } else if (first) {
         // 最初の一回: 少し回り込んだ位置から「斜め」へ滑り込む
-        goTo({ dir: [-0.9, 0.15, 1], dist: 190, target: [0, 0, 0] }, true);
-        setView('angle');
+        const sx = VIEWS[model.views[0]].dir[0] < 0 ? 0.9 : -0.9;
+        goTo({ dir: [sx, 0.15, 1], dist: 190, target: [0, 0, 0] }, true);
+        setView(model.views[0]);
         if (tween) tween.dur = 1600;
       }
     }
