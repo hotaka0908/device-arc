@@ -203,7 +203,7 @@ function buildVer3(root) {
 }
 
 /* ---------- rev4（次の基板） ----------
- * ver3 との違い: 前面は右上に マイク穴 → 白 LED の縦並び、下に小さなカメラ。ボタン 3 つ（同じ大きさ）は正面から見て左の側面、USB-C は底面で、どちらも厚みの中央。
+ * ver3 との違い: 前面は右上に マイク穴 → 白 LED の縦並び、下に小さなカメラ。ボタン 3 つ（同じ大きさ）は正面から見て左の側面、USB-C は底面（どちらも基板の背面側に載せる）。
  * スピーカーと背面マイクをなくし、空いた分で薄く。中身は 32kHz 水晶と電池（選ぶと本体が透ける）。
  */
 function buildRev4(root) {
@@ -223,12 +223,12 @@ function buildRev4(root) {
   const micF = micHole(MIC[0], MIC[1], root);
   const led = mesh(new THREE.SphereGeometry(0.7, 20, 12), std(white, { emissive: white, emissiveIntensity: 1.8 }), [LED[0], LED[1], FZ], root);
 
-  // 左側面（厚みの中央）: 同じ大きさのボタン 3 つ。色分けはしない（上 Yes / 中 No / 下 PTT）
+  // 左側面: 同じ大きさのボタン 3 つ。色分けはしない（上 Yes / 中 No / 下 PTT）
   const yes = sideButton(2.0, 8.4, alu(0x9ea7ad), root, 0, SIDE);
   const no = sideButton(2.0, 2.0, alu(0x9ea7ad), root, 0, SIDE);
   const talk = sideButton(2.0, -4.4, alu(0x9ea7ad), root, 0, SIDE);
 
-  // 底面（厚みの中央）: USB-C
+  // 底面: USB-C
   const usb = new THREE.Group();
   mesh(new THREE.ShapeGeometry(rrShape(8.6, 2.8, 1.3), 8), std(0x0b1014, { roughness: 0.5 }), null, usb);
   mesh(new THREE.ShapeGeometry(rrShape(6.4, 1.1, 0.5), 6), std(0x2d3a44), [0, 0, 0.01], usb);
