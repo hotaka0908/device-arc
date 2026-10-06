@@ -206,7 +206,7 @@
         </div>
         <div class="chg">
           <div class="chg-hd"><span class="b warn">高</span><b>電池の安全</b></div>
-          <p>NTC で電池の温度を測り、高温ならハード（充電 IC の TEMP 端子）とファーム（CE 端子）の二重で充電を止める。セルは保護回路 (PCM) + 輸送試験 (UN38.3) 付きを指定。充電電流は 0.5C に下げて発熱を抑える。</p>
+          <p>電池のそばに温度センサ (NTC) を置き、充電 IC の TEMP 端子につなぐ。暑い・寒いときは IC が自分で充電を止める（ファーム不要）。電池の保護回路 (PCM) は温度を見ないので、ここだけ基板側で。セルは PCM + 輸送試験 (UN38.3) 付きを指定。充電電流は 0.5C に下げて発熱を抑える。</p>
         </div>
         <div class="chg">
           <div class="chg-hd"><span class="b ok">中</span><b>前面の配置と、ボタン・USB-C の位置</b></div>
@@ -244,7 +244,7 @@
             <tr><td><b>ボタン</b></td><td>サイドプッシュ ×3・同じ大きさ（上 Yes / 中 No / 下 話す）。正面から見て左の側面、基板の背面側。PTT は GPIO4 で deep sleep から起きる</td><td><span class="em">PTT で起床</span></td></tr>
             <tr><td><b>32kHz 水晶</b></td><td>Seiko SC-20S + 22pF ×2 + 10MΩ（GPIO15/16）。検品項目に入れる</td><td><span class="em">実装する</span></td></tr>
             <tr><td><b>電源</b></td><td>LiPo 503035 500mAh・PCM + UN38.3 付き（PKCELL LP503035 級）。目標 3 日（待機を数 mA 台へ）</td><td>目標 1 日 → <span class="em">3 日</span>・<span class="em">保護付きセル</span></td></tr>
-            <tr><td><b>充電</b></td><td>USB-C（底面の中央）／TP4056 系、0.5C（250〜300mA）。NTC で温度監視、TEMP 端子 + CE 端子で充電停止</td><td><span class="em">温度で止める</span></td></tr>
+            <tr><td><b>充電</b></td><td>USB-C（底面）／TP4056 系、0.5C（250〜300mA）。NTC を TEMP 端子につないで温度で充電停止</td><td><span class="em">温度で止める</span></td></tr>
             <tr><td><b>基板の載せ分け</b></td><td>前面側 = カメラのコネクタ・LED・マイクだけ（2 mm 以下）。背面側 = ESP32・USB-C・スイッチ・電池コネクタ（3.2 mm で揃える）。その後ろに電池。電池はアンテナの帯にかけない</td><td><span class="em">厚い部品は背面へ</span></td></tr>
             <tr><td><b>接続</b></td><td>BLE（WROOM-1 のまま、技適取得済み）</td><td>同じ</td></tr>
             <tr><td><b>外装</b></td><td>樹脂がメインで数か所にアルミ。素材は柔軟に検討。側面シルバー・背面は鏡・LED の位置だけクリア</td><td><span class="em">アルミ → 樹脂 + アルミ</span></td></tr>
