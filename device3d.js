@@ -20,8 +20,6 @@ const VIEWS = {
   angle:  { label: '斜め', dir: [0.75, 0.42, 1],  dist: 125, target: [0, 0, 0] },
   front:  { label: '前',   dir: [0.12, 0.08, 1],  dist: 112, target: [0, 0, 0] },
   side:   { label: '横',   dir: [1, 0.14, 0.32],  dist: 112, target: [0, 0, 0] },
-  sideB:  { label: '横',   dir: [1, 0.16, -0.42], dist: 112, target: [0, 0, 0] },   // 背面寄りの側面（rev4: ボタンが体側にある）
-  back:   { label: '背面', dir: [0.3, 0.18, -1],  dist: 112, target: [0, 0, 0] },
   top:    { label: '上',   dir: [0.22, 1, 0.6],   dist: 112, target: [0, 3, 0] },
   bottom: { label: '下',   dir: [0.22, -1, 0.6],  dist: 112, target: [0, -3, 0] },
   bottomB:{ label: '下',   dir: [0.22, -1, -0.6], dist: 112, target: [0, -3, 0] },  // 背面寄りの底面（rev4: USB-C が体側にある）
@@ -200,33 +198,33 @@ function buildVer3(root) {
 }
 
 /* ---------- rev4（次の基板） ----------
- * ver3 との違い: 前面はカメラ・LED・前面マイクだけ。ボタン 3 つと USB-C は体側（背面側）の縁へ。
+ * ver3 との違い: 前面は上に LED・下にカメラ・右にマイク 1 つ。ボタン 3 つは側面の中央、USB-C は体側（背面側）の縁へ。
  * スピーカーをなくし、空いた分で薄く。中身に加速度センサと 32kHz 水晶（選ぶと本体が透ける）。
  */
 function buildRev4(root) {
   const shell = mesh(new RoundedBoxGeometry(W, H, D, 5, 1.6), alu(0xb2babf), null, root);
   const teal = 0x22d3ee, white = 0xf8fafc;
+  const CAM_Y = -9.5, LED_Y = 13, MIC = [10.5, 3];
 
-  // 前面: カメラ（中央）
+  // 前面: カメラ（下）
   const cam = new THREE.Group();
   mesh(new THREE.CircleGeometry(5.3, 48), new THREE.MeshPhysicalMaterial({ color: 0x0b1419, roughness: 0.08, clearcoat: 1 }), null, cam);
   mesh(new THREE.TorusGeometry(5.3, 0.4, 16, 64), alu(0x9aa3a9), null, cam);
   mesh(new THREE.TorusGeometry(2.6, 0.22, 12, 48), std(teal, { emissive: teal, emissiveIntensity: 0.25 }), null, cam);
   mesh(new THREE.CircleGeometry(1.3, 24), std(0x020406, { roughness: 0.1 }), [0, 0, 0.02], cam);
-  cam.position.set(0, 3, FZ + 0.02); root.add(cam);
+  cam.position.set(0, CAM_Y, FZ + 0.02); root.add(cam);
 
-  // 前面: 白 LED（カメラの下に横一列。3〜5 灯は検討中なので 3 で描く）
-  const leds = [-4, 0, 4].map(x => mesh(new THREE.SphereGeometry(0.7, 20, 12), std(white, { emissive: white, emissiveIntensity: 1.8 }), [x, -8.5, FZ], root));
+  // 前面: 白 LED（上に横一列。3〜5 灯は検討中なので 3 で描く）
+  const leds = [-4, 0, 4].map(x => mesh(new THREE.SphereGeometry(0.7, 20, 12), std(white, { emissive: white, emissiveIntensity: 1.8 }), [x, LED_Y, FZ], root));
 
-  // 前面マイク（上）/ 背面マイク（体側）
-  const micF = frontMic(0, 15.5, root);
-  const micB = frontMic(0, 15.5, root, -FZ - 0.03, Math.PI);
+  // 前面マイク（右）: 1 つだけ
+  const micF = frontMic(MIC[0], MIC[1], root);
 
-  // 側面（体側の縁）: ボタン 3 つ。色分けはしない（上 Yes / 中 No / 下 PTT）
-  const BZ = -FZ + 2.4;
-  const yes = sideButton(2.0, 9.0, alu(0x9ea7ad), root, BZ);
-  const no = sideButton(2.0, 3.4, alu(0x9ea7ad), root, BZ);
-  const talk = sideButton(2.8, -6.6, alu(0x9ea7ad), root, BZ);
+  // 側面（中央）: ボタン 3 つ。色分けはしない（上 Yes / 中 No / 下 PTT）
+  const BZ = -FZ + 2.4; // USB-C だけ体側の縁
+  const yes = sideButton(2.0, 9.0, alu(0x9ea7ad), root);
+  const no = sideButton(2.0, 3.4, alu(0x9ea7ad), root);
+  const talk = sideButton(2.8, -6.6, alu(0x9ea7ad), root);
 
   // 底面（体側の縁）: USB-C
   const usb = new THREE.Group();
@@ -244,16 +242,15 @@ function buildRev4(root) {
     shell, inside: [accel, xtal, battery],
     groups: [
       { name: '前面', items: [
-        { id: 'cam', label: 'カメラ', desc: '中央・前方（ver3 と同じ）', color: '#22d3ee', objs: [cam], anchor: [0, 3, FZ + 0.5], view: 'front' },
-        { id: 'led', label: 'LED（白）', desc: '聞いてる合図。3〜5 灯の横一列を検討中', color: '#f8fafc', objs: leds, anchor: [4, -8.5, FZ + 0.6], view: 'front' },
-        { id: 'mic-f', label: '前面マイク', desc: '相手の声を拾う', color: '#34d399', objs: [micF], anchor: [0, 15.5, FZ + 0.5], view: 'front' },
+        { id: 'led', label: 'LED（白）', desc: '上に横一列。聞いてる合図。3〜5 灯を検討中', color: '#f8fafc', objs: leds, anchor: [4, LED_Y, FZ + 0.6], view: 'front' },
+        { id: 'mic-f', label: 'マイク', desc: '前面の右に 1 つ。背面マイクはなし', color: '#34d399', objs: [micF], anchor: [MIC[0], MIC[1], FZ + 0.5], view: 'front' },
+        { id: 'cam', label: 'カメラ', desc: '前面の下・前方', color: '#22d3ee', objs: [cam], anchor: [0, CAM_Y, FZ + 0.5], view: 'front' },
       ] },
-      { name: '体側（背面側の縁）', items: [
-        { id: 'yes', label: 'ボタン（上 = Yes）', desc: '写真を撮る・はい。deep sleep から起こせる', color: '#38bdf8', objs: [yes], anchor: [W / 2 + 0.8, 9.0, BZ], view: 'sideB' },
-        { id: 'no', label: 'ボタン（中 = No）', desc: 'いいえ・お知らせの読み上げ。3 秒長押しでペアリング', color: '#38bdf8', objs: [no], anchor: [W / 2 + 0.8, 3.4, BZ], view: 'sideB' },
-        { id: 'talk', label: 'ボタン（下 = 話す）', desc: '押して話す（PTT）', color: '#38bdf8', objs: [talk], anchor: [W / 2 + 0.8, -6.6, BZ], view: 'sideB' },
+      { name: '側面・底面', items: [
+        { id: 'yes', label: 'ボタン（上 = Yes）', desc: '写真を撮る・はい。deep sleep から起こせる', color: '#38bdf8', objs: [yes], anchor: [W / 2 + 0.8, 9.0, 0], view: 'side' },
+        { id: 'no', label: 'ボタン（中 = No）', desc: 'いいえ・お知らせの読み上げ。3 秒長押しでペアリング', color: '#38bdf8', objs: [no], anchor: [W / 2 + 0.8, 3.4, 0], view: 'side' },
+        { id: 'talk', label: 'ボタン（下 = 話す）', desc: '押して話す（PTT）', color: '#38bdf8', objs: [talk], anchor: [W / 2 + 0.8, -6.6, 0], view: 'side' },
         { id: 'usb', label: 'USB-C', desc: '底面の体側。充電とファーム書き込み', color: '#38bdf8', objs: [usb], anchor: [0, -H / 2 - 0.4, BZ], view: 'bottomB' },
-        { id: 'mic-b', label: '背面マイク', desc: '自分の声を拾う', color: '#34d399', objs: [micB], anchor: [0, 15.5, -FZ - 0.5], view: 'back' },
       ] },
       { name: '中身（新しく載せる）', items: [
         { id: 'accel', label: '加速度センサ', desc: '外したら寝る・着けたら起きる', color: '#4ade80', objs: [accel], anchor: [-9, 7, 1], view: 'inside', inside: true },
@@ -261,10 +258,11 @@ function buildRev4(root) {
         { id: 'bat', label: '電池', desc: 'LiPo 530mAh（ver3 と同じ）', color: '#a3b1ab', objs: [battery], anchor: [2, -2, -0.5], view: 'inside', inside: true },
       ] },
       { name: 'なくすもの', items: [
-        { id: 'spk', label: 'スピーカー', desc: '音はスマホ・イヤホンから。空いた分で薄く', color: '#f87171', objs: [], anchor: [0, -16, FZ + 0.5], view: 'front', gone: true },
+        { id: 'spk', label: 'スピーカー', desc: '音はスマホ・イヤホンから。空いた分で薄く', color: '#f87171', objs: [], anchor: [0, 2, FZ + 0.5], view: 'front', gone: true },
+        { id: 'mic-b', label: '背面マイク', desc: 'マイクは前面右の 1 つだけに', color: '#f87171', objs: [], anchor: [0, 15.5, -FZ - 0.5], view: 'angle', gone: true },
       ] },
     ],
-    views: ['angle', 'front', 'sideB', 'back', 'bottomB', 'inside'],
+    views: ['angle', 'front', 'side', 'bottomB', 'inside'],
   };
 }
 

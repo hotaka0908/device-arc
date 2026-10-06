@@ -150,7 +150,7 @@
     <div class="diagram v3d" data-view="rev4" hidden>
       <div class="v3d-root" data-model="rev4"></div>
     </div>
-    <p class="note" data-view="rev4" hidden>※ 前面はカメラ・LED・マイクだけ。ボタン 3 つと USB-C は体側の縁へ。スピーカーはなし。「中」を押すと本体が透けて、新しく載せる加速度センサと 32kHz 水晶が見えます。寸法は ver3 のまま描いていて、薄さは設計側で詰めます。</p>
+    <p class="note" data-view="rev4" hidden>※ 前面は上に LED・下にカメラ・右にマイク 1 つ。ボタン 3 つは側面の中央、USB-C は体側の縁へ。スピーカーと背面マイクはなし。「中」を押すと本体が透けて、新しく載せる加速度センサと 32kHz 水晶が見えます。寸法は ver3 のまま描いていて、薄さは設計側で詰めます。</p>
 
     <!-- ===== 理想 (ideal) ===== -->
     <div class="diagram v3d" data-view="ideal" hidden>
@@ -217,8 +217,12 @@
           <p>音はスマホ・イヤホンから。アンプ・スピーカー・電源スイッチの 4 部品が減り、その分薄く。</p>
         </div>
         <div class="chg">
-          <div class="chg-hd"><span class="b ok">中</span><b>ボタンと USB-C を体側の縁へ</b></div>
-          <p>前面はカメラ・LED・マイクだけにして前面板を薄く。押す向きと並びは ver3 のまま。</p>
+          <div class="chg-hd"><span class="b ok">中</span><b>USB-C を体側の縁へ、ボタンは側面の中央</b></div>
+          <p>前面は LED・カメラ・マイクだけにして前面板を薄く。ボタンの押す向きと並びは ver3 のまま。</p>
+        </div>
+        <div class="chg">
+          <div class="chg-hd"><span class="b ok">中</span><b>マイクを 1 つに</b></div>
+          <p>前面の右に 1 つ。背面マイクはなくす。</p>
         </div>
         <div class="chg">
           <div class="chg-hd"><span class="b ok">中</span><b>限りなく薄く・小さく</b></div>
@@ -241,11 +245,11 @@
           <tbody>
             <tr><td><b>MCU</b></td><td>ESP32-S3-WROOM-1 N16R8（BLE 5.0・PSRAM 8MB）。1U + FPC アンテナも可</td><td>同じ</td></tr>
             <tr><td><b>基板</b></td><td>30 × 37 mm・四隅 R2 以上。厚みは最優先で薄く</td><td><span class="em">四隅 R2・薄く</span></td></tr>
-            <tr><td><b>カメラ</b></td><td>OV3660 92°・24pin FPC・専用 LDO で電源を切れる。前面中央</td><td>同じ</td></tr>
-            <tr><td><b>マイク</b></td><td>PDM MEMS ×2（前面 = 相手／背面 = 自分）</td><td>同じ</td></tr>
-            <tr><td><b>LED</b></td><td>白。聞いてる合図だけ点く。3〜5 灯の横一列を検討中</td><td><span class="em">緑 1 灯 → 白</span></td></tr>
+            <tr><td><b>カメラ</b></td><td>OV3660 92°・24pin FPC・専用 LDO で電源を切れる。前面の下</td><td><span class="em">中央 → 下</span></td></tr>
+            <tr><td><b>マイク</b></td><td>PDM MEMS ×1（前面の右）</td><td><span class="em">2 → 1（背面なし）</span></td></tr>
+            <tr><td><b>LED</b></td><td>白・前面の上。聞いてる合図だけ点く。3〜5 灯の横一列を検討中</td><td><span class="em">緑 1 灯 → 白</span></td></tr>
             <tr><td><b>スピーカー</b></td><td>なし（音はスマホ・イヤホン）</td><td><span class="em">廃止</span></td></tr>
-            <tr><td><b>ボタン</b></td><td>サイドプッシュ ×3（上 Yes / 中 No / 下 話す）。体側の縁</td><td><span class="em">位置だけ体側へ</span></td></tr>
+            <tr><td><b>ボタン</b></td><td>サイドプッシュ ×3（上 Yes / 中 No / 下 話す）。側面の中央</td><td>同じ</td></tr>
             <tr><td><b>加速度センサ</b></td><td>3 軸・I2C（LIS2DW12 級）。INT1 で deep sleep から起きる</td><td><span class="em">新規</span></td></tr>
             <tr><td><b>32kHz 水晶</b></td><td>Seiko SC-20S + 22pF ×2 + 10MΩ（GPIO15/16）。検品項目に入れる</td><td><span class="em">実装する</span></td></tr>
             <tr><td><b>電源</b></td><td>LiPo 503035 530mAh。目標 3 日（待機を数 mA 台へ）</td><td>目標 1 日 → <span class="em">3 日</span></td></tr>
