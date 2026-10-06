@@ -179,6 +179,8 @@ section { padding: 56px 0; border-top: 1px solid var(--line); position: relative
 .v3d-item:focus { outline: none; }
 .v3d-item:focus-visible { outline: 1px solid rgba(255,255,255,.35); }
 .v3d-item.is-active { color: #fff; font-weight: 700; background: rgba(255,255,255,.08); }
+.v3d-item.is-gone { color: #8a958e; text-decoration: line-through; text-decoration-color: rgba(248,113,113,.7); }
+.v3d-item.is-gone.is-active { color: #fca5a5; }
 .v3d-fallback { padding: 40px; text-align: center; color: #9fb0a8; }
 @media (max-width: 760px) {
   .v3d-layout { grid-template-columns: 1fr; }
@@ -251,6 +253,23 @@ ul.clean li { display: flex; gap: 10px; color: var(--muted); font-size: 14px; }
 ul.clean li::before { content: "›"; color: var(--accent); font-weight: 700; }
 
 .note { font-size: 12.5px; color: var(--dim); margin-top: 10px; }
+.note[hidden] { display: none; }
+
+/* ===== rev4: ver3 からの変更点カード ===== */
+.sub-h { font-family: var(--display); font-size: 18px; letter-spacing: .03em; margin: 6px 0 4px; }
+.sub-h + .table-wrap { margin-top: 12px; }
+.sub-p { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
+.changes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 36px; }
+@media (max-width: 720px) { .changes { grid-template-columns: 1fr; } }
+.chg {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+  padding: 14px 16px; box-shadow: 0 1px 2px rgba(16,40,30,.04);
+}
+.chg.keep { background: var(--bg-soft); border-style: dashed; }
+.chg-hd { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.chg-hd b { font-size: 15px; }
+.chg p { color: var(--muted); font-size: 13.5px; line-height: 1.65; }
+.b:not(.ok):not(.warn):not(.no) { background: #e6ece9; color: var(--muted); }
 
 /* ===== A/B option ===== */
 .opt { border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; background: var(--panel); }
