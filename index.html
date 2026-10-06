@@ -197,12 +197,16 @@
 
     <!-- rev4 -->
     <div data-view="rev4" hidden>
-      <h3 class="sub-h">ver3 から変えること（4 件）</h3>
-      <p class="sub-p">ねらいは「使いたいときに押せば動く・一日つけていられる・身につけたくなる」。2026-10-06 に煮詰めて 4 件に絞りました。</p>
+      <h3 class="sub-h">ver3 から変えること（5 件）</h3>
+      <p class="sub-p">ねらいは「使いたいときに押せば動く・一日つけていられる・身につけたくなる」。rev4 は自分たちで販売できる製品レベルをねらう。2026-10-06 に煮詰めて 5 件に絞りました。</p>
       <div class="changes">
         <div class="chg">
           <div class="chg-hd"><span class="b warn">高</span><b>32.768kHz 水晶を載せる</b></div>
           <p>ver3 は部品表にあるのに実機に付いていない。BLE をつないだまま深く眠れるようになり、待機 16mA → 10mA 台前半。電池持ちの本命。</p>
+        </div>
+        <div class="chg">
+          <div class="chg-hd"><span class="b warn">高</span><b>電池の安全</b></div>
+          <p>NTC で電池の温度を測り、高温ならハード（充電 IC の TEMP 端子）とファーム（CE 端子）の二重で充電を止める。セルは保護回路 (PCM) + 輸送試験 (UN38.3) 付きを指定。充電電流は 0.5C に下げて発熱を抑える。</p>
         </div>
         <div class="chg">
           <div class="chg-hd"><span class="b ok">中</span><b>前面の配置と、ボタン・USB-C の位置</b></div>
@@ -214,7 +218,7 @@
         </div>
         <div class="chg">
           <div class="chg-hd"><span class="b ok">中</span><b>限りなく薄く・小さく</b></div>
-          <p>厚みを最優先、次に幅。薄ければ薄いほど良く、数字は置かない。部品の重ね方は設計側に一任。アンテナは縁・体と反対側へ。</p>
+          <p>厚い部品（ESP32 モジュール・USB-C・スイッチ・電池コネクタ）は全部背面側に集めて高さを 3.2 mm で揃え、前面側はカメラのコネクタ・LED・マイクだけ。その後ろに電池。基板 1 + 背面 3.2 + 電池 5 ≈ 9.2 mm（ver3 比 −3 mm）。数字は置かず、薄ければ薄いほど良い。</p>
         </div>
         <div class="chg keep">
           <div class="chg-hd"><span class="b">据え置き</span><b>ボタンは 3 つ・同じ大きさ</b></div>
@@ -239,14 +243,15 @@
             <tr><td><b>スピーカー</b></td><td>なし（音はスマホ・イヤホン）</td><td><span class="em">廃止</span></td></tr>
             <tr><td><b>ボタン</b></td><td>サイドプッシュ ×3・同じ大きさ（上 Yes / 中 No / 下 話す）。正面から見て左の側面、厚みの中央。PTT は GPIO4 で deep sleep から起きる</td><td><span class="em">PTT で起床</span></td></tr>
             <tr><td><b>32kHz 水晶</b></td><td>Seiko SC-20S + 22pF ×2 + 10MΩ（GPIO15/16）。検品項目に入れる</td><td><span class="em">実装する</span></td></tr>
-            <tr><td><b>電源</b></td><td>LiPo 503035 530mAh。目標 3 日（待機を数 mA 台へ）</td><td>目標 1 日 → <span class="em">3 日</span></td></tr>
-            <tr><td><b>充電</b></td><td>USB-C（底面の中央）／TP4056 系 500mA</td><td>位置だけ</td></tr>
-            <tr><td><b>接続</b></td><td>BLE</td><td>同じ</td></tr>
-            <tr><td><b>外装</b></td><td>前面 34 × 45 は樹脂、側面・背面はアルミ（側面シルバー・背面は鏡）</td><td>設計中</td></tr>
+            <tr><td><b>電源</b></td><td>LiPo 503035 500mAh・PCM + UN38.3 付き（PKCELL LP503035 級）。目標 3 日（待機を数 mA 台へ）</td><td>目標 1 日 → <span class="em">3 日</span>・<span class="em">保護付きセル</span></td></tr>
+            <tr><td><b>充電</b></td><td>USB-C（底面の中央）／TP4056 系、0.5C（250〜300mA）。NTC で温度監視、TEMP 端子 + CE 端子で充電停止</td><td><span class="em">温度で止める</span></td></tr>
+            <tr><td><b>基板の載せ分け</b></td><td>前面側 = カメラのコネクタ・LED・マイクだけ（2 mm 以下）。背面側 = ESP32・USB-C・スイッチ・電池コネクタ（3.2 mm で揃える）。その後ろに電池。電池はアンテナの帯にかけない</td><td><span class="em">厚い部品は背面へ</span></td></tr>
+            <tr><td><b>接続</b></td><td>BLE（WROOM-1 のまま、技適取得済み）</td><td>同じ</td></tr>
+            <tr><td><b>外装</b></td><td>樹脂がメインで数か所にアルミ。素材は柔軟に検討。側面シルバー・背面は鏡・LED の位置だけクリア</td><td><span class="em">アルミ → 樹脂 + アルミ</span></td></tr>
           </tbody>
         </table>
       </div>
-      <p class="note">※ 量産段階で電池の温度センサ (NTC) と充電遮断を追加。充電ケース（置く = 充電）は Rev5 以降で、Rev4 では考えない。</p>
+      <p class="note">※ 製品化のために「できれば」: 取扱終了・在庫ゼロの部品を代替品に（基本部品だけで組めると段取り費が消える）、工場検査用のテストポイント、外装との位置決め。充電ケース（置く = 充電）は Rev5 以降で、Rev4 では考えない。</p>
     </div>
 
     <!-- 理想 -->
