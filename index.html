@@ -150,7 +150,7 @@
     <div class="diagram v3d" data-view="rev4" hidden>
       <div class="v3d-root" data-model="rev4"></div>
     </div>
-    <p class="note" data-view="rev4" hidden>※ 前面は上に白 LED 縦 3 灯・下に小さなカメラ・右にマイク穴 1 つ。同じ大きさのボタン 3 つは正面から見て左の側面、USB-C は底面で、どちらも厚みの中央。スピーカーと背面マイクはなし。「中」を押すと本体が透けて、新しく載せる加速度センサと 32kHz 水晶が見えます。寸法は ver3 のまま描いていて、薄さは設計側で詰めます。</p>
+    <p class="note" data-view="rev4" hidden>※ 前面は右上にマイク穴、その下に白 LED 1 灯（外装はここだけクリア）、下の中央に小さなカメラ窓。同じ大きさのボタン 3 つは正面から見て左の側面、USB-C は底面で、どちらも厚みの中央。スピーカーと背面マイクはなし。「中」を押すと本体が透けて、新しく載せる 32kHz 水晶と電池が見えます。寸法は ver3 のまま描いていて、薄さは設計側で詰めます。</p>
 
     <!-- ===== 理想 (ideal) ===== -->
     <div class="diagram v3d" data-view="ideal" hidden>
@@ -197,44 +197,32 @@
 
     <!-- rev4 -->
     <div data-view="rev4" hidden>
-      <h3 class="sub-h">ver3 から変えること</h3>
-      <p class="sub-p">ねらいは「使いたいときに押せば動く・一日つけていられる・身につけたくなる」。電池持ちに効く順に並べています。</p>
+      <h3 class="sub-h">ver3 から変えること（4 件）</h3>
+      <p class="sub-p">ねらいは「使いたいときに押せば動く・一日つけていられる・身につけたくなる」。2026-10-06 に煮詰めて 4 件に絞りました。</p>
       <div class="changes">
         <div class="chg">
           <div class="chg-hd"><span class="b warn">高</span><b>32.768kHz 水晶を載せる</b></div>
-          <p>ver3 は部品表にあるのに実機に付いていない。BLE をつないだまま深く眠れるようになり、待機 16mA → 10mA 台前半。</p>
+          <p>ver3 は部品表にあるのに実機に付いていない。BLE をつないだまま深く眠れるようになり、待機 16mA → 10mA 台前半。電池持ちの本命。</p>
         </div>
         <div class="chg">
-          <div class="chg-hd"><span class="b warn">高</span><b>加速度センサを載せる</b></div>
-          <p>外したら数分で眠り、持ち上げたら起きる。ピンはスピーカーをなくして空く GPIO4〜7 から。</p>
+          <div class="chg-hd"><span class="b ok">中</span><b>前面の配置と、ボタン・USB-C の位置</b></div>
+          <p>前面は右上にマイク穴、その下に白 LED 1 灯（そこだけクリア素材）、下の中央に小さなカメラ窓。ボタン 3 つは左側面、USB-C は底面で、どちらも厚みの中央。PTT を GPIO4 に移して、眠りからも PTT で起きる。</p>
         </div>
         <div class="chg">
-          <div class="chg-hd"><span class="b warn">高</span><b>USB 検出のノイズ対策</b></div>
-          <p>眠った直後に「USB が挿さった」と誤検出して起きるのを止める。コンデンサ 1 個と抵抗値の変更。</p>
-        </div>
-        <div class="chg">
-          <div class="chg-hd"><span class="b ok">中</span><b>スピーカーをなくす</b></div>
-          <p>音はスマホ・イヤホンから。アンプ・スピーカー・電源スイッチの 4 部品が減り、その分薄く。</p>
-        </div>
-        <div class="chg">
-          <div class="chg-hd"><span class="b ok">中</span><b>前面は LED・カメラ・マイクだけに</b></div>
-          <p>前面板を薄くする。同じ大きさのボタン 3 つは正面から見て左の側面、USB-C は底面で、どちらも厚みの中央。押す向きと並びは ver3 のまま。</p>
-        </div>
-        <div class="chg">
-          <div class="chg-hd"><span class="b ok">中</span><b>マイクを 1 つに</b></div>
-          <p>前面の右に 1 つ。背面マイクはなくす。</p>
+          <div class="chg-hd"><span class="b ok">中</span><b>スピーカーをなくし、マイクを 1 つに</b></div>
+          <p>音はスマホ・イヤホンから。アンプ・スピーカー・電源スイッチと背面マイクが減り、その分薄く。GPIO も 3 本空く。</p>
         </div>
         <div class="chg">
           <div class="chg-hd"><span class="b ok">中</span><b>限りなく薄く・小さく</b></div>
-          <p>厚みを最優先、次に幅。部品の重ね方は設計側に一任。アンテナは縁・体と反対側へ。</p>
-        </div>
-        <div class="chg">
-          <div class="chg-hd"><span class="b ok">中</span><b>基板の四隅を R2 以上に</b></div>
-          <p>アルミ筐体の内側の隅 (R2) に合わせる。外形 30 × 37 と部品配置は変えない。</p>
+          <p>厚みを最優先、次に幅。薄ければ薄いほど良く、数字は置かない。部品の重ね方は設計側に一任。アンテナは縁・体と反対側へ。</p>
         </div>
         <div class="chg keep">
-          <div class="chg-hd"><span class="b">据え置き</span><b>ボタンは 3 つのまま</b></div>
-          <p>上 = Yes（写真）・中 = No（お知らせの読み上げ・長押しでペアリング）・下 = 話す。GPIO も ver3 と同じ。</p>
+          <div class="chg-hd"><span class="b">据え置き</span><b>ボタンは 3 つ・同じ大きさ</b></div>
+          <p>上 = Yes（写真）・中 = No（お知らせの読み上げ・長押しでペアリング）・下 = 話す。眠っていても、話すボタンを押したままなら LED が点いた時点から聞き始める。</p>
+        </div>
+        <div class="chg keep">
+          <div class="chg-hd"><span class="b">取り下げ</span><b>やらないと決めたもの</b></div>
+          <p>加速度センサ（水晶が入れば削れる分が小さい）／USB 検出のノイズ対策（fw 0.2.69 で回避済み）／基板の四隅 R2／ボタン 2 つ化／LED 3〜5 灯／充電ケースの布石（Rev5 で）。</p>
         </div>
       </div>
 
@@ -244,22 +232,21 @@
           <thead><tr><th>項目</th><th>仕様</th><th>ver3 から</th></tr></thead>
           <tbody>
             <tr><td><b>MCU</b></td><td>ESP32-S3-WROOM-1 N16R8（BLE 5.0・PSRAM 8MB）。1U + FPC アンテナも可</td><td>同じ</td></tr>
-            <tr><td><b>基板</b></td><td>30 × 37 mm・四隅 R2 以上。厚みは最優先で薄く</td><td><span class="em">四隅 R2・薄く</span></td></tr>
-            <tr><td><b>カメラ</b></td><td>OV3660 92°・24pin FPC・専用 LDO で電源を切れる。前面の下、窓は小さく簡素に</td><td><span class="em">中央 → 下・小さく</span></td></tr>
-            <tr><td><b>マイク</b></td><td>PDM MEMS ×1（前面の右に穴 1 つ）</td><td><span class="em">2 → 1（背面なし）</span></td></tr>
-            <tr><td><b>LED</b></td><td>白 ×3・前面の上に縦一列。聞いてる合図だけ点く</td><td><span class="em">緑 1 灯 → 白 3 灯</span></td></tr>
+            <tr><td><b>基板</b></td><td>30 × 37 mm 前後。厚みは最優先で、薄ければ薄いほど良い</td><td><span class="em">薄く</span></td></tr>
+            <tr><td><b>カメラ</b></td><td>OV3660 92°・24pin FPC・専用 LDO で電源を切れる。前面の下・中央、窓は小さく簡素に。少し下向きになるのは許容</td><td><span class="em">中央 → 下・小さく</span></td></tr>
+            <tr><td><b>マイク</b></td><td>PDM MEMS ×1（前面の右上に穴 1 つ）</td><td><span class="em">2 → 1（背面なし）</span></td></tr>
+            <tr><td><b>LED</b></td><td>白 ×1・マイク穴の下。聞いてる合図だけ点く。外装はここだけクリア素材</td><td><span class="em">緑 → 白</span></td></tr>
             <tr><td><b>スピーカー</b></td><td>なし（音はスマホ・イヤホン）</td><td><span class="em">廃止</span></td></tr>
-            <tr><td><b>ボタン</b></td><td>サイドプッシュ ×3・同じ大きさ（上 Yes / 中 No / 下 話す）。正面から見て左の側面、厚みの中央</td><td><span class="em">3 つ同じ大きさ</span></td></tr>
-            <tr><td><b>加速度センサ</b></td><td>3 軸・I2C（LIS2DW12 級）。INT1 で deep sleep から起きる</td><td><span class="em">新規</span></td></tr>
+            <tr><td><b>ボタン</b></td><td>サイドプッシュ ×3・同じ大きさ（上 Yes / 中 No / 下 話す）。正面から見て左の側面、厚みの中央。PTT は GPIO4 で deep sleep から起きる</td><td><span class="em">PTT で起床</span></td></tr>
             <tr><td><b>32kHz 水晶</b></td><td>Seiko SC-20S + 22pF ×2 + 10MΩ（GPIO15/16）。検品項目に入れる</td><td><span class="em">実装する</span></td></tr>
             <tr><td><b>電源</b></td><td>LiPo 503035 530mAh。目標 3 日（待機を数 mA 台へ）</td><td>目標 1 日 → <span class="em">3 日</span></td></tr>
-            <tr><td><b>充電</b></td><td>USB-C（底面の中央）／TP4056 系 500mA。VBUS 検出は RC フィルタ + 低インピーダンス分圧</td><td><span class="em">ノイズ対策</span></td></tr>
+            <tr><td><b>充電</b></td><td>USB-C（底面の中央）／TP4056 系 500mA</td><td>位置だけ</td></tr>
             <tr><td><b>接続</b></td><td>BLE</td><td>同じ</td></tr>
             <tr><td><b>外装</b></td><td>前面 34 × 45 は樹脂、側面・背面はアルミ（側面シルバー・背面は鏡）</td><td>設計中</td></tr>
           </tbody>
         </table>
       </div>
-      <p class="note">※ 量産段階で電池の温度センサ (NTC) と充電遮断を追加。Rev5 以降で充電ケース（置く = 充電）を想定し、背面に充電接点 2 点の余地だけ見ておく。</p>
+      <p class="note">※ 量産段階で電池の温度センサ (NTC) と充電遮断を追加。充電ケース（置く = 充電）は Rev5 以降で、Rev4 では考えない。</p>
     </div>
 
     <!-- 理想 -->
@@ -343,7 +330,7 @@
         <div class="node hw">
           <div class="badge">ハードウェア</div>
           <div class="t">ネックレス rev4</div>
-          <div class="s">収音・撮影して送信。外すと眠る</div>
+          <div class="s">収音・撮影して送信。話すボタンで起きる</div>
         </div>
         <div class="link">
           <div class="lbl">BLE</div>
@@ -364,7 +351,7 @@
           <div class="s">会話 / 翻訳 / ツール</div>
         </div>
       </div>
-      <p class="note">※ 構成は ver3 と同じ。変わるのはネックレスの中身だけ（加速度センサで着脱を知り、32kHz 水晶で浅く眠る）。本体スピーカーがなくなるので、声の出口はスマホかイヤホンに一本化。</p>
+      <p class="note">※ 構成は ver3 と同じ。変わるのはネックレスの中身だけ（32kHz 水晶で浅く眠り、眠りからは話すボタンで起きる）。本体スピーカーがなくなるので、声の出口はスマホかイヤホンに一本化。</p>
     </div>
 
     <!-- 理想 -->
